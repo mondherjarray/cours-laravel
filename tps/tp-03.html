@@ -1,0 +1,575 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TP 3 - Interfaces avec Blade | ISIMED</title>
+    <link rel="stylesheet" href="../css/tp.css">
+</head>
+
+<body>
+    <div class="document">
+
+        <!-- ==================== EN-TÊTE ==================== -->
+        <div class="doc-header">
+            <div class="header-top">
+                <div class="header-logo">
+                    <img src="../assets/isim-logo.jpeg" alt="ISIM Logo">
+                    <div class="institution-name">
+                        <strong>ISIM</strong> Institut Supérieur d'Informatique de Médenine
+                    </div>
+                </div>
+                <div class="header-info">
+                    Année Universitaire<br>
+                    <strong>2025-2026</strong>
+                </div>
+            </div>
+            <div class="header-title">
+                <h1>Travaux Pratiques - Développement Web Avancé</h1>
+                <h2>TP N°3 : Interfaces avec Blade</h2>
+            </div>
+        </div>
+
+        <!-- ==================== BARRE D'INFORMATIONS ==================== -->
+        <div class="info-bar">
+            <div class="info-item">
+                <span class="label">Classe :</span>
+                <span class="value">MP1ILC</span>
+            </div>
+            <div class="info-item">
+                <span class="label">Enseignant :</span>
+                <span class="value">M. JARRAY Mondher</span>
+            </div>
+            <div class="info-item">
+                <span class="label">Durée :</span>
+                <span class="value">1h30</span>
+            </div>
+            <div class="info-item">
+                <span class="label">Projet :</span>
+                <span class="value">TaskFlow</span>
+            </div>
+        </div>
+
+        <!-- ==================== CONTENU ==================== -->
+        <div class="doc-content">
+
+            <!-- OBJECTIFS -->
+            <div class="objectives-box">
+                <h3>Objectifs du TP</h3>
+                <ul>
+                    <li>Créer un layout principal pour TaskFlow</li>
+                    <li>Utiliser la syntaxe Blade pour afficher des données</li>
+                    <li>Créer des vues pour les projets et les tâches</li>
+                    <li>Implémenter des composants réutilisables</li>
+                    <li>Construire des formulaires avec protection CSRF</li>
+                </ul>
+            </div>
+
+            <!-- PRÉREQUIS -->
+            <div class="prerequisites-box">
+                <h3>Prérequis</h3>
+                <ul>
+                    <li>Avoir terminé le TP 2 (routes et contrôleurs)</li>
+                    <li>Comprendre la syntaxe Blade (Chapitre 3)</li>
+                    <li>Projet TaskFlow fonctionnel</li>
+                </ul>
+            </div>
+
+            <!-- ==================== PARTIE 1 ==================== -->
+            <div class="section">
+                <h2 class="section-title">Partie 1 : Layout Principal (25 min)</h2>
+
+                <!-- Exercice 1.1 -->
+                <div class="exercise">
+                    <div class="exercise-header">
+                        <h4>Exercice 1.1 : Créer la structure des dossiers</h4>
+                    </div>
+                    <div class="exercise-content">
+                        <p>Créez l'arborescence suivante dans <code class="code-inline">resources/views/</code> :</p>
+
+                        <div class="file-tree"><pre>
+<span class="folder">views/</span>
+    <span class="folder">layouts/</span>
+        <span class="file">app.blade.php</span>
+    <span class="folder">components/</span>
+        <span class="file">alert.blade.php</span>
+        <span class="file">card.blade.php</span>
+    <span class="folder">partials/</span>
+        <span class="file">navbar.blade.php</span>
+        <span class="file">footer.blade.php</span>
+    <span class="folder">projets/</span>
+        <span class="file">index.blade.php</span>
+        <span class="file">show.blade.php</span>
+        <span class="file">create.blade.php</span>
+    <span class="folder">taches/</span>
+        <span class="file">index.blade.php</span>
+        <span class="file">create.blade.php</span>
+    <span class="file">welcome.blade.php</span>
+</pre></div>
+
+                        <p>Créez ces dossiers et fichiers vides pour commencer.</p>
+                    </div>
+                </div>
+
+                <!-- Exercice 1.2 -->
+                <div class="exercise">
+                    <div class="exercise-header">
+                        <h4>Exercice 1.2 : Créer le layout principal</h4>
+                    </div>
+                    <div class="exercise-content">
+                        <p>Créez le fichier <code class="code-inline">layouts/app.blade.php</code> avec le contenu suivant :</p>
+
+                        <div class="code-block" data-language="Blade">
+                            <code>&lt;!DOCTYPE html&gt;
+&lt;html lang="fr"&gt;
+&lt;head&gt;
+    &lt;meta charset="UTF-8"&gt;
+    &lt;meta name="viewport" content="width=device-width, initial-scale=1.0"&gt;
+    &lt;title&gt;@yield('title', 'TaskFlow')&lt;/title&gt;
+
+    &lt;!-- CSS simple pour le TP --&gt;
+    &lt;style&gt;
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: Arial, sans-serif; background: #f5f5f5; }
+        .navbar { background: #2c3e50; padding: 1rem 2rem; }
+        .navbar a { color: white; text-decoration: none; margin-right: 20px; }
+        .navbar a:hover { text-decoration: underline; }
+        .container { max-width: 1200px; margin: 2rem auto; padding: 0 1rem; }
+        .card { background: white; border-radius: 8px; padding: 1.5rem;
+                margin-bottom: 1rem; box-shadow: 0 2px 4px rgba(0,0,0,0.1); }
+        .btn { padding: 0.5rem 1rem; border: none; border-radius: 4px;
+               cursor: pointer; text-decoration: none; display: inline-block; }
+        .btn-primary { background: #3498db; color: white; }
+        .btn-success { background: #27ae60; color: white; }
+        .btn-danger { background: #e74c3c; color: white; }
+        .alert { padding: 1rem; border-radius: 4px; margin-bottom: 1rem; }
+        .alert-success { background: #d4edda; color: #155724; }
+        .alert-danger { background: #f8d7da; color: #721c24; }
+        .form-group { margin-bottom: 1rem; }
+        .form-group label { display: block; margin-bottom: 0.5rem; font-weight: bold; }
+        .form-group input, .form-group textarea, .form-group select {
+            width: 100%; padding: 0.5rem; border: 1px solid #ddd; border-radius: 4px;
+        }
+        footer { text-align: center; padding: 2rem; color: #666; margin-top: 2rem; }
+        .badge { padding: 0.25rem 0.5rem; border-radius: 4px; font-size: 0.8rem; }
+        .badge-success { background: #27ae60; color: white; }
+        .badge-warning { background: #f39c12; color: white; }
+        .badge-secondary { background: #95a5a6; color: white; }
+    &lt;/style&gt;
+
+    @yield('styles')
+&lt;/head&gt;
+&lt;body&gt;
+    {{-- Navigation --}}
+    @include('partials.navbar')
+
+    {{-- Contenu principal --}}
+    &lt;main class="container"&gt;
+        {{-- Messages flash --}}
+        @if(session('success'))
+            &lt;div class="alert alert-success"&gt;
+                {{ session('success') }}
+            &lt;/div&gt;
+        @endif
+
+        @if(session('error'))
+            &lt;div class="alert alert-danger"&gt;
+                {{ session('error') }}
+            &lt;/div&gt;
+        @endif
+
+        @yield('content')
+    &lt;/main&gt;
+
+    {{-- Pied de page --}}
+    @include('partials.footer')
+
+    @yield('scripts')
+&lt;/body&gt;
+&lt;/html&gt;</code>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Exercice 1.3 -->
+                <div class="exercise">
+                    <div class="exercise-header">
+                        <h4>Exercice 1.3 : Créer les partiels</h4>
+                    </div>
+                    <div class="exercise-content">
+                        <p><strong>Fichier : partials/navbar.blade.php</strong></p>
+                        <div class="code-block" data-language="Blade">
+                            <code>&lt;nav class="navbar"&gt;
+    &lt;a href="{{ route('home') }}" style="font-weight: bold; font-size: 1.2rem;"&gt;
+        TaskFlow
+    &lt;/a&gt;
+    &lt;a href="{{ url('/projets') }}"&gt;Projets&lt;/a&gt;
+    &lt;a href="{{ url('/taches') }}"&gt;Tâches&lt;/a&gt;
+&lt;/nav&gt;</code>
+                        </div>
+
+                        <p><strong>Fichier : partials/footer.blade.php</strong></p>
+                        <div class="code-block" data-language="Blade">
+                            <code>&lt;footer&gt;
+    &lt;p&gt;&copy; {{ date('Y') }} TaskFlow - ISIM Médenine&lt;/p&gt;
+    &lt;p&gt;Développé par la classe MP1ILC&lt;/p&gt;
+&lt;/footer&gt;</code>
+                        </div>
+
+                        <p>Ajoutez aussi la route "home" dans web.php :</p>
+                        <div class="code-block" data-language="PHP">
+                            <code>Route::get('/', function () {
+    return view('welcome');
+})->name('home');</code>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <hr class="page-break">
+
+            <!-- ==================== PARTIE 2 ==================== -->
+            <div class="section">
+                <h2 class="section-title">Partie 2 : Vues des Projets (30 min)</h2>
+
+                <!-- Exercice 2.1 -->
+                <div class="exercise">
+                    <div class="exercise-header">
+                        <h4>Exercice 2.1 : Liste des projets (index)</h4>
+                    </div>
+                    <div class="exercise-content">
+                        <p><strong>1. Modifiez ProjetController pour passer des données :</strong></p>
+                        <div class="code-block" data-language="PHP">
+                            <code>public function index()
+{
+    // Données simulées (plus tard depuis la BDD)
+    $projets = [
+        (object) ['id' => 1, 'nom' => 'Site E-commerce',
+                  'description' => 'Boutique en ligne', 'statut' => 'en_cours'],
+        (object) ['id' => 2, 'nom' => 'Application Mobile',
+                  'description' => 'App iOS/Android', 'statut' => 'termine'],
+        (object) ['id' => 3, 'nom' => 'API REST',
+                  'description' => 'Backend API', 'statut' => 'en_attente'],
+    ];
+
+    return view('projets.index', compact('projets'));
+}</code>
+                        </div>
+
+                        <p><strong>2. Créez la vue projets/index.blade.php :</strong></p>
+                        <div class="code-block" data-language="Blade">
+                            <code>@extends('layouts.app')
+
+@section('title', 'Mes Projets')
+
+@section('content')
+    &lt;div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.5rem;"&gt;
+        &lt;h1&gt;Mes Projets&lt;/h1&gt;
+        &lt;a href="{{ url('/projets/create') }}" class="btn btn-primary"&gt;
+            + Nouveau Projet
+        &lt;/a&gt;
+    &lt;/div&gt;
+
+    @forelse($projets as $projet)
+        &lt;div class="card"&gt;
+            &lt;div style="display: flex; justify-content: space-between;"&gt;
+                &lt;div&gt;
+                    &lt;h3&gt;{{ $projet-&gt;nom }}&lt;/h3&gt;
+                    &lt;p&gt;{{ $projet-&gt;description }}&lt;/p&gt;
+                &lt;/div&gt;
+                &lt;div&gt;
+                    @if($projet-&gt;statut === 'termine')
+                        &lt;span class="badge badge-success"&gt;Terminé&lt;/span&gt;
+                    @elseif($projet-&gt;statut === 'en_cours')
+                        &lt;span class="badge badge-warning"&gt;En cours&lt;/span&gt;
+                    @else
+                        &lt;span class="badge badge-secondary"&gt;En attente&lt;/span&gt;
+                    @endif
+                &lt;/div&gt;
+            &lt;/div&gt;
+            &lt;div style="margin-top: 1rem;"&gt;
+                &lt;a href="{{ url('/projets/' . $projet-&gt;id) }}" class="btn btn-primary"&gt;
+                    Voir
+                &lt;/a&gt;
+            &lt;/div&gt;
+        &lt;/div&gt;
+    @empty
+        &lt;div class="card"&gt;
+            &lt;p&gt;Aucun projet trouvé. Créez votre premier projet !&lt;/p&gt;
+        &lt;/div&gt;
+    @endforelse
+@endsection</code>
+                        </div>
+
+                        <div class="screenshot-placeholder">
+                            <p><strong>Capture d'écran :</strong> Page liste des projets</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Exercice 2.2 -->
+                <div class="exercise">
+                    <div class="exercise-header">
+                        <h4>Exercice 2.2 : Détail d'un projet (show)</h4>
+                    </div>
+                    <div class="exercise-content">
+                        <p><strong>1. Modifiez la méthode show() du contrôleur :</strong></p>
+                        <div class="code-block" data-language="PHP">
+                            <code>public function show($id)
+{
+    // Simulation d'un projet avec ses tâches
+    $projet = (object) [
+        'id' => $id,
+        'nom' => 'Site E-commerce',
+        'description' => 'Développement d\'une boutique en ligne complète',
+        'statut' => 'en_cours',
+        'date_creation' => '2025-01-15',
+    ];
+
+    $taches = [
+        (object) ['id' => 1, 'titre' => 'Créer la BDD', 'statut' => 'termine'],
+        (object) ['id' => 2, 'titre' => 'Design UI', 'statut' => 'en_cours'],
+        (object) ['id' => 3, 'titre' => 'Intégration paiement', 'statut' => 'en_attente'],
+    ];
+
+    return view('projets.show', compact('projet', 'taches'));
+}</code>
+                        </div>
+
+                        <p><strong>2. Créez la vue projets/show.blade.php :</strong></p>
+                        <p>La vue doit afficher :</p>
+                        <ul class="task-list">
+                            <li data-task="a">Le nom et la description du projet</li>
+                            <li data-task="b">Le statut avec un badge coloré</li>
+                            <li data-task="c">La liste des tâches du projet</li>
+                            <li data-task="d">Un bouton "Retour" vers la liste</li>
+                        </ul>
+
+                        <div class="answer-zone code">
+                            <strong>Écrivez votre code pour projets/show.blade.php :</strong>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Exercice 2.3 -->
+                <div class="exercise">
+                    <div class="exercise-header">
+                        <h4>Exercice 2.3 : Formulaire de création (create)</h4>
+                    </div>
+                    <div class="exercise-content">
+                        <p>Créez <code class="code-inline">projets/create.blade.php</code> avec un formulaire :</p>
+
+                        <div class="code-block" data-language="Blade">
+                            <code>@extends('layouts.app')
+
+@section('title', 'Nouveau Projet')
+
+@section('content')
+    &lt;h1&gt;Créer un nouveau projet&lt;/h1&gt;
+
+    &lt;div class="card"&gt;
+        &lt;form action="{{ url('/projets') }}" method="POST"&gt;
+            @csrf
+
+            &lt;div class="form-group"&gt;
+                &lt;label for="nom"&gt;Nom du projet *&lt;/label&gt;
+                &lt;input type="text" id="nom" name="nom" required
+                       placeholder="Ex: Site E-commerce"&gt;
+            &lt;/div&gt;
+
+            &lt;div class="form-group"&gt;
+                &lt;label for="description"&gt;Description&lt;/label&gt;
+                &lt;textarea id="description" name="description" rows="4"
+                          placeholder="Décrivez votre projet..."&gt;&lt;/textarea&gt;
+            &lt;/div&gt;
+
+            &lt;div class="form-group"&gt;
+                &lt;label for="statut"&gt;Statut&lt;/label&gt;
+                &lt;select id="statut" name="statut"&gt;
+                    &lt;option value="en_attente"&gt;En attente&lt;/option&gt;
+                    &lt;option value="en_cours"&gt;En cours&lt;/option&gt;
+                    &lt;option value="termine"&gt;Terminé&lt;/option&gt;
+                &lt;/select&gt;
+            &lt;/div&gt;
+
+            &lt;div style="margin-top: 1.5rem;"&gt;
+                &lt;button type="submit" class="btn btn-success"&gt;Créer le projet&lt;/button&gt;
+                &lt;a href="{{ url('/projets') }}" class="btn" style="background: #ddd;"&gt;
+                    Annuler
+                &lt;/a&gt;
+            &lt;/div&gt;
+        &lt;/form&gt;
+    &lt;/div&gt;
+@endsection</code>
+                        </div>
+
+                        <p><strong>Modifiez la méthode store() pour tester :</strong></p>
+                        <div class="code-block" data-language="PHP">
+                            <code>public function store(Request $request)
+{
+    // Afficher les données reçues (temporaire)
+    return response()->json([
+        'message' => 'Projet reçu !',
+        'data' => $request->all()
+    ]);
+}</code>
+                        </div>
+
+                        <p><strong>Question :</strong> Que se passe-t-il si vous retirez <code class="code-inline">@csrf</code> du formulaire ?</p>
+                        <div class="answer-zone"></div>
+                    </div>
+                </div>
+            </div>
+
+            <hr class="page-break">
+
+            <!-- ==================== PARTIE 3 ==================== -->
+            <div class="section">
+                <h2 class="section-title">Partie 3 : Composants et Améliorations (20 min)</h2>
+
+                <!-- Exercice 3.1 -->
+                <div class="exercise">
+                    <div class="exercise-header">
+                        <h4>Exercice 3.1 : Créer un composant Card</h4>
+                    </div>
+                    <div class="exercise-content">
+                        <p>Créez <code class="code-inline">components/card.blade.php</code> :</p>
+                        <div class="code-block" data-language="Blade">
+                            <code>@props(['title' => null])
+
+&lt;div class="card"&gt;
+    @if($title)
+        &lt;h3 style="margin-bottom: 1rem;"&gt;{{ $title }}&lt;/h3&gt;
+    @endif
+    {{ $slot }}
+&lt;/div&gt;</code>
+                        </div>
+
+                        <p>Utilisez-le dans vos vues :</p>
+                        <div class="code-block" data-language="Blade">
+                            <code>&lt;x-card title="Mon Projet"&gt;
+    &lt;p&gt;Contenu de la carte...&lt;/p&gt;
+&lt;/x-card&gt;
+
+&lt;x-card&gt;
+    &lt;p&gt;Carte sans titre&lt;/p&gt;
+&lt;/x-card&gt;</code>
+                        </div>
+
+                        <p><strong>Exercice :</strong> Refactorisez la page projets/index.blade.php pour utiliser ce composant.</p>
+                    </div>
+                </div>
+
+                <!-- Exercice 3.2 -->
+                <div class="exercise">
+                    <div class="exercise-header">
+                        <h4>Exercice 3.2 : Composant Badge de Statut</h4>
+                    </div>
+                    <div class="exercise-content">
+                        <p>Créez un composant <code class="code-inline">components/status-badge.blade.php</code> qui affiche automatiquement le bon badge selon le statut :</p>
+
+                        <div class="answer-zone code">
+                            <strong>Écrivez le code du composant :</strong>
+                        </div>
+
+                        <p>Utilisation souhaitée :</p>
+                        <div class="code-block" data-language="Blade">
+                            <code>&lt;x-status-badge status="en_cours" /&gt;
+&lt;x-status-badge status="termine" /&gt;
+&lt;x-status-badge status="en_attente" /&gt;</code>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Exercice 3.3 -->
+                <div class="exercise">
+                    <div class="exercise-header">
+                        <h4>Exercice 3.3 : Page d'accueil améliorée</h4>
+                    </div>
+                    <div class="exercise-content">
+                        <p>Modifiez <code class="code-inline">welcome.blade.php</code> pour créer une vraie page d'accueil avec :</p>
+                        <ul class="task-list">
+                            <li data-task="a">Un titre "Bienvenue sur TaskFlow"</li>
+                            <li data-task="b">Une description de l'application</li>
+                            <li data-task="c">Deux boutons : "Voir les projets" et "Créer un projet"</li>
+                            <li data-task="d">Utilisation du layout principal</li>
+                        </ul>
+
+                        <div class="screenshot-placeholder">
+                            <p><strong>Capture d'écran :</strong> Page d'accueil</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ==================== BARÈME ==================== -->
+            <div class="evaluation-box">
+                <h3>Barème d'évaluation</h3>
+                <div class="evaluation-grid">
+                    <div class="evaluation-item">
+                        <span class="criteria">Structure des dossiers (1.1)</span>
+                    </div>
+                    <div class="evaluation-item">
+                        <span class="criteria">Layout principal (1.2)</span>
+                    </div>
+                    <div class="evaluation-item">
+                        <span class="criteria">Partiels navbar/footer (1.3)</span>
+                    </div>
+                    <div class="evaluation-item">
+                        <span class="criteria">Liste des projets (2.1)</span>
+                    </div>
+                    <div class="evaluation-item">
+                        <span class="criteria">Détail projet (2.2)</span>
+                    </div>
+                    <div class="evaluation-item">
+                        <span class="criteria">Formulaire création (2.3)</span>
+                    </div>
+                    <div class="evaluation-item">
+                        <span class="criteria">Composant Card (3.1)</span>
+                    </div>
+                    <div class="evaluation-item">
+                        <span class="criteria">Composant Badge (3.2)</span>
+                    </div>
+                    <div class="evaluation-item">
+                        <span class="criteria">Page d'accueil (3.3)</span>
+                    </div>
+                </div>
+                <div class="evaluation-total">
+                    <span>Total</span>
+                </div>
+            </div>
+
+            <!-- ==================== BONUS ==================== -->
+            <div class="bonus-box">
+                <h3>Exercice Bonus </h3>
+                <ol>
+                    <li>Ajoutez un système de pagination simulé (afficher "Page 1 sur 3")</li>
+                    <li>Créez une vue pour éditer un projet (projets/edit.blade.php)</li>
+                    <li>Ajoutez des icônes (Unicode ou Font Awesome) dans l'interface</li>
+                </ol>
+            </div>
+
+            <!-- ==================== LIVRABLES ==================== -->
+            <div class="deliverables-box">
+                <h3>Livrables à rendre</h3>
+                <ul class="deliverables-list">
+                    <li>Tous les fichiers du dossier views/</li>
+                    <li>Le fichier ProjetController.php modifié</li>
+                    <li>Captures d'écran de toutes les pages</li>
+                    <li>Réponses aux questions</li>
+                </ul>
+            </div>
+
+        </div>
+
+        <!-- ==================== FOOTER ==================== -->
+        <div class="doc-footer">
+            <span>ISIM Médenine | Développement Web Avancé | 2025-2026</span>
+            <span>M. JARRAY Mondher</span>
+        </div>
+
+    </div>
+</body>
+
+</html>

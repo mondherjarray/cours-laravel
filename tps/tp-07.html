@@ -1,0 +1,617 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TP 7 - Authentification et Autorisation | ISIMED</title>
+    <link rel="stylesheet" href="../css/tp.css">
+</head>
+<body>
+    <div class="document">
+
+        <!-- ==================== EN-TÊTE DU DOCUMENT ==================== -->
+        <div class="doc-header">
+            <div class="header-top">
+                <div class="header-logo">
+                    <img src="../assets/isim-logo.jpeg" alt="ISIM Logo">
+                    <div class="institution-name">
+                        <strong>ISIM</strong>
+                        Institut Supérieur d'Informatique de Médenine
+                    </div>
+                </div>
+                <div class="header-info">
+                    Année Universitaire<br>
+                    <strong>2025-2026</strong>
+                </div>
+            </div>
+            <div class="header-title">
+                <h1>Travaux Pratiques - Développement Web Avancé</h1>
+                <h2>TP N°7 : Authentification et Autorisation</h2>
+            </div>
+        </div>
+
+        <!-- ==================== BARRE D'INFORMATIONS ==================== -->
+        <div class="info-bar">
+            <div class="info-item">
+                <span class="label">Classe :</span>
+                <span class="value">MP1ILC</span>
+            </div>
+            <div class="info-item">
+                <span class="label">Enseignant :</span>
+                <span class="value">M. JARRAY Mondher</span>
+            </div>
+            <div class="info-item">
+                <span class="label">Durée :</span>
+                <span class="value">1h30</span>
+            </div>
+            <div class="info-item">
+                <span class="label">Projet :</span>
+                <span class="value">TaskFlow</span>
+            </div>
+        </div>
+
+        <!-- ==================== CONTENU PRINCIPAL ==================== -->
+        <div class="doc-content">
+
+            <!-- OBJECTIFS -->
+            <div class="objectives-box">
+                <h3>Objectifs du TP</h3>
+                <ul>
+                    <li>Installer et configurer Laravel Breeze pour l'authentification</li>
+                    <li>Protéger les routes avec le middleware <code class="code-inline">auth</code></li>
+                    <li>Ajouter un système de rôles aux utilisateurs</li>
+                    <li>Créer des Policies pour gérer les autorisations</li>
+                    <li>Utiliser les directives Blade <code class="code-inline">@can</code> et <code class="code-inline">@auth</code></li>
+                </ul>
+            </div>
+
+            <!-- PRÉREQUIS -->
+            <div class="prerequisites-box">
+                <h3>Prérequis</h3>
+                <ul>
+                    <li>Avoir complété les TPs 1 à 6 (projet TaskFlow fonctionnel)</li>
+                    <li>Modèles Project et Task avec relations configurées</li>
+                    <li>Node.js installé pour la compilation des assets</li>
+                </ul>
+            </div>
+
+            <!-- ==================== PARTIE 1 ==================== -->
+            <div class="section">
+                <h2 class="section-title">Partie 1 : Installation de Laravel Breeze (25 min)</h2>
+
+                <!-- Exercice 1.1 -->
+                <div class="exercise">
+                    <div class="exercise-header">
+                        <h4>Exercice 1.1 : Installer Laravel Breeze</h4>
+                        <span class="exercise-points">4 pts</span>
+                    </div>
+                    <div class="exercise-content">
+                        <p>Laravel Breeze fournit un système d'authentification complet et simple.</p>
+
+                        <ol class="steps">
+                            <li>
+                                Installez le package Breeze via Composer
+                                <div class="command-line">composer require laravel/breeze --dev</div>
+                            </li>
+                            <li>
+                                Exécutez l'installation avec le stack Blade
+                                <div class="command-line">php artisan breeze:install blade</div>
+                            </li>
+                            <li>
+                                Exécutez les migrations pour créer les tables nécessaires
+                                <div class="command-line">php artisan migrate</div>
+                            </li>
+                            <li>
+                                Installez et compilez les assets front-end
+                                <div class="command-line">npm install && npm run dev</div>
+                            </li>
+                        </ol>
+
+                        <div class="info-box note">
+                            <div class="info-box-title">Note</div>
+                            <p>Gardez <code class="code-inline">npm run dev</code> actif dans un terminal pendant le développement pour la compilation en temps réel.</p>
+                        </div>
+
+                        <p><strong>Question :</strong> Quels fichiers et dossiers ont été créés par Breeze ?</p>
+                        <div class="answer-zone">
+                            <strong>Listez les principaux fichiers/dossiers créés :</strong>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Exercice 1.2 -->
+                <div class="exercise">
+                    <div class="exercise-header">
+                        <h4>Exercice 1.2 : Tester l'authentification</h4>
+                        <span class="exercise-points">2 pts</span>
+                    </div>
+                    <div class="exercise-content">
+                        <p>Vérifiez que l'authentification fonctionne correctement.</p>
+
+                        <ul class="task-list">
+                            <li data-task="1">Lancez le serveur : <code class="code-inline">php artisan serve</code></li>
+                            <li data-task="2">Accédez à <code class="code-inline">http://localhost:8000/register</code></li>
+                            <li data-task="3">Créez un compte utilisateur de test</li>
+                            <li data-task="4">Testez la connexion/déconnexion</li>
+                            <li data-task="5">Accédez au dashboard : <code class="code-inline">/dashboard</code></li>
+                        </ul>
+
+                        <div class="screenshot-placeholder">
+                            <p><strong>Capture d'écran :</strong> Page de dashboard après connexion</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <hr class="page-break">
+
+            <!-- ==================== PARTIE 2 ==================== -->
+            <div class="section">
+                <h2 class="section-title">Partie 2 : Protéger les Routes (20 min)</h2>
+
+                <!-- Exercice 2.1 -->
+                <div class="exercise">
+                    <div class="exercise-header">
+                        <h4>Exercice 2.1 : Ajouter le middleware auth</h4>
+                        <span class="exercise-points">3 pts</span>
+                    </div>
+                    <div class="exercise-content">
+                        <p>Protégez les routes de TaskFlow pour que seuls les utilisateurs connectés puissent y accéder.</p>
+
+                        <p>Modifiez le fichier <code class="code-inline">routes/web.php</code> :</p>
+
+                        <div class="code-block" data-language="PHP">
+<code><span class="comment">// routes/web.php</span>
+<span class="keyword">use</span> App\Http\Controllers\ProjectController;
+<span class="keyword">use</span> App\Http\Controllers\TaskController;
+
+<span class="comment">// Page d'accueil publique</span>
+Route::<span class="function">get</span>(<span class="string">'/'</span>, <span class="keyword">function</span> () {
+    <span class="keyword">return</span> <span class="function">view</span>(<span class="string">'welcome'</span>);
+});
+
+<span class="comment">// Routes protégées par authentification</span>
+Route::<span class="function">middleware</span>(<span class="string">'auth'</span>)-><span class="function">group</span>(<span class="keyword">function</span> () {
+    <span class="comment">// Dashboard</span>
+    Route::<span class="function">get</span>(<span class="string">'/dashboard'</span>, <span class="keyword">function</span> () {
+        <span class="keyword">return</span> <span class="function">view</span>(<span class="string">'dashboard'</span>);
+    })-><span class="function">name</span>(<span class="string">'dashboard'</span>);
+
+    <span class="comment">// Vos routes TaskFlow ici</span>
+    Route::<span class="function">resource</span>(<span class="string">'projets'</span>, ProjectController::<span class="keyword">class</span>);
+    Route::<span class="function">resource</span>(<span class="string">'taches'</span>, TaskController::<span class="keyword">class</span>);
+});
+
+<span class="keyword">require</span> <span class="function">__DIR__</span>.<span class="string">'/auth.php'</span>;</code>
+                        </div>
+
+                        <p><strong>Test :</strong> Essayez d'accéder à <code class="code-inline">/projets</code> sans être connecté. Que se passe-t-il ?</p>
+                        <div class="answer-zone"></div>
+                    </div>
+                </div>
+
+                <!-- Exercice 2.2 -->
+                <div class="exercise">
+                    <div class="exercise-header">
+                        <h4>Exercice 2.2 : Associer les projets aux utilisateurs</h4>
+                        <span class="exercise-points">3 pts</span>
+                    </div>
+                    <div class="exercise-content">
+                        <p>Chaque projet doit appartenir à un utilisateur. Modifiez la migration et le modèle.</p>
+
+                        <p><strong>1. Créez une migration pour ajouter user_id :</strong></p>
+                        <div class="command-line">php artisan make:migration add_user_id_to_projects_table</div>
+
+                        <div class="code-block" data-language="PHP">
+<code><span class="comment">// Migration</span>
+<span class="keyword">public function</span> <span class="function">up</span>(): <span class="keyword">void</span>
+{
+    Schema::<span class="function">table</span>(<span class="string">'projects'</span>, <span class="keyword">function</span> (Blueprint <span class="variable">$table</span>) {
+        <span class="variable">$table</span>-><span class="function">foreignId</span>(<span class="string">'user_id'</span>)
+              -><span class="function">after</span>(<span class="string">'id'</span>)
+              -><span class="function">constrained</span>()
+              -><span class="function">onDelete</span>(<span class="string">'cascade'</span>);
+    });
+}</code>
+                        </div>
+
+                        <p><strong>2. Ajoutez la relation dans le modèle Project :</strong></p>
+                        <div class="code-block" data-language="PHP">
+<code><span class="comment">// app/Models/Project.php</span>
+<span class="keyword">public function</span> <span class="function">user</span>(): BelongsTo
+{
+    <span class="keyword">return</span> <span class="variable">$this</span>-><span class="function">belongsTo</span>(User::<span class="keyword">class</span>);
+}
+
+<span class="comment">// Ajouter user_id au $fillable</span>
+<span class="keyword">protected</span> <span class="variable">$fillable</span> = [<span class="string">'name'</span>, <span class="string">'description'</span>, <span class="string">'status'</span>, <span class="string">'user_id'</span>];</code>
+                        </div>
+
+                        <p><strong>3. Ajoutez la relation inverse dans User :</strong></p>
+                        <div class="code-block" data-language="PHP">
+<code><span class="comment">// app/Models/User.php</span>
+<span class="keyword">public function</span> <span class="function">projects</span>(): HasMany
+{
+    <span class="keyword">return</span> <span class="variable">$this</span>-><span class="function">hasMany</span>(Project::<span class="keyword">class</span>);
+}</code>
+                        </div>
+
+                        <div class="command-line">php artisan migrate</div>
+                    </div>
+                </div>
+
+                <!-- Exercice 2.3 -->
+                <div class="exercise">
+                    <div class="exercise-header">
+                        <h4>Exercice 2.3 : Modifier le contrôleur</h4>
+                        <span class="exercise-points">2 pts</span>
+                    </div>
+                    <div class="exercise-content">
+                        <p>Modifiez ProjectController pour utiliser l'utilisateur connecté.</p>
+
+                        <div class="code-block" data-language="PHP">
+<code><span class="comment">// app/Http/Controllers/ProjectController.php</span>
+<span class="keyword">public function</span> <span class="function">index</span>()
+{
+    <span class="comment">// Afficher uniquement les projets de l'utilisateur connecté</span>
+    <span class="variable">$projets</span> = <span class="function">auth</span>()-><span class="function">user</span>()-><span class="function">projects</span>()-><span class="function">latest</span>()-><span class="function">get</span>();
+    <span class="keyword">return</span> <span class="function">view</span>(<span class="string">'projets.index'</span>, <span class="keyword">compact</span>(<span class="string">'projets'</span>));
+}
+
+<span class="keyword">public function</span> <span class="function">store</span>(StoreProjectRequest <span class="variable">$request</span>)
+{
+    <span class="comment">// Associer le projet à l'utilisateur connecté</span>
+    <span class="variable">$projet</span> = <span class="function">auth</span>()-><span class="function">user</span>()-><span class="function">projects</span>()-><span class="function">create</span>(<span class="variable">$request</span>-><span class="function">validated</span>());
+    <span class="keyword">return</span> <span class="function">redirect</span>()-><span class="function">route</span>(<span class="string">'projets.show'</span>, <span class="variable">$projet</span>)
+        -><span class="function">with</span>(<span class="string">'success'</span>, <span class="string">'Projet créé avec succès!'</span>);
+}</code>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <hr class="page-break">
+
+            <!-- ==================== PARTIE 3 ==================== -->
+            <div class="section">
+                <h2 class="section-title">Partie 3 : Système de Rôles (20 min)</h2>
+
+                <!-- Exercice 3.1 -->
+                <div class="exercise">
+                    <div class="exercise-header">
+                        <h4>Exercice 3.1 : Ajouter un champ rôle</h4>
+                        <span class="exercise-points">3 pts</span>
+                    </div>
+                    <div class="exercise-content">
+                        <p>Ajoutez un système de rôles simple (user, manager, admin).</p>
+
+                        <div class="command-line">php artisan make:migration add_role_to_users_table</div>
+
+                        <div class="code-block" data-language="PHP">
+<code><span class="comment">// Migration</span>
+<span class="keyword">public function</span> <span class="function">up</span>(): <span class="keyword">void</span>
+{
+    Schema::<span class="function">table</span>(<span class="string">'users'</span>, <span class="keyword">function</span> (Blueprint <span class="variable">$table</span>) {
+        <span class="variable">$table</span>-><span class="function">enum</span>(<span class="string">'role'</span>, [<span class="string">'user'</span>, <span class="string">'manager'</span>, <span class="string">'admin'</span>])
+              -><span class="function">default</span>(<span class="string">'user'</span>)
+              -><span class="function">after</span>(<span class="string">'email'</span>);
+    });
+}</code>
+                        </div>
+
+                        <p><strong>Ajoutez des méthodes helper dans User.php :</strong></p>
+                        <div class="code-block" data-language="PHP">
+<code><span class="comment">// app/Models/User.php</span>
+<span class="keyword">protected</span> <span class="variable">$fillable</span> = [
+    <span class="string">'name'</span>, <span class="string">'email'</span>, <span class="string">'password'</span>, <span class="string">'role'</span>,
+];
+
+<span class="keyword">public function</span> <span class="function">isAdmin</span>(): <span class="keyword">bool</span>
+{
+    <span class="keyword">return</span> <span class="variable">$this</span>->role === <span class="string">'admin'</span>;
+}
+
+<span class="keyword">public function</span> <span class="function">isManager</span>(): <span class="keyword">bool</span>
+{
+    <span class="keyword">return</span> <span class="function">in_array</span>(<span class="variable">$this</span>->role, [<span class="string">'manager'</span>, <span class="string">'admin'</span>]);
+}</code>
+                        </div>
+
+                        <div class="command-line">php artisan migrate</div>
+                    </div>
+                </div>
+
+                <!-- Exercice 3.2 -->
+                <div class="exercise">
+                    <div class="exercise-header">
+                        <h4>Exercice 3.2 : Créer un utilisateur admin</h4>
+                        <span class="exercise-points">2 pts</span>
+                    </div>
+                    <div class="exercise-content">
+                        <p>Utilisez Tinker pour créer un utilisateur admin.</p>
+
+                        <div class="command-line">php artisan tinker</div>
+
+                        <div class="code-block" data-language="PHP">
+<code><span class="comment">// Dans Tinker</span>
+<span class="variable">$admin</span> = \App\Models\User::<span class="function">create</span>([
+    <span class="string">'name'</span> => <span class="string">'Admin TaskFlow'</span>,
+    <span class="string">'email'</span> => <span class="string">'admin@taskflow.com'</span>,
+    <span class="string">'password'</span> => <span class="function">bcrypt</span>(<span class="string">'password'</span>),
+    <span class="string">'role'</span> => <span class="string">'admin'</span>,
+]);
+
+<span class="comment">// Vérifier</span>
+<span class="variable">$admin</span>-><span class="function">isAdmin</span>();  <span class="comment">// true</span></code>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <hr class="page-break">
+
+            <!-- ==================== PARTIE 4 ==================== -->
+            <div class="section">
+                <h2 class="section-title">Partie 4 : Policies (25 min)</h2>
+
+                <!-- Exercice 4.1 -->
+                <div class="exercise">
+                    <div class="exercise-header">
+                        <h4>Exercice 4.1 : Créer une Policy pour Project</h4>
+                        <span class="exercise-points">4 pts</span>
+                    </div>
+                    <div class="exercise-content">
+                        <p>Les Policies permettent de définir qui peut faire quoi sur un modèle.</p>
+
+                        <div class="command-line">php artisan make:policy ProjectPolicy --model=Project</div>
+
+                        <p>Complétez la Policy avec les règles suivantes :</p>
+
+                        <div class="code-block" data-language="PHP">
+<code><span class="comment">// app/Policies/ProjectPolicy.php</span>
+<span class="keyword">namespace</span> App\Policies;
+
+<span class="keyword">use</span> App\Models\Project;
+<span class="keyword">use</span> App\Models\User;
+
+<span class="keyword">class</span> <span class="function">ProjectPolicy</span>
+{
+    <span class="comment">// Tous les utilisateurs connectés peuvent voir la liste</span>
+    <span class="keyword">public function</span> <span class="function">viewAny</span>(User <span class="variable">$user</span>): <span class="keyword">bool</span>
+    {
+        <span class="keyword">return</span> <span class="keyword">true</span>;
+    }
+
+    <span class="comment">// Peut voir si propriétaire ou admin</span>
+    <span class="keyword">public function</span> <span class="function">view</span>(User <span class="variable">$user</span>, Project <span class="variable">$project</span>): <span class="keyword">bool</span>
+    {
+        <span class="keyword">return</span> <span class="variable">$user</span>->id === <span class="variable">$project</span>->user_id || <span class="variable">$user</span>-><span class="function">isAdmin</span>();
+    }
+
+    <span class="comment">// Tous peuvent créer</span>
+    <span class="keyword">public function</span> <span class="function">create</span>(User <span class="variable">$user</span>): <span class="keyword">bool</span>
+    {
+        <span class="keyword">return</span> <span class="keyword">true</span>;
+    }
+
+    <span class="comment">// Peut modifier si propriétaire ou admin</span>
+    <span class="keyword">public function</span> <span class="function">update</span>(User <span class="variable">$user</span>, Project <span class="variable">$project</span>): <span class="keyword">bool</span>
+    {
+        <span class="keyword">return</span> <span class="variable">$user</span>->id === <span class="variable">$project</span>->user_id || <span class="variable">$user</span>-><span class="function">isAdmin</span>();
+    }
+
+    <span class="comment">// Seul le propriétaire ou admin peut supprimer</span>
+    <span class="keyword">public function</span> <span class="function">delete</span>(User <span class="variable">$user</span>, Project <span class="variable">$project</span>): <span class="keyword">bool</span>
+    {
+        <span class="keyword">return</span> <span class="variable">$user</span>->id === <span class="variable">$project</span>->user_id || <span class="variable">$user</span>-><span class="function">isAdmin</span>();
+    }
+}</code>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Exercice 4.2 -->
+                <div class="exercise">
+                    <div class="exercise-header">
+                        <h4>Exercice 4.2 : Utiliser la Policy dans le contrôleur</h4>
+                        <span class="exercise-points">3 pts</span>
+                    </div>
+                    <div class="exercise-content">
+                        <p>Ajoutez les vérifications d'autorisation dans ProjectController.</p>
+
+                        <div class="code-block" data-language="PHP">
+<code><span class="comment">// app/Http/Controllers/ProjectController.php</span>
+<span class="keyword">public function</span> <span class="function">show</span>(Project <span class="variable">$projet</span>)
+{
+    <span class="variable">$this</span>-><span class="function">authorize</span>(<span class="string">'view'</span>, <span class="variable">$projet</span>);
+    <span class="keyword">return</span> <span class="function">view</span>(<span class="string">'projets.show'</span>, <span class="keyword">compact</span>(<span class="string">'projet'</span>));
+}
+
+<span class="keyword">public function</span> <span class="function">edit</span>(Project <span class="variable">$projet</span>)
+{
+    <span class="variable">$this</span>-><span class="function">authorize</span>(<span class="string">'update'</span>, <span class="variable">$projet</span>);
+    <span class="keyword">return</span> <span class="function">view</span>(<span class="string">'projets.edit'</span>, <span class="keyword">compact</span>(<span class="string">'projet'</span>));
+}
+
+<span class="keyword">public function</span> <span class="function">update</span>(UpdateProjectRequest <span class="variable">$request</span>, Project <span class="variable">$projet</span>)
+{
+    <span class="variable">$this</span>-><span class="function">authorize</span>(<span class="string">'update'</span>, <span class="variable">$projet</span>);
+    <span class="variable">$projet</span>-><span class="function">update</span>(<span class="variable">$request</span>-><span class="function">validated</span>());
+    <span class="keyword">return</span> <span class="function">redirect</span>()-><span class="function">route</span>(<span class="string">'projets.show'</span>, <span class="variable">$projet</span>);
+}
+
+<span class="keyword">public function</span> <span class="function">destroy</span>(Project <span class="variable">$projet</span>)
+{
+    <span class="variable">$this</span>-><span class="function">authorize</span>(<span class="string">'delete'</span>, <span class="variable">$projet</span>);
+    <span class="variable">$projet</span>-><span class="function">delete</span>();
+    <span class="keyword">return</span> <span class="function">redirect</span>()-><span class="function">route</span>(<span class="string">'projets.index'</span>);
+}</code>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Exercice 4.3 -->
+                <div class="exercise">
+                    <div class="exercise-header">
+                        <h4>Exercice 4.3 : Utiliser @can dans Blade</h4>
+                        <span class="exercise-points">3 pts</span>
+                    </div>
+                    <div class="exercise-content">
+                        <p>Cachez les boutons d'action selon les permissions.</p>
+
+                        <div class="code-block" data-language="Blade">
+<code><span class="comment">{{-- resources/views/projets/show.blade.php --}}</span>
+&lt;div class="actions"&gt;
+    <span class="keyword">@can</span>(<span class="string">'update'</span>, <span class="variable">$projet</span>)
+        &lt;a href="{{ route('projets.edit', $projet) }}" class="btn btn-primary"&gt;
+            Modifier
+        &lt;/a&gt;
+    <span class="keyword">@endcan</span>
+
+    <span class="keyword">@can</span>(<span class="string">'delete'</span>, <span class="variable">$projet</span>)
+        &lt;form action="{{ route('projets.destroy', $projet) }}" method="POST"&gt;
+            <span class="keyword">@csrf</span>
+            <span class="keyword">@method</span>('DELETE')
+            &lt;button type="submit" class="btn btn-danger"
+                    onclick="return confirm('Êtes-vous sûr ?')"&gt;
+                Supprimer
+            &lt;/button&gt;
+        &lt;/form&gt;
+    <span class="keyword">@endcan</span>
+&lt;/div&gt;
+
+<span class="comment">{{-- Afficher le rôle de l'utilisateur --}}</span>
+<span class="keyword">@auth</span>
+    &lt;p&gt;Connecté en tant que : {{ auth()-&gt;user()-&gt;role }}&lt;/p&gt;
+<span class="keyword">@endauth</span></code>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <hr class="page-break">
+
+            <!-- ==================== PARTIE 5 ==================== -->
+            <div class="section">
+                <h2 class="section-title">Partie 5 : Navigation et Interface (10 min)</h2>
+
+                <!-- Exercice 5.1 -->
+                <div class="exercise">
+                    <div class="exercise-header">
+                        <h4>Exercice 5.1 : Personnaliser la navigation</h4>
+                        <span class="exercise-points">2 pts</span>
+                    </div>
+                    <div class="exercise-content">
+                        <p>Modifiez le fichier de navigation pour ajouter les liens TaskFlow.</p>
+
+                        <div class="code-block" data-language="Blade">
+<code><span class="comment">{{-- resources/views/layouts/navigation.blade.php --}}</span>
+<span class="comment">{{-- Trouvez la section des liens de navigation et ajoutez : --}}</span>
+
+&lt;x-nav-link :href="route('projets.index')" :active="request()-&gt;routeIs('projets.*')"&gt;
+    {{ __('Projets') }}
+&lt;/x-nav-link&gt;
+
+&lt;x-nav-link :href="route('taches.index')" :active="request()-&gt;routeIs('taches.*')"&gt;
+    {{ __('Tâches') }}
+&lt;/x-nav-link&gt;
+
+<span class="comment">{{-- Lien Admin visible seulement pour les admins --}}</span>
+<span class="keyword">@if</span>(auth()-&gt;user()-&gt;isAdmin())
+    &lt;x-nav-link :href="route('admin.index')" :active="request()-&gt;routeIs('admin.*')"&gt;
+        {{ __('Administration') }}
+    &lt;/x-nav-link&gt;
+<span class="keyword">@endif</span></code>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ==================== BARÈME ==================== -->
+            <div class="evaluation-box">
+                <h3>Barème d'évaluation</h3>
+                <div class="evaluation-grid">
+                    <div class="evaluation-item">
+                        <span class="criteria">Installation Laravel Breeze</span>
+                        <span class="points">4 pts</span>
+                    </div>
+                    <div class="evaluation-item">
+                        <span class="criteria">Test authentification</span>
+                        <span class="points">2 pts</span>
+                    </div>
+                    <div class="evaluation-item">
+                        <span class="criteria">Protection des routes</span>
+                        <span class="points">3 pts</span>
+                    </div>
+                    <div class="evaluation-item">
+                        <span class="criteria">Association projets/utilisateurs</span>
+                        <span class="points">3 pts</span>
+                    </div>
+                    <div class="evaluation-item">
+                        <span class="criteria">Modification contrôleur</span>
+                        <span class="points">2 pts</span>
+                    </div>
+                    <div class="evaluation-item">
+                        <span class="criteria">Système de rôles</span>
+                        <span class="points">3 pts</span>
+                    </div>
+                    <div class="evaluation-item">
+                        <span class="criteria">Création admin</span>
+                        <span class="points">2 pts</span>
+                    </div>
+                    <div class="evaluation-item">
+                        <span class="criteria">Policy ProjectPolicy</span>
+                        <span class="points">4 pts</span>
+                    </div>
+                    <div class="evaluation-item">
+                        <span class="criteria">Utilisation dans contrôleur</span>
+                        <span class="points">3 pts</span>
+                    </div>
+                    <div class="evaluation-item">
+                        <span class="criteria">Directives @can dans Blade</span>
+                        <span class="points">3 pts</span>
+                    </div>
+                    <div class="evaluation-item">
+                        <span class="criteria">Navigation personnalisée</span>
+                        <span class="points">2 pts</span>
+                    </div>
+                </div>
+                <div class="evaluation-total">
+                    <span>Total</span>
+                    <span class="points">31 pts (ramené à 20)</span>
+                </div>
+            </div>
+
+            <!-- ==================== BONUS ==================== -->
+            <div class="bonus-box">
+                <h3>Exercice Bonus (+3 pts)</h3>
+                <ol>
+                    <li>Créez une Policy pour le modèle Task avec les mêmes règles</li>
+                    <li>Ajoutez un middleware personnalisé <code class="code-inline">RoleMiddleware</code> pour protéger les routes admin</li>
+                    <li>Affichez une page 403 personnalisée quand l'accès est refusé</li>
+                </ol>
+            </div>
+
+            <!-- ==================== LIVRABLES ==================== -->
+            <div class="deliverables-box">
+                <h3>Livrables à rendre</h3>
+                <ul class="deliverables-list">
+                    <li>Fichiers de migration modifiés</li>
+                    <li>Modèles User et Project mis à jour</li>
+                    <li>ProjectPolicy.php</li>
+                    <li>ProjectController.php modifié</li>
+                    <li>Captures d'écran des tests (connexion, permissions)</li>
+                </ul>
+            </div>
+
+        </div>
+
+        <!-- ==================== PIED DE PAGE ==================== -->
+        <div class="doc-footer">
+            <span>ISIM Médenine | Développement Web Avancé | 2025-2026</span>
+            <span>M. JARRAY Mondher</span>
+        </div>
+
+    </div>
+</body>
+</html>

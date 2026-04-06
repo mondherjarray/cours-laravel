@@ -1,0 +1,1006 @@
+/*
+ * ISIMED - Institut Supérieur d'Informatique de Médenine
+ * Cours Laravel 11 - Développement Web Avancé
+ * Style pour Travaux Pratiques (Format Document)
+ * M. JARRAY Mondher - MP1ILC - 2025-2026
+ */
+
+/* ==================== VARIABLES ==================== */
+:root {
+    --isim-blue-dark: #1a4f7a;
+    --isim-blue-primary: #2874a6;
+    --isim-blue-light: #5dade2;
+    --isim-blue-bg: #eaf2f8;
+    --isim-white: #ffffff;
+    --isim-gray: #566573;
+    --isim-gray-light: #f8f9fa;
+    --isim-text: #2c3e50;
+    --isim-accent: #e74c3c;
+    --isim-success: #27ae60;
+    --isim-warning: #f39c12;
+}
+
+/* ==================== RESET & BASE ==================== */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Segoe UI', 'Arial', sans-serif;
+    font-size: 11pt;
+    line-height: 1.6;
+    color: var(--isim-text);
+    background: #f0f0f0;
+}
+
+/* ==================== DOCUMENT CONTAINER ==================== */
+.document {
+    max-width: 210mm;
+    margin: 20px auto;
+    background: white;
+    box-shadow: 0 2px 20px rgba(0, 0, 0, 0.1);
+}
+
+@media print {
+    body {
+        background: white;
+    }
+
+    .document {
+        box-shadow: none;
+        margin: 0;
+        max-width: none;
+    }
+}
+
+/* ==================== DOCUMENT HEADER ==================== */
+.doc-header {
+    background: linear-gradient(135deg, var(--isim-blue-dark) 0%, var(--isim-blue-primary) 100%);
+    color: white;
+    padding: 20px 30px;
+}
+
+.header-top {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-bottom: 15px;
+    border-bottom: 2px solid rgba(255, 255, 255, 0.3);
+    margin-bottom: 15px;
+}
+
+.header-logo {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+.header-logo img {
+    height: 50px;
+}
+
+.header-logo .institution-name {
+    font-size: 0.9rem;
+    line-height: 1.4;
+}
+
+.header-logo .institution-name strong {
+    display: block;
+    font-size: 1rem;
+}
+
+.header-info {
+    text-align: right;
+    font-size: 0.9rem;
+}
+
+.header-title {
+    text-align: center;
+}
+
+.header-title h1 {
+    font-size: 1.6rem;
+    margin-bottom: 5px;
+}
+
+.header-title h2 {
+    font-size: 1.2rem;
+    font-weight: normal;
+    opacity: 0.9;
+}
+
+/* ==================== INFO BAR ==================== */
+.info-bar {
+    background: var(--isim-blue-bg);
+    padding: 15px 30px;
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 15px;
+    border-bottom: 3px solid var(--isim-blue-primary);
+}
+
+.info-item {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.info-item .label {
+    font-weight: 600;
+    color: var(--isim-blue-dark);
+}
+
+.info-item .value {
+    color: var(--isim-gray);
+}
+
+/* ==================== MAIN CONTENT ==================== */
+.doc-content {
+    padding: 30px 40px;
+}
+
+/* ==================== SECTION TITLES ==================== */
+.section {
+    margin-bottom: 30px;
+}
+
+.section-title {
+    color: var(--isim-blue-dark);
+    font-size: 1.3rem;
+    padding: 10px 15px;
+    background: var(--isim-blue-bg);
+    border-left: 5px solid var(--isim-blue-primary);
+    margin-bottom: 20px;
+}
+
+.subsection-title {
+    color: var(--isim-blue-primary);
+    font-size: 1.1rem;
+    margin: 25px 0 15px 0;
+    padding-bottom: 8px;
+    border-bottom: 2px solid var(--isim-blue-light);
+}
+
+/* ==================== OBJECTIVES BOX ==================== */
+.objectives-box {
+    background: var(--isim-blue-bg);
+    border: 2px solid var(--isim-blue-primary);
+    border-radius: 8px;
+    padding: 20px 25px;
+    margin-bottom: 25px;
+}
+
+.objectives-box h3 {
+    color: var(--isim-blue-dark);
+    margin-bottom: 15px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.objectives-box ul {
+    margin-left: 25px;
+}
+
+.objectives-box li {
+    margin-bottom: 8px;
+}
+
+/* ==================== PREREQUISITES BOX ==================== */
+.prerequisites-box {
+    background: #fef9e7;
+    border: 2px solid var(--isim-warning);
+    border-radius: 8px;
+    padding: 20px 25px;
+    margin-bottom: 25px;
+}
+
+.prerequisites-box h3 {
+    color: #9a7d0a;
+    margin-bottom: 15px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+/* ==================== EXERCISE BOX ==================== */
+.exercise {
+    border: 2px solid var(--isim-blue-light);
+    border-radius: 10px;
+    margin-bottom: 25px;
+    overflow: hidden;
+}
+
+.exercise-header {
+    background: var(--isim-blue-primary);
+    color: white;
+    padding: 12px 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.exercise-header h4 {
+    font-size: 1.1rem;
+    margin: 0;
+}
+
+.exercise-points {
+    background: white;
+    color: var(--isim-blue-primary);
+    padding: 5px 15px;
+    border-radius: 15px;
+    font-weight: bold;
+    font-size: 0.9rem;
+}
+
+.exercise-content {
+    padding: 20px;
+}
+
+.exercise-content p {
+    margin-bottom: 15px;
+}
+
+/* ==================== TASK LIST ==================== */
+.task-list {
+    list-style: none;
+    margin: 15px 0;
+}
+
+.task-list li {
+    padding: 12px 15px 12px 45px;
+    margin-bottom: 10px;
+    background: var(--isim-gray-light);
+    border-radius: 6px;
+    position: relative;
+}
+
+.task-list li::before {
+    content: attr(data-task);
+    position: absolute;
+    left: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 25px;
+    height: 25px;
+    background: var(--isim-blue-primary);
+    color: white;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.8rem;
+    font-weight: bold;
+}
+
+/* ==================== CODE BLOCKS ==================== */
+.code-block {
+    background: #2d3436;
+    color: #dfe6e9;
+    border-radius: 6px;
+    padding: 15px 20px;
+    margin: 15px 0;
+    overflow-x: auto;
+    font-family: 'Consolas', 'Monaco', 'Courier New', monospace;
+    font-size: 10pt;
+    line-height: 1.5;
+    position: relative;
+}
+
+.code-block::before {
+    content: attr(data-language);
+    position: absolute;
+    top: 8px;
+    right: 12px;
+    font-size: 9pt;
+    color: #636e72;
+    text-transform: uppercase;
+}
+
+.code-block code {
+    display: block;
+    white-space: pre;
+}
+
+.code-inline {
+    background: var(--isim-blue-bg);
+    color: var(--isim-blue-dark);
+    padding: 2px 6px;
+    border-radius: 4px;
+    font-family: 'Consolas', monospace;
+    font-size: 10pt;
+}
+
+/* Syntax highlighting */
+.code-block .keyword { color: #e84393; }
+.code-block .string { color: #00b894; }
+.code-block .comment { color: #636e72; font-style: italic; }
+.code-block .function { color: #0984e3; }
+.code-block .variable { color: #fdcb6e; }
+.code-block .number { color: #e17055; }
+
+/* ==================== COMMAND LINE ==================== */
+.command-line {
+    background: #1e272e;
+    color: #d2dae2;
+    padding: 12px 18px;
+    border-radius: 6px;
+    font-family: 'Consolas', monospace;
+    font-size: 10pt;
+    margin: 12px 0;
+}
+
+.command-line::before {
+    content: "$ ";
+    color: #0be881;
+}
+
+/* ==================== TABLES ==================== */
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 20px 0;
+    font-size: 10pt;
+}
+
+table th {
+    background: var(--isim-blue-dark);
+    color: white;
+    padding: 12px 15px;
+    text-align: left;
+    font-weight: 600;
+}
+
+table td {
+    padding: 10px 15px;
+    border: 1px solid #ddd;
+}
+
+table tr:nth-child(even) {
+    background: var(--isim-gray-light);
+}
+
+/* ==================== INFO BOXES ==================== */
+.info-box {
+    border-radius: 6px;
+    padding: 15px 20px;
+    margin: 20px 0;
+    border-left: 5px solid;
+}
+
+.info-box.note {
+    background: #e8f4fd;
+    border-color: var(--isim-blue-primary);
+}
+
+.info-box.tip {
+    background: #e8f8f0;
+    border-color: var(--isim-success);
+}
+
+.info-box.warning {
+    background: #fef9e7;
+    border-color: var(--isim-warning);
+}
+
+.info-box.danger {
+    background: #fdedec;
+    border-color: var(--isim-accent);
+}
+
+.info-box-title {
+    font-weight: bold;
+    margin-bottom: 8px;
+}
+
+.info-box.note .info-box-title { color: var(--isim-blue-primary); }
+.info-box.tip .info-box-title { color: var(--isim-success); }
+.info-box.warning .info-box-title { color: var(--isim-warning); }
+.info-box.danger .info-box-title { color: var(--isim-accent); }
+
+/* ==================== FILE TREE ==================== */
+.file-tree {
+    background: #2d3436;
+    color: #dfe6e9;
+    padding: 15px 20px;
+    border-radius: 6px;
+    font-family: 'Consolas', monospace;
+    font-size: 9.5pt;
+    line-height: 1.7;
+    margin: 15px 0;
+}
+
+.file-tree .folder { color: #74b9ff; }
+.file-tree .file { color: #81ecec; }
+.file-tree .comment { color: #636e72; }
+
+/* ==================== EVALUATION SECTION ==================== */
+.evaluation-box {
+    background: var(--isim-gray-light);
+    border: 2px solid var(--isim-gray);
+    border-radius: 8px;
+    padding: 20px 25px;
+    margin: 25px 0;
+}
+
+.evaluation-box h3 {
+    color: var(--isim-blue-dark);
+    margin-bottom: 15px;
+    padding-bottom: 10px;
+    border-bottom: 2px solid var(--isim-blue-light);
+}
+
+.evaluation-grid {
+    display: grid;
+    grid-template-columns: 1fr auto;
+    gap: 10px 20px;
+}
+
+.evaluation-item {
+    display: contents;
+}
+
+.evaluation-item .criteria {
+    padding: 8px 0;
+    border-bottom: 1px dashed #ddd;
+}
+
+.evaluation-item .points {
+    padding: 8px 15px;
+    background: var(--isim-blue-primary);
+    color: white;
+    border-radius: 15px;
+    font-weight: bold;
+    text-align: center;
+    white-space: nowrap;
+}
+
+.evaluation-total {
+    margin-top: 15px;
+    padding-top: 15px;
+    border-top: 3px solid var(--isim-blue-dark);
+    display: flex;
+    justify-content: space-between;
+    font-weight: bold;
+    font-size: 1.1rem;
+}
+
+.evaluation-total .points {
+    background: var(--isim-blue-dark);
+    color: white;
+    padding: 8px 20px;
+    border-radius: 20px;
+}
+
+/* ==================== BONUS SECTION ==================== */
+.bonus-box {
+    background: linear-gradient(135deg, #ffeaa7 0%, #fdcb6e 100%);
+    border-radius: 8px;
+    padding: 20px 25px;
+    margin: 25px 0;
+}
+
+.bonus-box h3 {
+    color: #6c5b00;
+    margin-bottom: 15px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.bonus-box h3::before {
+    content: "⭐";
+}
+
+/* ==================== DELIVERABLES ==================== */
+.deliverables-box {
+    background: #e8f8f0;
+    border: 2px solid var(--isim-success);
+    border-radius: 8px;
+    padding: 20px 25px;
+    margin: 25px 0;
+}
+
+.deliverables-box h3 {
+    color: var(--isim-success);
+    margin-bottom: 15px;
+}
+
+.deliverables-list {
+    list-style: none;
+}
+
+.deliverables-list li {
+    padding: 10px 15px 10px 35px;
+    margin-bottom: 8px;
+    background: white;
+    border-radius: 6px;
+    position: relative;
+}
+
+.deliverables-list li::before {
+    content: "📁";
+    position: absolute;
+    left: 10px;
+}
+
+/* ==================== DOCUMENT FOOTER ==================== */
+.doc-footer {
+    background: var(--isim-gray-light);
+    padding: 15px 30px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 9pt;
+    color: var(--isim-gray);
+    border-top: 2px solid var(--isim-blue-primary);
+}
+
+/* ==================== PAGE BREAK ==================== */
+.page-break {
+    page-break-after: always;
+    height: 0;
+    margin: 0;
+    border: none;
+}
+
+@media print {
+    .page-break {
+        display: block;
+    }
+}
+
+/* ==================== LISTS ==================== */
+ul, ol {
+    margin: 10px 0 10px 25px;
+}
+
+li {
+    margin-bottom: 8px;
+}
+
+/* ==================== STEPS ==================== */
+.steps {
+    counter-reset: step;
+    list-style: none;
+    margin-left: 0;
+}
+
+.steps li {
+    counter-increment: step;
+    position: relative;
+    padding: 15px 15px 15px 55px;
+    margin-bottom: 15px;
+    background: var(--isim-gray-light);
+    border-radius: 8px;
+    border-left: 4px solid var(--isim-blue-primary);
+}
+
+.steps li::before {
+    content: "Étape " counter(step);
+    position: absolute;
+    left: -4px;
+    top: -1px;
+    background: var(--isim-blue-primary);
+    color: white;
+    padding: 3px 10px;
+    font-size: 9pt;
+    font-weight: bold;
+    border-radius: 0 0 6px 0;
+}
+
+/* ==================== TWO COLUMNS ==================== */
+.two-columns {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 25px;
+    margin: 20px 0;
+}
+
+@media (max-width: 768px), print {
+    .two-columns {
+        grid-template-columns: 1fr;
+    }
+}
+
+/* ==================== SCREENSHOT PLACEHOLDER ==================== */
+.screenshot-placeholder {
+    background: var(--isim-gray-light);
+    border: 2px dashed var(--isim-gray);
+    border-radius: 8px;
+    padding: 40px;
+    text-align: center;
+    color: var(--isim-gray);
+    margin: 20px 0;
+}
+
+.screenshot-placeholder p {
+    margin: 0;
+}
+
+/* ==================== ANSWER ZONE ==================== */
+.answer-zone {
+    border: 2px solid var(--isim-blue-light);
+    border-radius: 8px;
+    padding: 20px;
+    margin: 20px 0;
+    min-height: 150px;
+    background: repeating-linear-gradient(
+        white,
+        white 24px,
+        #e0e0e0 25px
+    );
+}
+
+.answer-zone.code {
+    background: var(--isim-gray-light);
+    font-family: 'Consolas', monospace;
+}
+
+/* ==================== PRINT STYLES - A4 PORTRAIT ==================== */
+@media print {
+    /* Configuration de la page - Format PORTRAIT A4 (style document Word) */
+    @page {
+        size: A4 portrait;
+        margin: 12mm 12mm 12mm 12mm;
+    }
+
+    @page :first {
+        margin-top: 10mm;
+    }
+
+    * {
+        -webkit-print-color-adjust: exact !important;
+        print-color-adjust: exact !important;
+        color-adjust: exact !important;
+    }
+
+    html, body {
+        width: 210mm;
+        margin: 0;
+        padding: 0;
+        background: white !important;
+        font-size: 10pt;
+        -webkit-print-color-adjust: exact !important;
+        print-color-adjust: exact !important;
+    }
+
+    .document {
+        box-shadow: none;
+        margin: 0;
+        max-width: none;
+        width: 100%;
+    }
+
+    /* Header ajusté pour impression */
+    .doc-header {
+        padding: 15px 25px;
+        -webkit-print-color-adjust: exact;
+        print-color-adjust: exact;
+    }
+
+    .header-logo img {
+        height: 40px;
+    }
+
+    .header-logo .institution-name {
+        font-size: 0.8rem;
+    }
+
+    .header-title h1 {
+        font-size: 1.4rem;
+    }
+
+    .header-title h2 {
+        font-size: 1rem;
+    }
+
+    /* Info bar */
+    .info-bar {
+        padding: 10px 25px;
+        font-size: 0.85rem;
+    }
+
+    /* Contenu */
+    .doc-content {
+        padding: 20px 25px;
+    }
+
+    .section-title {
+        font-size: 1.15rem;
+        padding: 8px 12px;
+        margin-bottom: 15px;
+    }
+
+    .subsection-title {
+        font-size: 1rem;
+        margin: 20px 0 12px 0;
+    }
+
+    /* Code blocks pour impression */
+    .code-block {
+        background: #f5f5f5 !important;
+        color: #333 !important;
+        border: 1px solid #ddd;
+        padding: 12px 15px;
+        margin: 12px 0;
+        font-size: 9pt;
+        page-break-inside: avoid;
+        break-inside: avoid;
+    }
+
+    .code-block .keyword { color: #d63384 !important; }
+    .code-block .string { color: #198754 !important; }
+    .code-block .comment { color: #6c757d !important; }
+    .code-block .function { color: #0d6efd !important; }
+    .code-block .variable { color: #fd7e14 !important; }
+
+    .command-line {
+        background: #f8f9fa !important;
+        color: #212529 !important;
+        border: 1px solid #dee2e6;
+        padding: 10px 15px;
+        margin: 10px 0;
+        page-break-inside: avoid;
+    }
+
+    .command-line::before {
+        color: #198754 !important;
+    }
+
+    /* File tree */
+    .file-tree {
+        background: #f8f9fa !important;
+        color: #212529 !important;
+        border: 1px solid #dee2e6;
+        padding: 12px 15px;
+        font-size: 9pt;
+        page-break-inside: avoid;
+    }
+
+    .file-tree .folder { color: #0d6efd !important; }
+    .file-tree .file { color: #198754 !important; }
+    .file-tree .comment { color: #6c757d !important; }
+
+    /* Boxes - éviter les coupures et fusion */
+    .info-box,
+    .exercise,
+    .objectives-box,
+    .prerequisites-box,
+    .evaluation-box,
+    .bonus-box,
+    .deliverables-box {
+        page-break-inside: avoid;
+        break-inside: avoid;
+        margin-bottom: 15px;
+        orphans: 3;
+        widows: 3;
+    }
+
+    /* Éviter que les exercices soient coupés au milieu */
+    .exercise {
+        page-break-inside: avoid !important;
+        break-inside: avoid !important;
+        margin-bottom: 20px;
+    }
+
+    .exercise-content {
+        page-break-inside: avoid;
+        break-inside: avoid;
+    }
+
+    /* Forcer un saut de page avant une nouvelle section si elle risque d'être coupée */
+    .section {
+        page-break-inside: auto;
+        break-inside: auto;
+        orphans: 4;
+        widows: 4;
+    }
+
+    /* Garder les titres avec leur contenu */
+    h2, h3, h4 {
+        page-break-after: avoid !important;
+        break-after: avoid !important;
+        orphans: 3;
+        widows: 3;
+    }
+
+    .info-box {
+        padding: 12px 15px;
+        margin: 15px 0;
+    }
+
+    .exercise {
+        margin-bottom: 20px;
+    }
+
+    .exercise-header {
+        padding: 10px 15px;
+    }
+
+    .exercise-content {
+        padding: 15px;
+    }
+
+    /* Tables */
+    table {
+        font-size: 9pt;
+        page-break-inside: avoid;
+    }
+
+    table th {
+        padding: 8px 10px;
+    }
+
+    table td {
+        padding: 6px 10px;
+    }
+
+    /* Steps */
+    .steps li {
+        padding: 12px 12px 12px 50px;
+        margin-bottom: 12px;
+        page-break-inside: avoid;
+    }
+
+    .steps li::before {
+        font-size: 8pt;
+        padding: 2px 8px;
+    }
+
+    /* Task list */
+    .task-list li {
+        padding: 10px 12px 10px 40px;
+        margin-bottom: 8px;
+        page-break-inside: avoid;
+    }
+
+    /* Two columns - revenir à une colonne en impression */
+    .two-columns {
+        grid-template-columns: 1fr;
+        gap: 15px;
+    }
+
+    /* Footer */
+    .doc-footer {
+        padding: 10px 25px;
+        font-size: 8pt;
+    }
+
+    /* Page breaks */
+    .page-break {
+        display: block;
+        page-break-after: always;
+        break-after: page;
+        page-break-before: auto;
+        height: 0;
+        margin: 0;
+        padding: 0;
+        border: none;
+        visibility: hidden;
+    }
+
+    /* Sections - permettre la coupure mais garder titres avec contenu */
+    .section {
+        page-break-inside: auto;
+        break-inside: auto;
+        margin-bottom: 20px;
+    }
+
+    /* Garder les titres de section avec leur contenu suivant */
+    .section-title {
+        page-break-after: avoid !important;
+        break-after: avoid !important;
+        page-break-inside: avoid;
+        break-inside: avoid;
+        margin-bottom: 15px;
+    }
+
+    .subsection-title {
+        page-break-after: avoid !important;
+        break-after: avoid !important;
+        page-break-inside: avoid;
+        break-inside: avoid;
+        margin-top: 15px;
+        margin-bottom: 10px;
+    }
+
+    /* Éviter les éléments orphelins en bas de page */
+    p, li {
+        orphans: 2;
+        widows: 2;
+    }
+
+    /* Answer zone */
+    .answer-zone {
+        min-height: 100px;
+        page-break-inside: avoid;
+    }
+
+    /* Screenshot placeholder */
+    .screenshot-placeholder {
+        padding: 30px;
+        page-break-inside: avoid;
+    }
+
+    /* Evaluation */
+    .evaluation-grid {
+        gap: 8px 15px;
+    }
+
+    .evaluation-item .points {
+        padding: 5px 12px;
+        font-size: 0.85rem;
+    }
+
+    /* Badges */
+    .badge {
+        padding: 2px 8px;
+        font-size: 8pt;
+    }
+
+    /* Hide hover effects */
+    a:hover,
+    tr:hover {
+        background: inherit !important;
+    }
+
+    /* Task list - éviter les coupures */
+    .task-list li {
+        page-break-inside: avoid;
+        break-inside: avoid;
+    }
+
+    /* Steps - éviter les coupures */
+    .steps li {
+        page-break-inside: avoid;
+        break-inside: avoid;
+    }
+
+    /* Answer zone - éviter les coupures */
+    .answer-zone {
+        page-break-inside: avoid;
+        break-inside: avoid;
+        min-height: 80px;
+    }
+
+    /* Code blocks - marges réduites pour économiser l'espace */
+    .code-block {
+        margin: 10px 0;
+        padding: 10px 12px;
+    }
+
+    .command-line {
+        margin: 8px 0;
+        padding: 8px 12px;
+    }
+
+    /* Tables - éviter les coupures de lignes */
+    tr {
+        page-break-inside: avoid;
+        break-inside: avoid;
+    }
+
+    /* Evaluation box - toujours sur une nouvelle page si nécessaire */
+    .evaluation-box {
+        page-break-before: auto;
+        page-break-inside: avoid;
+        break-inside: avoid;
+    }
+
+    /* Footer du document */
+    .doc-footer {
+        page-break-inside: avoid;
+        break-inside: avoid;
+        margin-top: 20px;
+    }
+
+    /* Liens - afficher l'URL en impression */
+    a[href^="http"]:not([href*="localhost"])::after {
+        content: none; /* Ne pas afficher l'URL, c'est déjà visible dans le texte */
+    }
+}

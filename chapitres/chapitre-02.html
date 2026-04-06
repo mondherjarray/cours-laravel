@@ -1,0 +1,1221 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chapitre 2 - Routage et Contrôleurs | ISIMED</title>
+    <link rel="stylesheet" href="../css/slides.css">
+</head>
+<body>
+    <div class="presentation">
+
+        <!-- ==================== SLIDE 1 : PAGE DE TITRE ==================== -->
+        <div class="slide title-slide">
+            <div class="slide-header">
+                <div class="logo-container">
+                    <img src="../assets/isim-logo.jpeg" alt="ISIM Logo" class="logo">
+                    <div class="institution">
+                        <strong>ISIM</strong>
+                        Institut Supérieur d'Informatique<br>de Médenine
+                    </div>
+                </div>
+                <div class="chapter-info">
+                    Année Universitaire<br>
+                    <strong>2025-2026</strong>
+                </div>
+            </div>
+            <div class="slide-content">
+                <h1 class="main-title">Développement Web Avancé</h1>
+                <h2 class="course-title">Framework Laravel 11</h2>
+                <div class="chapter-title">Chapitre 2 : Routage et Contrôleurs</div>
+                <div class="info-grid">
+                    <div class="info-item">
+                        <label>Enseignant</label>
+                        <span>M. JARRAY Mondher</span>
+                    </div>
+                    <div class="info-item">
+                        <label>Classe</label>
+                        <span>MP1ILC</span>
+                    </div>
+                    <div class="info-item">
+                        <label>Semestre</label>
+                        <span>S1</span>
+                    </div>
+                    <div class="info-item">
+                        <label>Durée</label>
+                        <span>1h30</span>
+                    </div>
+                </div>
+            </div>
+            <div class="slide-footer">
+                <span class="author">M. JARRAY Mondher | ISIM Médenine</span>
+                <span class="page-number">1</span>
+            </div>
+        </div>
+
+        <!-- ==================== SLIDE 2 : OBJECTIFS ==================== -->
+        <div class="slide">
+            <div class="slide-header">
+                <div class="logo-container">
+                    <img src="../assets/isim-logo.jpeg" alt="ISIM Logo" class="logo">
+                    <div class="institution">
+                        <strong>ISIM</strong>
+                        Développement Web Avancé
+                    </div>
+                </div>
+                <div class="chapter-info">
+                    Chapitre 2<br>
+                    <span class="chapter-number">Routage</span>
+                </div>
+            </div>
+            <div class="slide-title">
+                <h1>Objectifs du Chapitre</h1>
+            </div>
+            <div class="slide-content">
+                <ul class="objectives-list">
+                    <li>Comprendre le système de routage de Laravel</li>
+                    <li>Créer des routes avec différentes méthodes HTTP</li>
+                    <li>Utiliser les paramètres de route</li>
+                    <li>Nommer les routes pour une meilleure organisation</li>
+                    <li>Créer et utiliser des contrôleurs</li>
+                    <li>Organiser les routes avec des groupes et des middlewares</li>
+                </ul>
+            </div>
+            <div class="slide-footer">
+                <span class="author">M. JARRAY Mondher | ISIM Médenine</span>
+                <span class="page-number">2</span>
+            </div>
+        </div>
+
+        <!-- ==================== SLIDE 3 : PLAN ==================== -->
+        <div class="slide">
+            <div class="slide-header">
+                <div class="logo-container">
+                    <img src="../assets/isim-logo.jpeg" alt="ISIM Logo" class="logo">
+                    <div class="institution">
+                        <strong>ISIM</strong>
+                        Développement Web Avancé
+                    </div>
+                </div>
+                <div class="chapter-info">
+                    Chapitre 2<br>
+                    <span class="chapter-number">Routage</span>
+                </div>
+            </div>
+            <div class="slide-title">
+                <h1>Plan du Chapitre</h1>
+            </div>
+            <div class="slide-content">
+                <ol>
+                    <li><strong>Introduction au Routage</strong>
+                        <ul>
+                            <li>Qu'est-ce qu'une route ?</li>
+                            <li>Les fichiers de routes</li>
+                        </ul>
+                    </li>
+                    <li><strong>Les Routes de Base</strong>
+                        <ul>
+                            <li>Méthodes HTTP (GET, POST, PUT, DELETE)</li>
+                            <li>Routes avec paramètres</li>
+                        </ul>
+                    </li>
+                    <li><strong>Routes Nommées et Groupes</strong>
+                        <ul>
+                            <li>Nommer les routes</li>
+                            <li>Préfixes et groupes</li>
+                        </ul>
+                    </li>
+                    <li><strong>Les Contrôleurs</strong>
+                        <ul>
+                            <li>Création de contrôleurs</li>
+                            <li>Contrôleurs de ressources</li>
+                        </ul>
+                    </li>
+                    <li><strong>Les Middlewares</strong></li>
+                </ol>
+            </div>
+            <div class="slide-footer">
+                <span class="author">M. JARRAY Mondher | ISIM Médenine</span>
+                <span class="page-number">3</span>
+            </div>
+        </div>
+
+        <!-- ==================== SLIDE 4 : QU'EST-CE QU'UNE ROUTE ==================== -->
+        <div class="slide">
+            <div class="slide-header">
+                <div class="logo-container">
+                    <img src="../assets/isim-logo.jpeg" alt="ISIM Logo" class="logo">
+                    <div class="institution">
+                        <strong>ISIM</strong>
+                        Développement Web Avancé
+                    </div>
+                </div>
+                <div class="chapter-info">
+                    Chapitre 2<br>
+                    <span class="chapter-number">Routage</span>
+                </div>
+            </div>
+            <div class="slide-title">
+                <h1>1. Qu'est-ce qu'une Route ?</h1>
+                <p class="subtitle">Le point d'entrée de votre application</p>
+            </div>
+            <div class="slide-content">
+                <div class="info-box note">
+                    <div class="info-box-title">Définition</div>
+                    Une <strong>route</strong> est une règle qui dit à Laravel : "Quand un utilisateur visite cette URL, exécute ce code".
+                </div>
+
+                <h3>Comment ça fonctionne ?</h3>
+                <div class="architecture-box">
+                    <div class="mvc-diagram">
+                        <div class="mvc-component" style="border-color: #9b59b6;">
+                            <h5>Utilisateur</h5>
+                            <p>Tape une URL</p>
+                        </div>
+                        <div class="mvc-arrow">→</div>
+                        <div class="mvc-component" style="border-color: #e67e22;">
+                            <h5>Routeur</h5>
+                            <p>Trouve la route</p>
+                        </div>
+                        <div class="mvc-arrow">→</div>
+                        <div class="mvc-component controller">
+                            <h5>Contrôleur</h5>
+                            <p>Traite la demande</p>
+                        </div>
+                        <div class="mvc-arrow">→</div>
+                        <div class="mvc-component view">
+                            <h5>Réponse</h5>
+                            <p>Page HTML</p>
+                        </div>
+                    </div>
+                </div>
+
+                <h3>Exemple simple</h3>
+                <p>Quand l'utilisateur visite <code class="code-inline">http://monsite.com/bonjour</code></p>
+                <div class="code-block" data-language="PHP">
+<code><span class="comment">// routes/web.php</span>
+Route::<span class="function">get</span>(<span class="string">'/bonjour'</span>, <span class="keyword">function</span> () {
+    <span class="keyword">return</span> <span class="string">'Bonjour le monde !'</span>;
+});</code>
+                </div>
+            </div>
+            <div class="slide-footer">
+                <span class="author">M. JARRAY Mondher | ISIM Médenine</span>
+                <span class="page-number">4</span>
+            </div>
+        </div>
+
+        <!-- ==================== SLIDE 5 : FICHIERS DE ROUTES ==================== -->
+        <div class="slide">
+            <div class="slide-header">
+                <div class="logo-container">
+                    <img src="../assets/isim-logo.jpeg" alt="ISIM Logo" class="logo">
+                    <div class="institution">
+                        <strong>ISIM</strong>
+                        Développement Web Avancé
+                    </div>
+                </div>
+                <div class="chapter-info">
+                    Chapitre 2<br>
+                    <span class="chapter-number">Routage</span>
+                </div>
+            </div>
+            <div class="slide-title">
+                <h1>Les Fichiers de Routes</h1>
+                <p class="subtitle">Où définir vos routes ?</p>
+            </div>
+            <div class="slide-content">
+                <p>Les routes sont définies dans le dossier <code class="code-inline">routes/</code></p>
+
+                <div class="table-container">
+                    <table>
+                        <tr>
+                            <th>Fichier</th>
+                            <th>Utilisation</th>
+                            <th>Accès</th>
+                        </tr>
+                        <tr>
+                            <td><code class="code-inline">web.php</code></td>
+                            <td>Pages web classiques (HTML)</td>
+                            <td>Sessions, cookies, CSRF</td>
+                        </tr>
+                        <tr>
+                            <td><code class="code-inline">api.php</code></td>
+                            <td>API REST (JSON)</td>
+                            <td>Authentification par token</td>
+                        </tr>
+                        <tr>
+                            <td><code class="code-inline">console.php</code></td>
+                            <td>Commandes Artisan personnalisées</td>
+                            <td>Terminal uniquement</td>
+                        </tr>
+                    </table>
+                </div>
+
+                <div class="two-columns">
+                    <div class="column">
+                        <h4>Routes Web (web.php)</h4>
+                        <div class="code-block" data-language="PHP">
+<code><span class="comment">// Accès : http://site.com/</span>
+Route::<span class="function">get</span>(<span class="string">'/'</span>, <span class="keyword">function</span> () {
+    <span class="keyword">return</span> <span class="function">view</span>(<span class="string">'welcome'</span>);
+});</code>
+                        </div>
+                    </div>
+                    <div class="column">
+                        <h4>Routes API (api.php)</h4>
+                        <div class="code-block" data-language="PHP">
+<code><span class="comment">// Accès : http://site.com/api/users</span>
+Route::<span class="function">get</span>(<span class="string">'/users'</span>, <span class="keyword">function</span> () {
+    <span class="keyword">return</span> User::<span class="function">all</span>();
+});</code>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="info-box note">
+                    <div class="info-box-title">Note Laravel 11</div>
+                    Dans Laravel 11, les routes API sont préfixées automatiquement par <code class="code-inline">/api</code>.
+                </div>
+            </div>
+            <div class="slide-footer">
+                <span class="author">M. JARRAY Mondher | ISIM Médenine</span>
+                <span class="page-number">5</span>
+            </div>
+        </div>
+
+        <!-- ==================== SLIDE 6 : MÉTHODES HTTP ==================== -->
+        <div class="slide">
+            <div class="slide-header">
+                <div class="logo-container">
+                    <img src="../assets/isim-logo.jpeg" alt="ISIM Logo" class="logo">
+                    <div class="institution">
+                        <strong>ISIM</strong>
+                        Développement Web Avancé
+                    </div>
+                </div>
+                <div class="chapter-info">
+                    Chapitre 2<br>
+                    <span class="chapter-number">Routage</span>
+                </div>
+            </div>
+            <div class="slide-title">
+                <h1>2. Les Méthodes HTTP</h1>
+                <p class="subtitle">GET, POST, PUT, DELETE...</p>
+            </div>
+            <div class="slide-content">
+                <p>Chaque route répond à une <strong>méthode HTTP</strong> spécifique :</p>
+
+                <div class="table-container">
+                    <table>
+                        <tr>
+                            <th>Méthode</th>
+                            <th>Utilisation</th>
+                            <th>Exemple</th>
+                        </tr>
+                        <tr>
+                            <td><span class="badge primary">GET</span></td>
+                            <td>Lire / Afficher des données</td>
+                            <td>Afficher la liste des projets</td>
+                        </tr>
+                        <tr>
+                            <td><span class="badge success">POST</span></td>
+                            <td>Créer une nouvelle ressource</td>
+                            <td>Créer un nouveau projet</td>
+                        </tr>
+                        <tr>
+                            <td><span class="badge warning">PUT/PATCH</span></td>
+                            <td>Modifier une ressource existante</td>
+                            <td>Modifier un projet</td>
+                        </tr>
+                        <tr>
+                            <td><span class="badge danger">DELETE</span></td>
+                            <td>Supprimer une ressource</td>
+                            <td>Supprimer un projet</td>
+                        </tr>
+                    </table>
+                </div>
+
+                <h3>Syntaxe Laravel</h3>
+                <div class="code-block" data-language="PHP">
+<code><span class="comment">// Route GET - Afficher</span>
+Route::<span class="function">get</span>(<span class="string">'/projets'</span>, [ProjetController::<span class="keyword">class</span>, <span class="string">'index'</span>]);
+
+<span class="comment">// Route POST - Créer</span>
+Route::<span class="function">post</span>(<span class="string">'/projets'</span>, [ProjetController::<span class="keyword">class</span>, <span class="string">'store'</span>]);
+
+<span class="comment">// Route PUT - Modifier</span>
+Route::<span class="function">put</span>(<span class="string">'/projets/{id}'</span>, [ProjetController::<span class="keyword">class</span>, <span class="string">'update'</span>]);
+
+<span class="comment">// Route DELETE - Supprimer</span>
+Route::<span class="function">delete</span>(<span class="string">'/projets/{id}'</span>, [ProjetController::<span class="keyword">class</span>, <span class="string">'destroy'</span>]);</code>
+                </div>
+            </div>
+            <div class="slide-footer">
+                <span class="author">M. JARRAY Mondher | ISIM Médenine</span>
+                <span class="page-number">6</span>
+            </div>
+        </div>
+
+        <!-- ==================== SLIDE 7 : PARAMÈTRES DE ROUTE ==================== -->
+        <div class="slide">
+            <div class="slide-header">
+                <div class="logo-container">
+                    <img src="../assets/isim-logo.jpeg" alt="ISIM Logo" class="logo">
+                    <div class="institution">
+                        <strong>ISIM</strong>
+                        Développement Web Avancé
+                    </div>
+                </div>
+                <div class="chapter-info">
+                    Chapitre 2<br>
+                    <span class="chapter-number">Routage</span>
+                </div>
+            </div>
+            <div class="slide-title">
+                <h1>Paramètres de Route</h1>
+                <p class="subtitle">Routes dynamiques avec {paramètre}</p>
+            </div>
+            <div class="slide-content">
+                <p>Les paramètres permettent de capturer des valeurs dans l'URL.</p>
+
+                <h3>Paramètre obligatoire</h3>
+                <div class="code-block" data-language="PHP">
+<code><span class="comment">// URL : /projets/5</span>
+Route::<span class="function">get</span>(<span class="string">'/projets/{id}'</span>, <span class="keyword">function</span> (<span class="variable">$id</span>) {
+    <span class="keyword">return</span> <span class="string">"Afficher le projet numéro : "</span> . <span class="variable">$id</span>;
+});
+
+<span class="comment">// URL : /utilisateurs/ahmed</span>
+Route::<span class="function">get</span>(<span class="string">'/utilisateurs/{nom}'</span>, <span class="keyword">function</span> (<span class="variable">$nom</span>) {
+    <span class="keyword">return</span> <span class="string">"Bonjour "</span> . <span class="variable">$nom</span>;
+});</code>
+                </div>
+
+                <h3>Paramètre optionnel</h3>
+                <p>Ajoutez <code class="code-inline">?</code> et une valeur par défaut :</p>
+                <div class="code-block" data-language="PHP">
+<code><span class="comment">// URL : /salut ou /salut/Ahmed</span>
+Route::<span class="function">get</span>(<span class="string">'/salut/{nom?}'</span>, <span class="keyword">function</span> (<span class="variable">$nom</span> = <span class="string">'Invité'</span>) {
+    <span class="keyword">return</span> <span class="string">"Bonjour "</span> . <span class="variable">$nom</span>;
+});</code>
+                </div>
+
+                <h3>Plusieurs paramètres</h3>
+                <div class="code-block" data-language="PHP">
+<code><span class="comment">// URL : /projets/5/taches/12</span>
+Route::<span class="function">get</span>(<span class="string">'/projets/{projet}/taches/{tache}'</span>, <span class="keyword">function</span> (<span class="variable">$projet</span>, <span class="variable">$tache</span>) {
+    <span class="keyword">return</span> <span class="string">"Projet $projet, Tâche $tache"</span>;
+});</code>
+                </div>
+            </div>
+            <div class="slide-footer">
+                <span class="author">M. JARRAY Mondher | ISIM Médenine</span>
+                <span class="page-number">7</span>
+            </div>
+        </div>
+
+        <!-- ==================== SLIDE 8 : CONTRAINTES SUR LES PARAMÈTRES ==================== -->
+        <div class="slide">
+            <div class="slide-header">
+                <div class="logo-container">
+                    <img src="../assets/isim-logo.jpeg" alt="ISIM Logo" class="logo">
+                    <div class="institution">
+                        <strong>ISIM</strong>
+                        Développement Web Avancé
+                    </div>
+                </div>
+                <div class="chapter-info">
+                    Chapitre 2<br>
+                    <span class="chapter-number">Routage</span>
+                </div>
+            </div>
+            <div class="slide-title">
+                <h1>Contraintes sur les Paramètres</h1>
+                <p class="subtitle">Valider le format des paramètres</p>
+            </div>
+            <div class="slide-content">
+                <p>Vous pouvez limiter le format des paramètres avec des expressions régulières :</p>
+
+                <h3>Méthode where()</h3>
+                <div class="code-block" data-language="PHP">
+<code><span class="comment">// L'id doit être un nombre</span>
+Route::<span class="function">get</span>(<span class="string">'/projets/{id}'</span>, <span class="keyword">function</span> (<span class="variable">$id</span>) {
+    <span class="comment">// ...</span>
+})-><span class="function">where</span>(<span class="string">'id'</span>, <span class="string">'[0-9]+'</span>);
+
+<span class="comment">// Le nom doit contenir uniquement des lettres</span>
+Route::<span class="function">get</span>(<span class="string">'/utilisateurs/{nom}'</span>, <span class="keyword">function</span> (<span class="variable">$nom</span>) {
+    <span class="comment">// ...</span>
+})-><span class="function">where</span>(<span class="string">'nom'</span>, <span class="string">'[A-Za-z]+'</span>);</code>
+                </div>
+
+                <h3>Méthodes raccourcies</h3>
+                <div class="code-block" data-language="PHP">
+<code><span class="comment">// whereNumber : uniquement des chiffres</span>
+Route::<span class="function">get</span>(<span class="string">'/projets/{id}'</span>, ...)-><span class="function">whereNumber</span>(<span class="string">'id'</span>);
+
+<span class="comment">// whereAlpha : uniquement des lettres</span>
+Route::<span class="function">get</span>(<span class="string">'/users/{nom}'</span>, ...)-><span class="function">whereAlpha</span>(<span class="string">'nom'</span>);
+
+<span class="comment">// whereAlphaNumeric : lettres et chiffres</span>
+Route::<span class="function">get</span>(<span class="string">'/posts/{slug}'</span>, ...)-><span class="function">whereAlphaNumeric</span>(<span class="string">'slug'</span>);
+
+<span class="comment">// whereUuid : format UUID</span>
+Route::<span class="function">get</span>(<span class="string">'/orders/{uuid}'</span>, ...)-><span class="function">whereUuid</span>(<span class="string">'uuid'</span>);</code>
+                </div>
+
+                <div class="info-box tip">
+                    <div class="info-box-title">Conseil</div>
+                    Utilisez toujours des contraintes pour sécuriser vos routes et éviter les erreurs.
+                </div>
+            </div>
+            <div class="slide-footer">
+                <span class="author">M. JARRAY Mondher | ISIM Médenine</span>
+                <span class="page-number">8</span>
+            </div>
+        </div>
+
+        <!-- ==================== SLIDE 9 : ROUTES NOMMÉES ==================== -->
+        <div class="slide">
+            <div class="slide-header">
+                <div class="logo-container">
+                    <img src="../assets/isim-logo.jpeg" alt="ISIM Logo" class="logo">
+                    <div class="institution">
+                        <strong>ISIM</strong>
+                        Développement Web Avancé
+                    </div>
+                </div>
+                <div class="chapter-info">
+                    Chapitre 2<br>
+                    <span class="chapter-number">Routage</span>
+                </div>
+            </div>
+            <div class="slide-title">
+                <h1>3. Routes Nommées</h1>
+                <p class="subtitle">Donner un nom à vos routes</p>
+            </div>
+            <div class="slide-content">
+                <p>Nommer une route permet de l'utiliser facilement dans le code sans écrire l'URL complète.</p>
+
+                <h3>Définir une route nommée</h3>
+                <div class="code-block" data-language="PHP">
+<code>Route::<span class="function">get</span>(<span class="string">'/projets'</span>, [ProjetController::<span class="keyword">class</span>, <span class="string">'index'</span>])
+    -><span class="function">name</span>(<span class="string">'projets.index'</span>);
+
+Route::<span class="function">get</span>(<span class="string">'/projets/{id}'</span>, [ProjetController::<span class="keyword">class</span>, <span class="string">'show'</span>])
+    -><span class="function">name</span>(<span class="string">'projets.show'</span>);
+
+Route::<span class="function">post</span>(<span class="string">'/projets'</span>, [ProjetController::<span class="keyword">class</span>, <span class="string">'store'</span>])
+    -><span class="function">name</span>(<span class="string">'projets.store'</span>);</code>
+                </div>
+
+                <h3>Utiliser une route nommée</h3>
+                <div class="two-columns">
+                    <div class="column">
+                        <h4>Dans un contrôleur</h4>
+                        <div class="code-block" data-language="PHP">
+<code><span class="comment">// Redirection</span>
+<span class="keyword">return</span> <span class="function">redirect</span>()
+    -><span class="function">route</span>(<span class="string">'projets.index'</span>);
+
+<span class="comment">// Avec paramètre</span>
+<span class="keyword">return</span> <span class="function">redirect</span>()
+    -><span class="function">route</span>(<span class="string">'projets.show'</span>, [<span class="string">'id'</span> => <span class="number">5</span>]);</code>
+                        </div>
+                    </div>
+                    <div class="column">
+                        <h4>Dans une vue Blade</h4>
+                        <div class="code-block" data-language="Blade">
+<code><span class="comment">{{-- Lien simple --}}</span>
+&lt;a href=<span class="string">"{{ route('projets.index') }}"</span>&gt;
+    Voir les projets
+&lt;/a&gt;
+
+<span class="comment">{{-- Avec paramètre --}}</span>
+&lt;a href=<span class="string">"{{ route('projets.show', 5) }}"</span>&gt;
+    Projet 5
+&lt;/a&gt;</code>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="info-box success">
+                    <div class="info-box-title">Avantage</div>
+                    Si vous changez l'URL, vous n'avez qu'à modifier la route. Tous les liens utilisant <code class="code-inline">route('nom')</code> seront mis à jour automatiquement.
+                </div>
+            </div>
+            <div class="slide-footer">
+                <span class="author">M. JARRAY Mondher | ISIM Médenine</span>
+                <span class="page-number">9</span>
+            </div>
+        </div>
+
+        <!-- ==================== SLIDE 10 : GROUPES DE ROUTES ==================== -->
+        <div class="slide">
+            <div class="slide-header">
+                <div class="logo-container">
+                    <img src="../assets/isim-logo.jpeg" alt="ISIM Logo" class="logo">
+                    <div class="institution">
+                        <strong>ISIM</strong>
+                        Développement Web Avancé
+                    </div>
+                </div>
+                <div class="chapter-info">
+                    Chapitre 2<br>
+                    <span class="chapter-number">Routage</span>
+                </div>
+            </div>
+            <div class="slide-title">
+                <h1>Groupes de Routes</h1>
+                <p class="subtitle">Organiser les routes avec des préfixes</p>
+            </div>
+            <div class="slide-content">
+                <p>Les groupes permettent d'appliquer des options communes à plusieurs routes.</p>
+
+                <h3>Préfixe d'URL</h3>
+                <div class="code-block" data-language="PHP">
+<code>Route::<span class="function">prefix</span>(<span class="string">'admin'</span>)-><span class="function">group</span>(<span class="keyword">function</span> () {
+    <span class="comment">// URL : /admin/dashboard</span>
+    Route::<span class="function">get</span>(<span class="string">'/dashboard'</span>, [AdminController::<span class="keyword">class</span>, <span class="string">'dashboard'</span>]);
+
+    <span class="comment">// URL : /admin/utilisateurs</span>
+    Route::<span class="function">get</span>(<span class="string">'/utilisateurs'</span>, [AdminController::<span class="keyword">class</span>, <span class="string">'users'</span>]);
+
+    <span class="comment">// URL : /admin/parametres</span>
+    Route::<span class="function">get</span>(<span class="string">'/parametres'</span>, [AdminController::<span class="keyword">class</span>, <span class="string">'settings'</span>]);
+});</code>
+                </div>
+
+                <h3>Préfixe de nom</h3>
+                <div class="code-block" data-language="PHP">
+<code>Route::<span class="function">name</span>(<span class="string">'admin.'</span>)-><span class="function">prefix</span>(<span class="string">'admin'</span>)-><span class="function">group</span>(<span class="keyword">function</span> () {
+    <span class="comment">// Nom : admin.dashboard</span>
+    Route::<span class="function">get</span>(<span class="string">'/dashboard'</span>, ...)-><span class="function">name</span>(<span class="string">'dashboard'</span>);
+
+    <span class="comment">// Nom : admin.users</span>
+    Route::<span class="function">get</span>(<span class="string">'/utilisateurs'</span>, ...)-><span class="function">name</span>(<span class="string">'users'</span>);
+});</code>
+                </div>
+
+                <div class="info-box note">
+                    <div class="info-box-title">Application TaskFlow</div>
+                    Nous utiliserons des groupes pour séparer les routes publiques et les routes admin.
+                </div>
+            </div>
+            <div class="slide-footer">
+                <span class="author">M. JARRAY Mondher | ISIM Médenine</span>
+                <span class="page-number">10</span>
+            </div>
+        </div>
+
+        <!-- ==================== SLIDE 11 : INTRODUCTION AUX CONTRÔLEURS ==================== -->
+        <div class="slide">
+            <div class="slide-header">
+                <div class="logo-container">
+                    <img src="../assets/isim-logo.jpeg" alt="ISIM Logo" class="logo">
+                    <div class="institution">
+                        <strong>ISIM</strong>
+                        Développement Web Avancé
+                    </div>
+                </div>
+                <div class="chapter-info">
+                    Chapitre 2<br>
+                    <span class="chapter-number">Routage</span>
+                </div>
+            </div>
+            <div class="slide-title">
+                <h1>4. Les Contrôleurs</h1>
+                <p class="subtitle">Organiser la logique de l'application</p>
+            </div>
+            <div class="slide-content">
+                <div class="info-box note">
+                    <div class="info-box-title">Définition</div>
+                    Un <strong>contrôleur</strong> est une classe PHP qui regroupe la logique de traitement pour un ensemble de routes liées.
+                </div>
+
+                <h3>Pourquoi utiliser des contrôleurs ?</h3>
+                <div class="two-columns">
+                    <div class="column">
+                        <h4>❌ Sans contrôleur</h4>
+                        <div class="code-block" data-language="PHP">
+<code><span class="comment">// routes/web.php</span>
+Route::<span class="function">get</span>(<span class="string">'/projets'</span>, <span class="keyword">function</span> () {
+    <span class="variable">$projets</span> = Projet::<span class="function">all</span>();
+    <span class="keyword">return</span> <span class="function">view</span>(<span class="string">'projets.index'</span>,
+        [<span class="string">'projets'</span> => <span class="variable">$projets</span>]);
+});
+
+<span class="comment">// Code dans le fichier routes !</span>
+<span class="comment">// Difficile à maintenir...</span></code>
+                        </div>
+                    </div>
+                    <div class="column">
+                        <h4>✅ Avec contrôleur</h4>
+                        <div class="code-block" data-language="PHP">
+<code><span class="comment">// routes/web.php</span>
+Route::<span class="function">get</span>(<span class="string">'/projets'</span>,
+    [ProjetController::<span class="keyword">class</span>, <span class="string">'index'</span>]);
+
+<span class="comment">// Logique dans le contrôleur</span>
+<span class="comment">// Code propre et organisé !</span></code>
+                        </div>
+                    </div>
+                </div>
+
+                <h3>Emplacement des contrôleurs</h3>
+                <div class="file-tree"><pre>
+<span class="folder">app/</span>
+    <span class="folder">Http/</span>
+        <span class="folder">Controllers/</span>
+            <span class="file">Controller.php</span>          <span class="comment"># Classe de base</span>
+            <span class="file">ProjetController.php</span>    <span class="comment"># Vos contrôleurs</span>
+            <span class="file">TacheController.php</span>
+</pre></div>
+            </div>
+            <div class="slide-footer">
+                <span class="author">M. JARRAY Mondher | ISIM Médenine</span>
+                <span class="page-number">11</span>
+            </div>
+        </div>
+
+        <!-- ==================== SLIDE 12 : CRÉER UN CONTRÔLEUR ==================== -->
+        <div class="slide">
+            <div class="slide-header">
+                <div class="logo-container">
+                    <img src="../assets/isim-logo.jpeg" alt="ISIM Logo" class="logo">
+                    <div class="institution">
+                        <strong>ISIM</strong>
+                        Développement Web Avancé
+                    </div>
+                </div>
+                <div class="chapter-info">
+                    Chapitre 2<br>
+                    <span class="chapter-number">Routage</span>
+                </div>
+            </div>
+            <div class="slide-title">
+                <h1>Créer un Contrôleur</h1>
+                <p class="subtitle">Avec la commande Artisan</p>
+            </div>
+            <div class="slide-content">
+                <h3>Commande de création</h3>
+                <div class="command-line">php artisan make:controller ProjetController</div>
+
+                <h3>Résultat : app/Http/Controllers/ProjetController.php</h3>
+                <div class="code-block" data-language="PHP">
+<code><span class="keyword">&lt;?php</span>
+
+<span class="keyword">namespace</span> App\Http\Controllers;
+
+<span class="keyword">class</span> <span class="function">ProjetController</span> <span class="keyword">extends</span> Controller
+{
+    <span class="comment">// Afficher la liste des projets</span>
+    <span class="keyword">public function</span> <span class="function">index</span>()
+    {
+        <span class="variable">$projets</span> = Projet::<span class="function">all</span>();
+        <span class="keyword">return</span> <span class="function">view</span>(<span class="string">'projets.index'</span>, [<span class="string">'projets'</span> => <span class="variable">$projets</span>]);
+    }
+
+    <span class="comment">// Afficher un seul projet</span>
+    <span class="keyword">public function</span> <span class="function">show</span>(<span class="variable">$id</span>)
+    {
+        <span class="variable">$projet</span> = Projet::<span class="function">findOrFail</span>(<span class="variable">$id</span>);
+        <span class="keyword">return</span> <span class="function">view</span>(<span class="string">'projets.show'</span>, [<span class="string">'projet'</span> => <span class="variable">$projet</span>]);
+    }
+
+    <span class="comment">// Afficher le formulaire de création</span>
+    <span class="keyword">public function</span> <span class="function">create</span>()
+    {
+        <span class="keyword">return</span> <span class="function">view</span>(<span class="string">'projets.create'</span>);
+    }
+}</code>
+                </div>
+            </div>
+            <div class="slide-footer">
+                <span class="author">M. JARRAY Mondher | ISIM Médenine</span>
+                <span class="page-number">12</span>
+            </div>
+        </div>
+
+        <!-- ==================== SLIDE 13 : LIER ROUTE ET CONTRÔLEUR ==================== -->
+        <div class="slide">
+            <div class="slide-header">
+                <div class="logo-container">
+                    <img src="../assets/isim-logo.jpeg" alt="ISIM Logo" class="logo">
+                    <div class="institution">
+                        <strong>ISIM</strong>
+                        Développement Web Avancé
+                    </div>
+                </div>
+                <div class="chapter-info">
+                    Chapitre 2<br>
+                    <span class="chapter-number">Routage</span>
+                </div>
+            </div>
+            <div class="slide-title">
+                <h1>Lier Route et Contrôleur</h1>
+                <p class="subtitle">La syntaxe moderne de Laravel</p>
+            </div>
+            <div class="slide-content">
+                <h3>Importer le contrôleur</h3>
+                <div class="code-block" data-language="PHP">
+<code><span class="comment">// routes/web.php</span>
+<span class="keyword">use</span> App\Http\Controllers\ProjetController;</code>
+                </div>
+
+                <h3>Syntaxe recommandée (Laravel 8+)</h3>
+                <div class="code-block" data-language="PHP">
+<code><span class="comment">// [Classe::class, 'méthode']</span>
+Route::<span class="function">get</span>(<span class="string">'/projets'</span>, [ProjetController::<span class="keyword">class</span>, <span class="string">'index'</span>]);
+Route::<span class="function">get</span>(<span class="string">'/projets/create'</span>, [ProjetController::<span class="keyword">class</span>, <span class="string">'create'</span>]);
+Route::<span class="function">get</span>(<span class="string">'/projets/{id}'</span>, [ProjetController::<span class="keyword">class</span>, <span class="string">'show'</span>]);
+Route::<span class="function">post</span>(<span class="string">'/projets'</span>, [ProjetController::<span class="keyword">class</span>, <span class="string">'store'</span>]);</code>
+                </div>
+
+                <h3>Ancienne syntaxe (déconseillée)</h3>
+                <div class="code-block" data-language="PHP">
+<code><span class="comment">// Chaîne de caractères - à éviter</span>
+Route::<span class="function">get</span>(<span class="string">'/projets'</span>, <span class="string">'ProjetController@index'</span>);</code>
+                </div>
+
+                <div class="info-box warning">
+                    <div class="info-box-title">Important</div>
+                    <p>Utilisez toujours la syntaxe avec <code class="code-inline">::class</code>. Elle permet à votre IDE de détecter les erreurs et facilite la refactorisation.</p>
+                </div>
+            </div>
+            <div class="slide-footer">
+                <span class="author">M. JARRAY Mondher | ISIM Médenine</span>
+                <span class="page-number">13</span>
+            </div>
+        </div>
+
+        <!-- ==================== SLIDE 14 : CONTRÔLEUR RESSOURCE ==================== -->
+        <div class="slide">
+            <div class="slide-header">
+                <div class="logo-container">
+                    <img src="../assets/isim-logo.jpeg" alt="ISIM Logo" class="logo">
+                    <div class="institution">
+                        <strong>ISIM</strong>
+                        Développement Web Avancé
+                    </div>
+                </div>
+                <div class="chapter-info">
+                    Chapitre 2<br>
+                    <span class="chapter-number">Routage</span>
+                </div>
+            </div>
+            <div class="slide-title">
+                <h1>Contrôleur de Ressource</h1>
+                <p class="subtitle">CRUD complet en une seule commande</p>
+            </div>
+            <div class="slide-content">
+                <p>Un contrôleur de ressource génère automatiquement toutes les méthodes CRUD.</p>
+
+                <h3>Créer un contrôleur ressource</h3>
+                <div class="command-line">php artisan make:controller ProjetController --resource</div>
+
+                <h3>Les 7 méthodes générées</h3>
+                <div class="table-container">
+                    <table>
+                        <tr>
+                            <th>Méthode</th>
+                            <th>URL</th>
+                            <th>Action</th>
+                        </tr>
+                        <tr>
+                            <td><code class="code-inline">index()</code></td>
+                            <td>GET /projets</td>
+                            <td>Afficher la liste</td>
+                        </tr>
+                        <tr>
+                            <td><code class="code-inline">create()</code></td>
+                            <td>GET /projets/create</td>
+                            <td>Formulaire de création</td>
+                        </tr>
+                        <tr>
+                            <td><code class="code-inline">store()</code></td>
+                            <td>POST /projets</td>
+                            <td>Enregistrer un nouveau</td>
+                        </tr>
+                        <tr>
+                            <td><code class="code-inline">show($id)</code></td>
+                            <td>GET /projets/{id}</td>
+                            <td>Afficher un seul</td>
+                        </tr>
+                        <tr>
+                            <td><code class="code-inline">edit($id)</code></td>
+                            <td>GET /projets/{id}/edit</td>
+                            <td>Formulaire de modification</td>
+                        </tr>
+                        <tr>
+                            <td><code class="code-inline">update($id)</code></td>
+                            <td>PUT /projets/{id}</td>
+                            <td>Mettre à jour</td>
+                        </tr>
+                        <tr>
+                            <td><code class="code-inline">destroy($id)</code></td>
+                            <td>DELETE /projets/{id}</td>
+                            <td>Supprimer</td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+            <div class="slide-footer">
+                <span class="author">M. JARRAY Mondher | ISIM Médenine</span>
+                <span class="page-number">14</span>
+            </div>
+        </div>
+
+        <!-- ==================== SLIDE 15 : ROUTE RESOURCE ==================== -->
+        <div class="slide">
+            <div class="slide-header">
+                <div class="logo-container">
+                    <img src="../assets/isim-logo.jpeg" alt="ISIM Logo" class="logo">
+                    <div class="institution">
+                        <strong>ISIM</strong>
+                        Développement Web Avancé
+                    </div>
+                </div>
+                <div class="chapter-info">
+                    Chapitre 2<br>
+                    <span class="chapter-number">Routage</span>
+                </div>
+            </div>
+            <div class="slide-title">
+                <h1>Route Resource</h1>
+                <p class="subtitle">7 routes en une seule ligne</p>
+            </div>
+            <div class="slide-content">
+                <h3>Déclarer une route ressource</h3>
+                <div class="code-block" data-language="PHP">
+<code><span class="comment">// Une seule ligne crée 7 routes !</span>
+Route::<span class="function">resource</span>(<span class="string">'projets'</span>, ProjetController::<span class="keyword">class</span>);</code>
+                </div>
+
+                <h3>Vérifier les routes créées</h3>
+                <div class="command-line">php artisan route:list</div>
+
+                <h3>Limiter les routes</h3>
+                <div class="code-block" data-language="PHP">
+<code><span class="comment">// Seulement ces méthodes</span>
+Route::<span class="function">resource</span>(<span class="string">'projets'</span>, ProjetController::<span class="keyword">class</span>)
+    -><span class="function">only</span>([<span class="string">'index'</span>, <span class="string">'show'</span>]);
+
+<span class="comment">// Toutes sauf celles-ci</span>
+Route::<span class="function">resource</span>(<span class="string">'projets'</span>, ProjetController::<span class="keyword">class</span>)
+    -><span class="function">except</span>([<span class="string">'destroy'</span>]);</code>
+                </div>
+
+                <h3>Route API Resource (sans create/edit)</h3>
+                <div class="code-block" data-language="PHP">
+<code><span class="comment">// Pour les API - 5 routes sans formulaires</span>
+Route::<span class="function">apiResource</span>(<span class="string">'projets'</span>, ProjetController::<span class="keyword">class</span>);</code>
+                </div>
+
+                <div class="info-box success">
+                    <div class="info-box-title">TaskFlow</div>
+                    Nous utiliserons <code class="code-inline">Route::resource</code> pour gérer les projets et les tâches.
+                </div>
+            </div>
+            <div class="slide-footer">
+                <span class="author">M. JARRAY Mondher | ISIM Médenine</span>
+                <span class="page-number">15</span>
+            </div>
+        </div>
+
+        <!-- ==================== SLIDE 16 : INJECTION DE DÉPENDANCES ==================== -->
+        <div class="slide">
+            <div class="slide-header">
+                <div class="logo-container">
+                    <img src="../assets/isim-logo.jpeg" alt="ISIM Logo" class="logo">
+                    <div class="institution">
+                        <strong>ISIM</strong>
+                        Développement Web Avancé
+                    </div>
+                </div>
+                <div class="chapter-info">
+                    Chapitre 2<br>
+                    <span class="chapter-number">Routage</span>
+                </div>
+            </div>
+            <div class="slide-title">
+                <h1>Injection de Dépendances</h1>
+                <p class="subtitle">Récupérer automatiquement les objets</p>
+            </div>
+            <div class="slide-content">
+                <p>Laravel peut automatiquement injecter des objets dans vos méthodes de contrôleur.</p>
+
+                <h3>Injecter la Request</h3>
+                <div class="code-block" data-language="PHP">
+<code><span class="keyword">use</span> Illuminate\Http\Request;
+
+<span class="keyword">public function</span> <span class="function">store</span>(Request <span class="variable">$request</span>)
+{
+    <span class="comment">// Accéder aux données du formulaire</span>
+    <span class="variable">$nom</span> = <span class="variable">$request</span>-><span class="function">input</span>(<span class="string">'nom'</span>);
+    <span class="variable">$email</span> = <span class="variable">$request</span>-><span class="function">input</span>(<span class="string">'email'</span>);
+
+    <span class="comment">// Ou récupérer toutes les données</span>
+    <span class="variable">$data</span> = <span class="variable">$request</span>-><span class="function">all</span>();
+}</code>
+                </div>
+
+                <h3>Route Model Binding</h3>
+                <p>Laravel peut récupérer automatiquement un modèle depuis la base de données :</p>
+                <div class="code-block" data-language="PHP">
+<code><span class="comment">// Route</span>
+Route::<span class="function">get</span>(<span class="string">'/projets/{projet}'</span>, [ProjetController::<span class="keyword">class</span>, <span class="string">'show'</span>]);
+
+<span class="comment">// Contrôleur - $projet est automatiquement récupéré !</span>
+<span class="keyword">public function</span> <span class="function">show</span>(Projet <span class="variable">$projet</span>)
+{
+    <span class="comment">// $projet contient déjà le projet avec l'id de l'URL</span>
+    <span class="keyword">return</span> <span class="function">view</span>(<span class="string">'projets.show'</span>, [<span class="string">'projet'</span> => <span class="variable">$projet</span>]);
+}</code>
+                </div>
+
+                <div class="info-box tip">
+                    <div class="info-box-title">Astuce</div>
+                    Le nom du paramètre dans la route doit correspondre au nom de la variable dans la méthode.
+                </div>
+            </div>
+            <div class="slide-footer">
+                <span class="author">M. JARRAY Mondher | ISIM Médenine</span>
+                <span class="page-number">16</span>
+            </div>
+        </div>
+
+        <!-- ==================== SLIDE 17 : MIDDLEWARES ==================== -->
+        <div class="slide">
+            <div class="slide-header">
+                <div class="logo-container">
+                    <img src="../assets/isim-logo.jpeg" alt="ISIM Logo" class="logo">
+                    <div class="institution">
+                        <strong>ISIM</strong>
+                        Développement Web Avancé
+                    </div>
+                </div>
+                <div class="chapter-info">
+                    Chapitre 2<br>
+                    <span class="chapter-number">Routage</span>
+                </div>
+            </div>
+            <div class="slide-title">
+                <h1>5. Les Middlewares</h1>
+                <p class="subtitle">Filtrer les requêtes HTTP</p>
+            </div>
+            <div class="slide-content">
+                <div class="info-box note">
+                    <div class="info-box-title">Définition</div>
+                    Un <strong>middleware</strong> est un filtre qui examine les requêtes HTTP avant qu'elles n'atteignent le contrôleur.
+                </div>
+
+                <div class="architecture-box">
+                    <div class="mvc-diagram">
+                        <div class="mvc-component" style="border-color: #9b59b6;">
+                            <h5>Requête</h5>
+                        </div>
+                        <div class="mvc-arrow">→</div>
+                        <div class="mvc-component" style="border-color: #e67e22;">
+                            <h5>Middleware</h5>
+                            <p>Vérification</p>
+                        </div>
+                        <div class="mvc-arrow">→</div>
+                        <div class="mvc-component controller">
+                            <h5>Contrôleur</h5>
+                        </div>
+                    </div>
+                </div>
+
+                <h3>Exemples de middlewares</h3>
+                <ul>
+                    <li><strong>auth</strong> : Vérifie que l'utilisateur est connecté</li>
+                    <li><strong>guest</strong> : Vérifie que l'utilisateur n'est PAS connecté</li>
+                    <li><strong>verified</strong> : Vérifie que l'email est vérifié</li>
+                    <li><strong>throttle</strong> : Limite le nombre de requêtes</li>
+                </ul>
+
+                <h3>Utiliser un middleware</h3>
+                <div class="code-block" data-language="PHP">
+<code><span class="comment">// Sur une route</span>
+Route::<span class="function">get</span>(<span class="string">'/dashboard'</span>, [DashboardController::<span class="keyword">class</span>, <span class="string">'index'</span>])
+    -><span class="function">middleware</span>(<span class="string">'auth'</span>);
+
+<span class="comment">// Sur un groupe</span>
+Route::<span class="function">middleware</span>(<span class="string">'auth'</span>)-><span class="function">group</span>(<span class="keyword">function</span> () {
+    Route::<span class="function">get</span>(<span class="string">'/projets'</span>, ...);
+    Route::<span class="function">get</span>(<span class="string">'/taches'</span>, ...);
+});</code>
+                </div>
+            </div>
+            <div class="slide-footer">
+                <span class="author">M. JARRAY Mondher | ISIM Médenine</span>
+                <span class="page-number">17</span>
+            </div>
+        </div>
+
+        <!-- ==================== SLIDE 18 : EXEMPLE COMPLET TASKFLOW ==================== -->
+        <div class="slide">
+            <div class="slide-header">
+                <div class="logo-container">
+                    <img src="../assets/isim-logo.jpeg" alt="ISIM Logo" class="logo">
+                    <div class="institution">
+                        <strong>ISIM</strong>
+                        Développement Web Avancé
+                    </div>
+                </div>
+                <div class="chapter-info">
+                    Chapitre 2<br>
+                    <span class="chapter-number">Routage</span>
+                </div>
+            </div>
+            <div class="slide-title">
+                <h1>Exemple Complet : TaskFlow</h1>
+                <p class="subtitle">Organisation des routes du projet</p>
+            </div>
+            <div class="slide-content">
+                <div class="code-block" data-language="PHP">
+<code><span class="comment">// routes/web.php</span>
+<span class="keyword">use</span> App\Http\Controllers\ProjetController;
+<span class="keyword">use</span> App\Http\Controllers\TacheController;
+<span class="keyword">use</span> App\Http\Controllers\DashboardController;
+
+<span class="comment">// Page d'accueil publique</span>
+Route::<span class="function">get</span>(<span class="string">'/'</span>, <span class="keyword">function</span> () {
+    <span class="keyword">return</span> <span class="function">view</span>(<span class="string">'welcome'</span>);
+})-><span class="function">name</span>(<span class="string">'home'</span>);
+
+<span class="comment">// Routes protégées (utilisateur connecté)</span>
+Route::<span class="function">middleware</span>(<span class="string">'auth'</span>)-><span class="function">group</span>(<span class="keyword">function</span> () {
+
+    <span class="comment">// Dashboard</span>
+    Route::<span class="function">get</span>(<span class="string">'/dashboard'</span>, [DashboardController::<span class="keyword">class</span>, <span class="string">'index'</span>])
+        -><span class="function">name</span>(<span class="string">'dashboard'</span>);
+
+    <span class="comment">// Gestion des projets (CRUD complet)</span>
+    Route::<span class="function">resource</span>(<span class="string">'projets'</span>, ProjetController::<span class="keyword">class</span>);
+
+    <span class="comment">// Tâches d'un projet</span>
+    Route::<span class="function">resource</span>(<span class="string">'projets.taches'</span>, TacheController::<span class="keyword">class</span>);
+});</code>
+                </div>
+
+                <div class="info-box success">
+                    <div class="info-box-title">Résultat</div>
+                    Ce code crée automatiquement plus de 14 routes pour gérer les projets et leurs tâches !
+                </div>
+            </div>
+            <div class="slide-footer">
+                <span class="author">M. JARRAY Mondher | ISIM Médenine</span>
+                <span class="page-number">18</span>
+            </div>
+        </div>
+
+        <!-- ==================== SLIDE 19 : RÉSUMÉ ==================== -->
+        <div class="slide">
+            <div class="slide-header">
+                <div class="logo-container">
+                    <img src="../assets/isim-logo.jpeg" alt="ISIM Logo" class="logo">
+                    <div class="institution">
+                        <strong>ISIM</strong>
+                        Développement Web Avancé
+                    </div>
+                </div>
+                <div class="chapter-info">
+                    Chapitre 2<br>
+                    <span class="chapter-number">Routage</span>
+                </div>
+            </div>
+            <div class="slide-title">
+                <h1>Résumé du Chapitre</h1>
+            </div>
+            <div class="slide-content">
+                <div class="summary-grid">
+                    <div class="summary-item">
+                        <h5>Routes</h5>
+                        <p>Définissent les URLs de l'application</p>
+                    </div>
+                    <div class="summary-item">
+                        <h5>Méthodes HTTP</h5>
+                        <p>GET, POST, PUT, DELETE</p>
+                    </div>
+                    <div class="summary-item">
+                        <h5>Contrôleurs</h5>
+                        <p>Regroupent la logique métier</p>
+                    </div>
+                    <div class="summary-item">
+                        <h5>Middlewares</h5>
+                        <p>Filtrent les requêtes</p>
+                    </div>
+                </div>
+
+                <h3>Commandes à retenir</h3>
+                <div class="table-container">
+                    <table>
+                        <tr>
+                            <th>Commande</th>
+                            <th>Description</th>
+                        </tr>
+                        <tr>
+                            <td><code class="code-inline">php artisan make:controller NomController</code></td>
+                            <td>Créer un contrôleur</td>
+                        </tr>
+                        <tr>
+                            <td><code class="code-inline">php artisan make:controller NomController --resource</code></td>
+                            <td>Contrôleur avec CRUD</td>
+                        </tr>
+                        <tr>
+                            <td><code class="code-inline">php artisan route:list</code></td>
+                            <td>Lister toutes les routes</td>
+                        </tr>
+                    </table>
+                </div>
+
+                <div class="info-box note">
+                    <div class="info-box-title">Prochain chapitre</div>
+                    <strong>Chapitre 3 :</strong> Vues et Blade - Créer des interfaces utilisateur dynamiques.
+                </div>
+            </div>
+            <div class="slide-footer">
+                <span class="author">M. JARRAY Mondher | ISIM Médenine</span>
+                <span class="page-number">19</span>
+            </div>
+        </div>
+
+        <!-- ==================== SLIDE 20 : QUESTIONS ==================== -->
+        <div class="slide">
+            <div class="slide-header">
+                <div class="logo-container">
+                    <img src="../assets/isim-logo.jpeg" alt="ISIM Logo" class="logo">
+                    <div class="institution">
+                        <strong>ISIM</strong>
+                        Développement Web Avancé
+                    </div>
+                </div>
+                <div class="chapter-info">
+                    Chapitre 2<br>
+                    <span class="chapter-number">Routage</span>
+                </div>
+            </div>
+            <div class="slide-title">
+                <h1>Questions ?</h1>
+            </div>
+            <div class="slide-content" style="display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center;">
+                <div style="font-size: 4rem; margin-bottom: 30px;">🤔</div>
+                <h3>Avez-vous des questions sur les routes et les contrôleurs ?</h3>
+
+                <div style="margin-top: 40px; padding: 30px; background: var(--isim-blue-bg); border-radius: 10px;">
+                    <h4 style="color: var(--isim-blue-dark);">Prochaine séance : TP 2</h4>
+                    <p>Création des routes et contrôleurs pour TaskFlow</p>
+                </div>
+            </div>
+            <div class="slide-footer">
+                <span class="author">M. JARRAY Mondher | ISIM Médenine</span>
+                <span class="page-number">20</span>
+            </div>
+        </div>
+
+    </div>
+</body>
+</html>

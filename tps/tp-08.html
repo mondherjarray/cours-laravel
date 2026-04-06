@@ -1,0 +1,609 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TP 8 - API REST avec Laravel | ISIMED</title>
+    <link rel="stylesheet" href="../css/tp.css">
+</head>
+<body>
+    <div class="document">
+
+        <!-- ==================== EN-TÊTE DU DOCUMENT ==================== -->
+        <div class="doc-header">
+            <div class="header-top">
+                <div class="header-logo">
+                    <img src="../assets/isim-logo.jpeg" alt="ISIM Logo">
+                    <div class="institution-name">
+                        <strong>ISIM</strong>
+                        Institut Supérieur d'Informatique de Médenine
+                    </div>
+                </div>
+                <div class="header-info">
+                    Année Universitaire<br>
+                    <strong>2025-2026</strong>
+                </div>
+            </div>
+            <div class="header-title">
+                <h1>Travaux Pratiques - Développement Web Avancé</h1>
+                <h2>TP N°8 : API REST avec Laravel</h2>
+            </div>
+        </div>
+
+        <!-- ==================== BARRE D'INFORMATIONS ==================== -->
+        <div class="info-bar">
+            <div class="info-item">
+                <span class="label">Classe :</span>
+                <span class="value">MP1ILC</span>
+            </div>
+            <div class="info-item">
+                <span class="label">Enseignant :</span>
+                <span class="value">M. JARRAY Mondher</span>
+            </div>
+            <div class="info-item">
+                <span class="label">Durée :</span>
+                <span class="value">1h30</span>
+            </div>
+            <div class="info-item">
+                <span class="label">Projet :</span>
+                <span class="value">TaskFlow API</span>
+            </div>
+        </div>
+
+        <!-- ==================== CONTENU PRINCIPAL ==================== -->
+        <div class="doc-content">
+
+            <!-- OBJECTIFS -->
+            <div class="objectives-box">
+                <h3>Objectifs du TP</h3>
+                <ul>
+                    <li>Configurer les routes API avec Laravel Sanctum</li>
+                    <li>Créer des contrôleurs API dédiés</li>
+                    <li>Utiliser les API Resources pour formater les réponses JSON</li>
+                    <li>Implémenter l'authentification par token</li>
+                    <li>Tester l'API avec Postman ou curl</li>
+                </ul>
+            </div>
+
+            <!-- PRÉREQUIS -->
+            <div class="prerequisites-box">
+                <h3>Prérequis</h3>
+                <ul>
+                    <li>TP 7 complété (authentification avec Breeze)</li>
+                    <li>Postman, Insomnia, ou extension REST Client VS Code</li>
+                    <li>Modèles Project et Task fonctionnels</li>
+                </ul>
+            </div>
+
+            <!-- ==================== PARTIE 1 ==================== -->
+            <div class="section">
+                <h2 class="section-title">Partie 1 : Configuration de l'API (20 min)</h2>
+
+                <!-- Exercice 1.1 -->
+                <div class="exercise">
+                    <div class="exercise-header">
+                        <h4>Exercice 1.1 : Installer l'API Sanctum</h4>
+                        <span class="exercise-points">3 pts</span>
+                    </div>
+                    <div class="exercise-content">
+                        <p>Laravel 11 utilise la commande <code class="code-inline">install:api</code> pour configurer Sanctum.</p>
+
+                        <div class="command-line">php artisan install:api</div>
+
+                        <p>Cette commande :</p>
+                        <ul>
+                            <li>Crée le fichier <code class="code-inline">routes/api.php</code></li>
+                            <li>Installe Laravel Sanctum</li>
+                            <li>Crée la migration pour les tokens</li>
+                        </ul>
+
+                        <div class="command-line">php artisan migrate</div>
+
+                        <div class="info-box note">
+                            <div class="info-box-title">Vérification</div>
+                            <p>Vérifiez que le trait <code class="code-inline">HasApiTokens</code> est présent dans votre modèle User.</p>
+                        </div>
+
+                        <div class="code-block" data-language="PHP">
+<code><span class="comment">// app/Models/User.php</span>
+<span class="keyword">use</span> Laravel\Sanctum\HasApiTokens;
+
+<span class="keyword">class</span> <span class="function">User</span> <span class="keyword">extends</span> Authenticatable
+{
+    <span class="keyword">use</span> HasApiTokens, HasFactory, Notifiable;
+    <span class="comment">// ...</span>
+}</code>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Exercice 1.2 -->
+                <div class="exercise">
+                    <div class="exercise-header">
+                        <h4>Exercice 1.2 : Créer le contrôleur d'authentification API</h4>
+                        <span class="exercise-points">4 pts</span>
+                    </div>
+                    <div class="exercise-content">
+                        <div class="command-line">php artisan make:controller Api/AuthController</div>
+
+                        <div class="code-block" data-language="PHP">
+<code><span class="comment">// app/Http/Controllers/Api/AuthController.php</span>
+<span class="keyword">namespace</span> App\Http\Controllers\Api;
+
+<span class="keyword">use</span> App\Http\Controllers\Controller;
+<span class="keyword">use</span> App\Models\User;
+<span class="keyword">use</span> Illuminate\Http\Request;
+<span class="keyword">use</span> Illuminate\Support\Facades\Hash;
+<span class="keyword">use</span> Illuminate\Validation\ValidationException;
+
+<span class="keyword">class</span> <span class="function">AuthController</span> <span class="keyword">extends</span> Controller
+{
+    <span class="comment">// Inscription</span>
+    <span class="keyword">public function</span> <span class="function">register</span>(Request <span class="variable">$request</span>)
+    {
+        <span class="variable">$validated</span> = <span class="variable">$request</span>-><span class="function">validate</span>([
+            <span class="string">'name'</span> => <span class="string">'required|string|max:255'</span>,
+            <span class="string">'email'</span> => <span class="string">'required|email|unique:users'</span>,
+            <span class="string">'password'</span> => <span class="string">'required|min:8|confirmed'</span>,
+        ]);
+
+        <span class="variable">$user</span> = User::<span class="function">create</span>([
+            <span class="string">'name'</span> => <span class="variable">$validated</span>[<span class="string">'name'</span>],
+            <span class="string">'email'</span> => <span class="variable">$validated</span>[<span class="string">'email'</span>],
+            <span class="string">'password'</span> => Hash::<span class="function">make</span>(<span class="variable">$validated</span>[<span class="string">'password'</span>]),
+        ]);
+
+        <span class="variable">$token</span> = <span class="variable">$user</span>-><span class="function">createToken</span>(<span class="string">'auth-token'</span>)->plainTextToken;
+
+        <span class="keyword">return</span> <span class="function">response</span>()-><span class="function">json</span>([
+            <span class="string">'user'</span> => <span class="variable">$user</span>,
+            <span class="string">'token'</span> => <span class="variable">$token</span>,
+        ], <span class="number">201</span>);
+    }
+
+    <span class="comment">// Connexion</span>
+    <span class="keyword">public function</span> <span class="function">login</span>(Request <span class="variable">$request</span>)
+    {
+        <span class="variable">$request</span>-><span class="function">validate</span>([
+            <span class="string">'email'</span> => <span class="string">'required|email'</span>,
+            <span class="string">'password'</span> => <span class="string">'required'</span>,
+        ]);
+
+        <span class="variable">$user</span> = User::<span class="function">where</span>(<span class="string">'email'</span>, <span class="variable">$request</span>->email)-><span class="function">first</span>();
+
+        <span class="keyword">if</span> (!<span class="variable">$user</span> || !Hash::<span class="function">check</span>(<span class="variable">$request</span>->password, <span class="variable">$user</span>->password)) {
+            <span class="keyword">throw</span> ValidationException::<span class="function">withMessages</span>([
+                <span class="string">'email'</span> => [<span class="string">'Les identifiants sont incorrects.'</span>],
+            ]);
+        }
+
+        <span class="variable">$token</span> = <span class="variable">$user</span>-><span class="function">createToken</span>(<span class="string">'auth-token'</span>)->plainTextToken;
+
+        <span class="keyword">return</span> <span class="function">response</span>()-><span class="function">json</span>([
+            <span class="string">'user'</span> => <span class="variable">$user</span>,
+            <span class="string">'token'</span> => <span class="variable">$token</span>,
+        ]);
+    }
+
+    <span class="comment">// Déconnexion</span>
+    <span class="keyword">public function</span> <span class="function">logout</span>(Request <span class="variable">$request</span>)
+    {
+        <span class="variable">$request</span>-><span class="function">user</span>()-><span class="function">currentAccessToken</span>()-><span class="function">delete</span>();
+
+        <span class="keyword">return</span> <span class="function">response</span>()-><span class="function">json</span>([
+            <span class="string">'message'</span> => <span class="string">'Déconnexion réussie'</span>
+        ]);
+    }
+}</code>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <hr class="page-break">
+
+            <!-- ==================== PARTIE 2 ==================== -->
+            <div class="section">
+                <h2 class="section-title">Partie 2 : Créer les API Resources (25 min)</h2>
+
+                <!-- Exercice 2.1 -->
+                <div class="exercise">
+                    <div class="exercise-header">
+                        <h4>Exercice 2.1 : Créer ProjectResource</h4>
+                        <span class="exercise-points">3 pts</span>
+                    </div>
+                    <div class="exercise-content">
+                        <div class="command-line">php artisan make:resource ProjectResource</div>
+
+                        <div class="code-block" data-language="PHP">
+<code><span class="comment">// app/Http/Resources/ProjectResource.php</span>
+<span class="keyword">namespace</span> App\Http\Resources;
+
+<span class="keyword">use</span> Illuminate\Http\Request;
+<span class="keyword">use</span> Illuminate\Http\Resources\Json\JsonResource;
+
+<span class="keyword">class</span> <span class="function">ProjectResource</span> <span class="keyword">extends</span> JsonResource
+{
+    <span class="keyword">public function</span> <span class="function">toArray</span>(Request <span class="variable">$request</span>): <span class="keyword">array</span>
+    {
+        <span class="keyword">return</span> [
+            <span class="string">'id'</span> => <span class="variable">$this</span>->id,
+            <span class="string">'name'</span> => <span class="variable">$this</span>->name,
+            <span class="string">'description'</span> => <span class="variable">$this</span>->description,
+            <span class="string">'status'</span> => <span class="variable">$this</span>->status,
+            <span class="string">'owner'</span> => [
+                <span class="string">'id'</span> => <span class="variable">$this</span>->user->id,
+                <span class="string">'name'</span> => <span class="variable">$this</span>->user->name,
+            ],
+            <span class="string">'tasks_count'</span> => <span class="variable">$this</span>-><span class="function">whenCounted</span>(<span class="string">'tasks'</span>),
+            <span class="string">'tasks'</span> => TaskResource::<span class="function">collection</span>(<span class="variable">$this</span>-><span class="function">whenLoaded</span>(<span class="string">'tasks'</span>)),
+            <span class="string">'created_at'</span> => <span class="variable">$this</span>->created_at-><span class="function">toISOString</span>(),
+            <span class="string">'updated_at'</span> => <span class="variable">$this</span>->updated_at-><span class="function">toISOString</span>(),
+        ];
+    }
+}</code>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Exercice 2.2 -->
+                <div class="exercise">
+                    <div class="exercise-header">
+                        <h4>Exercice 2.2 : Créer TaskResource</h4>
+                        <span class="exercise-points">2 pts</span>
+                    </div>
+                    <div class="exercise-content">
+                        <div class="command-line">php artisan make:resource TaskResource</div>
+
+                        <div class="code-block" data-language="PHP">
+<code><span class="comment">// app/Http/Resources/TaskResource.php</span>
+<span class="keyword">namespace</span> App\Http\Resources;
+
+<span class="keyword">use</span> Illuminate\Http\Request;
+<span class="keyword">use</span> Illuminate\Http\Resources\Json\JsonResource;
+
+<span class="keyword">class</span> <span class="function">TaskResource</span> <span class="keyword">extends</span> JsonResource
+{
+    <span class="keyword">public function</span> <span class="function">toArray</span>(Request <span class="variable">$request</span>): <span class="keyword">array</span>
+    {
+        <span class="keyword">return</span> [
+            <span class="string">'id'</span> => <span class="variable">$this</span>->id,
+            <span class="string">'title'</span> => <span class="variable">$this</span>->title,
+            <span class="string">'description'</span> => <span class="variable">$this</span>->description,
+            <span class="string">'status'</span> => <span class="variable">$this</span>->status,
+            <span class="string">'priority'</span> => <span class="variable">$this</span>->priority,
+            <span class="string">'due_date'</span> => <span class="variable">$this</span>->due_date?-><span class="function">toISOString</span>(),
+            <span class="string">'project_id'</span> => <span class="variable">$this</span>->project_id,
+            <span class="string">'created_at'</span> => <span class="variable">$this</span>->created_at-><span class="function">toISOString</span>(),
+        ];
+    }
+}</code>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Exercice 2.3 -->
+                <div class="exercise">
+                    <div class="exercise-header">
+                        <h4>Exercice 2.3 : Créer le contrôleur API Project</h4>
+                        <span class="exercise-points">4 pts</span>
+                    </div>
+                    <div class="exercise-content">
+                        <div class="command-line">php artisan make:controller Api/ProjectController --api</div>
+
+                        <div class="code-block" data-language="PHP">
+<code><span class="comment">// app/Http/Controllers/Api/ProjectController.php</span>
+<span class="keyword">namespace</span> App\Http\Controllers\Api;
+
+<span class="keyword">use</span> App\Http\Controllers\Controller;
+<span class="keyword">use</span> App\Http\Resources\ProjectResource;
+<span class="keyword">use</span> App\Models\Project;
+<span class="keyword">use</span> Illuminate\Http\Request;
+
+<span class="keyword">class</span> <span class="function">ProjectController</span> <span class="keyword">extends</span> Controller
+{
+    <span class="keyword">public function</span> <span class="function">index</span>(Request <span class="variable">$request</span>)
+    {
+        <span class="variable">$projects</span> = <span class="variable">$request</span>-><span class="function">user</span>()-><span class="function">projects</span>()
+            -><span class="function">with</span>(<span class="string">'user'</span>)
+            -><span class="function">withCount</span>(<span class="string">'tasks'</span>)
+            -><span class="function">latest</span>()
+            -><span class="function">paginate</span>(<span class="number">10</span>);
+
+        <span class="keyword">return</span> ProjectResource::<span class="function">collection</span>(<span class="variable">$projects</span>);
+    }
+
+    <span class="keyword">public function</span> <span class="function">store</span>(Request <span class="variable">$request</span>)
+    {
+        <span class="variable">$validated</span> = <span class="variable">$request</span>-><span class="function">validate</span>([
+            <span class="string">'name'</span> => <span class="string">'required|string|max:255'</span>,
+            <span class="string">'description'</span> => <span class="string">'nullable|string'</span>,
+            <span class="string">'status'</span> => <span class="string">'in:pending,active,completed'</span>,
+        ]);
+
+        <span class="variable">$project</span> = <span class="variable">$request</span>-><span class="function">user</span>()-><span class="function">projects</span>()-><span class="function">create</span>(<span class="variable">$validated</span>);
+
+        <span class="keyword">return</span> <span class="keyword">new</span> <span class="function">ProjectResource</span>(<span class="variable">$project</span>-><span class="function">load</span>(<span class="string">'user'</span>));
+    }
+
+    <span class="keyword">public function</span> <span class="function">show</span>(Project <span class="variable">$project</span>)
+    {
+        <span class="variable">$this</span>-><span class="function">authorize</span>(<span class="string">'view'</span>, <span class="variable">$project</span>);
+
+        <span class="keyword">return</span> <span class="keyword">new</span> <span class="function">ProjectResource</span>(
+            <span class="variable">$project</span>-><span class="function">load</span>([<span class="string">'user'</span>, <span class="string">'tasks'</span>])
+        );
+    }
+
+    <span class="keyword">public function</span> <span class="function">update</span>(Request <span class="variable">$request</span>, Project <span class="variable">$project</span>)
+    {
+        <span class="variable">$this</span>-><span class="function">authorize</span>(<span class="string">'update'</span>, <span class="variable">$project</span>);
+
+        <span class="variable">$validated</span> = <span class="variable">$request</span>-><span class="function">validate</span>([
+            <span class="string">'name'</span> => <span class="string">'sometimes|string|max:255'</span>,
+            <span class="string">'description'</span> => <span class="string">'nullable|string'</span>,
+            <span class="string">'status'</span> => <span class="string">'in:pending,active,completed'</span>,
+        ]);
+
+        <span class="variable">$project</span>-><span class="function">update</span>(<span class="variable">$validated</span>);
+
+        <span class="keyword">return</span> <span class="keyword">new</span> <span class="function">ProjectResource</span>(<span class="variable">$project</span>);
+    }
+
+    <span class="keyword">public function</span> <span class="function">destroy</span>(Project <span class="variable">$project</span>)
+    {
+        <span class="variable">$this</span>-><span class="function">authorize</span>(<span class="string">'delete'</span>, <span class="variable">$project</span>);
+
+        <span class="variable">$project</span>-><span class="function">delete</span>();
+
+        <span class="keyword">return</span> <span class="function">response</span>()-><span class="function">json</span>([<span class="string">'message'</span> => <span class="string">'Projet supprimé'</span>], <span class="number">200</span>);
+    }
+}</code>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <hr class="page-break">
+
+            <!-- ==================== PARTIE 3 ==================== -->
+            <div class="section">
+                <h2 class="section-title">Partie 3 : Définir les Routes API (15 min)</h2>
+
+                <!-- Exercice 3.1 -->
+                <div class="exercise">
+                    <div class="exercise-header">
+                        <h4>Exercice 3.1 : Configurer les routes</h4>
+                        <span class="exercise-points">3 pts</span>
+                    </div>
+                    <div class="exercise-content">
+                        <p>Définissez les routes dans <code class="code-inline">routes/api.php</code>.</p>
+
+                        <div class="code-block" data-language="PHP">
+<code><span class="comment">// routes/api.php</span>
+<span class="keyword">use</span> App\Http\Controllers\Api\AuthController;
+<span class="keyword">use</span> App\Http\Controllers\Api\ProjectController;
+<span class="keyword">use</span> App\Http\Controllers\Api\TaskController;
+<span class="keyword">use</span> Illuminate\Support\Facades\Route;
+
+<span class="comment">// Routes publiques</span>
+Route::<span class="function">post</span>(<span class="string">'/register'</span>, [AuthController::<span class="keyword">class</span>, <span class="string">'register'</span>]);
+Route::<span class="function">post</span>(<span class="string">'/login'</span>, [AuthController::<span class="keyword">class</span>, <span class="string">'login'</span>]);
+
+<span class="comment">// Routes protégées</span>
+Route::<span class="function">middleware</span>(<span class="string">'auth:sanctum'</span>)-><span class="function">group</span>(<span class="keyword">function</span> () {
+    <span class="comment">// Utilisateur courant</span>
+    Route::<span class="function">get</span>(<span class="string">'/user'</span>, <span class="keyword">fn</span> (Request <span class="variable">$request</span>) => <span class="variable">$request</span>-><span class="function">user</span>());
+    Route::<span class="function">post</span>(<span class="string">'/logout'</span>, [AuthController::<span class="keyword">class</span>, <span class="string">'logout'</span>]);
+
+    <span class="comment">// Ressources</span>
+    Route::<span class="function">apiResource</span>(<span class="string">'projects'</span>, ProjectController::<span class="keyword">class</span>);
+    Route::<span class="function">apiResource</span>(<span class="string">'tasks'</span>, TaskController::<span class="keyword">class</span>);
+
+    <span class="comment">// Tâches d'un projet</span>
+    Route::<span class="function">get</span>(<span class="string">'/projects/{project}/tasks'</span>, [ProjectController::<span class="keyword">class</span>, <span class="string">'tasks'</span>]);
+});</code>
+                        </div>
+
+                        <p><strong>Vérifiez les routes :</strong></p>
+                        <div class="command-line">php artisan route:list --path=api</div>
+
+                        <div class="answer-zone">
+                            <strong>Listez les routes API créées :</strong>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <hr class="page-break">
+
+            <!-- ==================== PARTIE 4 ==================== -->
+            <div class="section">
+                <h2 class="section-title">Partie 4 : Tester l'API (30 min)</h2>
+
+                <!-- Exercice 4.1 -->
+                <div class="exercise">
+                    <div class="exercise-header">
+                        <h4>Exercice 4.1 : Tester avec Postman ou curl</h4>
+                        <span class="exercise-points">5 pts</span>
+                    </div>
+                    <div class="exercise-content">
+                        <p>Testez toutes les routes de votre API. Voici les requêtes à effectuer :</p>
+
+                        <h4 class="subsection-title">1. Inscription</h4>
+                        <div class="code-block" data-language="HTTP">
+<code>POST http://localhost:8000/api/register
+Content-Type: application/json
+
+{
+    "name": "Test User",
+    "email": "test@taskflow.com",
+    "password": "password123",
+    "password_confirmation": "password123"
+}</code>
+                        </div>
+
+                        <h4 class="subsection-title">2. Connexion</h4>
+                        <div class="code-block" data-language="HTTP">
+<code>POST http://localhost:8000/api/login
+Content-Type: application/json
+
+{
+    "email": "test@taskflow.com",
+    "password": "password123"
+}</code>
+                        </div>
+
+                        <p><strong>Notez le token reçu :</strong></p>
+                        <div class="answer-zone"></div>
+
+                        <h4 class="subsection-title">3. Lister les projets (avec token)</h4>
+                        <div class="code-block" data-language="HTTP">
+<code>GET http://localhost:8000/api/projects
+Authorization: Bearer VOTRE_TOKEN_ICI
+Accept: application/json</code>
+                        </div>
+
+                        <h4 class="subsection-title">4. Créer un projet</h4>
+                        <div class="code-block" data-language="HTTP">
+<code>POST http://localhost:8000/api/projects
+Authorization: Bearer VOTRE_TOKEN_ICI
+Content-Type: application/json
+
+{
+    "name": "Projet API Test",
+    "description": "Créé via l'API",
+    "status": "active"
+}</code>
+                        </div>
+
+                        <h4 class="subsection-title">5. Voir un projet</h4>
+                        <div class="code-block" data-language="HTTP">
+<code>GET http://localhost:8000/api/projects/1
+Authorization: Bearer VOTRE_TOKEN_ICI
+Accept: application/json</code>
+                        </div>
+
+                        <div class="screenshot-placeholder">
+                            <p><strong>Capture d'écran :</strong> Réponse JSON de la liste des projets dans Postman</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Exercice 4.2 -->
+                <div class="exercise">
+                    <div class="exercise-header">
+                        <h4>Exercice 4.2 : Tester les erreurs</h4>
+                        <span class="exercise-points">3 pts</span>
+                    </div>
+                    <div class="exercise-content">
+                        <p>Vérifiez que l'API gère correctement les erreurs.</p>
+
+                        <table>
+                            <tr>
+                                <th>Test</th>
+                                <th>Code attendu</th>
+                                <th>Vérifié</th>
+                            </tr>
+                            <tr>
+                                <td>Accès sans token à /api/projects</td>
+                                <td>401 Unauthorized</td>
+                                <td></td>
+                            </tr>
+                            <tr>
+                                <td>Projet inexistant /api/projects/999</td>
+                                <td>404 Not Found</td>
+                                <td></td>
+                            </tr>
+                            <tr>
+                                <td>Créer projet sans nom</td>
+                                <td>422 Unprocessable</td>
+                                <td></td>
+                            </tr>
+                            <tr>
+                                <td>Modifier projet d'un autre utilisateur</td>
+                                <td>403 Forbidden</td>
+                                <td></td>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ==================== BARÈME ==================== -->
+            <div class="evaluation-box">
+                <h3>Barème d'évaluation</h3>
+                <div class="evaluation-grid">
+                    <div class="evaluation-item">
+                        <span class="criteria">Installation Sanctum</span>
+                        <span class="points">3 pts</span>
+                    </div>
+                    <div class="evaluation-item">
+                        <span class="criteria">AuthController (login/register/logout)</span>
+                        <span class="points">4 pts</span>
+                    </div>
+                    <div class="evaluation-item">
+                        <span class="criteria">ProjectResource</span>
+                        <span class="points">3 pts</span>
+                    </div>
+                    <div class="evaluation-item">
+                        <span class="criteria">TaskResource</span>
+                        <span class="points">2 pts</span>
+                    </div>
+                    <div class="evaluation-item">
+                        <span class="criteria">ProjectController API</span>
+                        <span class="points">4 pts</span>
+                    </div>
+                    <div class="evaluation-item">
+                        <span class="criteria">Routes API configurées</span>
+                        <span class="points">3 pts</span>
+                    </div>
+                    <div class="evaluation-item">
+                        <span class="criteria">Tests avec Postman (succès)</span>
+                        <span class="points">5 pts</span>
+                    </div>
+                    <div class="evaluation-item">
+                        <span class="criteria">Tests erreurs</span>
+                        <span class="points">3 pts</span>
+                    </div>
+                </div>
+                <div class="evaluation-total">
+                    <span>Total</span>
+                    <span class="points">27 pts (ramené à 20)</span>
+                </div>
+            </div>
+
+            <!-- ==================== BONUS ==================== -->
+            <div class="bonus-box">
+                <h3>Exercice Bonus (+3 pts)</h3>
+                <ol>
+                    <li>Créez <code class="code-inline">Api/TaskController</code> complet avec CRUD</li>
+                    <li>Ajoutez la pagination et les filtres (status, search) sur /api/projects</li>
+                    <li>Documentez votre API avec les en-têtes et exemples de réponse</li>
+                </ol>
+            </div>
+
+            <!-- ==================== LIVRABLES ==================== -->
+            <div class="deliverables-box">
+                <h3>Livrables à rendre</h3>
+                <ul class="deliverables-list">
+                    <li>AuthController.php</li>
+                    <li>Api/ProjectController.php</li>
+                    <li>ProjectResource.php et TaskResource.php</li>
+                    <li>routes/api.php</li>
+                    <li>Captures d'écran Postman (au moins 3 requêtes)</li>
+                    <li>Collection Postman exportée (optionnel)</li>
+                </ul>
+            </div>
+
+        </div>
+
+        <!-- ==================== PIED DE PAGE ==================== -->
+        <div class="doc-footer">
+            <span>ISIM Médenine | Développement Web Avancé | 2025-2026</span>
+            <span>M. JARRAY Mondher</span>
+        </div>
+
+    </div>
+</body>
+</html>

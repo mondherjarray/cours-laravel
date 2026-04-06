@@ -1,0 +1,499 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TP 2 - Routes et Contrôleurs | ISIMED</title>
+    <link rel="stylesheet" href="../css/tp.css">
+</head>
+
+<body>
+    <div class="document">
+
+        <!-- ==================== EN-TÊTE ==================== -->
+        <div class="doc-header">
+            <div class="header-top">
+                <div class="header-logo">
+                    <img src="../assets/isim-logo.jpeg" alt="ISIM Logo">
+                    <div class="institution-name">
+                        <strong>ISIM</strong> Institut Supérieur d'Informatique de Médenine
+                    </div>
+                </div>
+                <div class="header-info">
+                    Année Universitaire<br>
+                    <strong>2025-2026</strong>
+                </div>
+            </div>
+            <div class="header-title">
+                <h1>Travaux Pratiques - Développement Web Avancé</h1>
+                <h2>TP N°2 : Routes et Contrôleurs</h2>
+            </div>
+        </div>
+
+        <!-- ==================== BARRE D'INFORMATIONS ==================== -->
+        <div class="info-bar">
+            <div class="info-item">
+                <span class="label">Classe :</span>
+                <span class="value">MP1ILC</span>
+            </div>
+            <div class="info-item">
+                <span class="label">Enseignant :</span>
+                <span class="value">M. JARRAY Mondher</span>
+            </div>
+            <div class="info-item">
+                <span class="label">Durée :</span>
+                <span class="value">1h30</span>
+            </div>
+            <div class="info-item">
+                <span class="label">Projet :</span>
+                <span class="value">TaskFlow</span>
+            </div>
+        </div>
+
+        <!-- ==================== CONTENU ==================== -->
+        <div class="doc-content">
+
+            <!-- OBJECTIFS -->
+            <div class="objectives-box">
+                <h3>Objectifs du TP</h3>
+                <ul>
+                    <li>Créer des routes avec différentes méthodes HTTP</li>
+                    <li>Utiliser des paramètres de route</li>
+                    <li>Créer et utiliser des contrôleurs</li>
+                    <li>Organiser les routes avec des groupes</li>
+                    <li>Mettre en place la structure de base de TaskFlow</li>
+                </ul>
+            </div>
+
+            <!-- PRÉREQUIS -->
+            <div class="prerequisites-box">
+                <h3>Prérequis</h3>
+                <ul>
+                    <li>Avoir terminé le TP 1 (projet TaskFlow créé)</li>
+                    <li>Laravel 11 installé et fonctionnel</li>
+                    <li>Comprendre les bases du routage (Chapitre 2)</li>
+                </ul>
+            </div>
+
+            <!-- ==================== PARTIE 1 ==================== -->
+            <div class="section">
+                <h2 class="section-title">Partie 1 : Routes de Base (25 min)</h2>
+
+                <!-- Exercice 1.1 -->
+                <div class="exercise">
+                    <div class="exercise-header">
+                        <h4>Exercice 1.1 : Créer des routes simples</h4>
+                    </div>
+                    <div class="exercise-content">
+                        <p>Ouvrez le fichier <code class="code-inline">routes/web.php</code> et ajoutez les routes suivantes :</p>
+
+                        <ul class="task-list">
+                            <li data-task="a">Une route GET <code class="code-inline">/a-propos</code> qui retourne le texte "À propos de TaskFlow"</li>
+                            <li data-task="b">Une route GET <code class="code-inline">/contact</code> qui retourne le texte "Page de contact"</li>
+                            <li data-task="c">Une route GET <code class="code-inline">/services</code> qui retourne un tableau JSON avec 3 services</li>
+                        </ul>
+
+                        <div class="info-box tip">
+                            <div class="info-box-title">Aide</div>
+                            <p>Pour retourner du JSON :</p>
+                            <div class="code-block" data-language="PHP">
+                                <code>Route::<span class="function">get</span>(<span class="string">'/services'</span>, <span class="keyword">function</span>() {
+    <span class="keyword">return</span> <span class="function">response</span>()-><span class="function">json</span>([
+        <span class="string">'service1'</span> => <span class="string">'Gestion de projets'</span>,
+        <span class="string">'service2'</span> => <span class="string">'...'</span>
+    ]);
+});</code>
+                            </div>
+                        </div>
+
+                        <p><strong>Testez vos routes</strong> en visitant les URLs dans votre navigateur.</p>
+
+                        <div class="answer-zone code">
+                            <strong>Écrivez votre code ici :</strong>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Exercice 1.2 -->
+                <div class="exercise">
+                    <div class="exercise-header">
+                        <h4>Exercice 1.2 : Routes avec paramètres</h4>
+                    </div>
+                    <div class="exercise-content">
+                        <p>Créez les routes suivantes avec des paramètres :</p>
+
+                        <ul class="task-list">
+                            <li data-task="a">
+                                <code class="code-inline">/utilisateur/{nom}</code> qui affiche "Bienvenue [nom] !"
+                            </li>
+                            <li data-task="b">
+                                <code class="code-inline">/projet/{id}</code> où l'id doit être un nombre<br>
+                                <em>Utilisez <code class="code-inline">whereNumber()</code></em>
+                            </li>
+                            <li data-task="c">
+                                <code class="code-inline">/equipe/{nom?}</code> avec un paramètre optionnel<br> Si pas de nom : "Équipe par défaut"
+                            </li>
+                            <li data-task="d">
+                                <code class="code-inline">/projet/{projetId}/tache/{tacheId}</code> avec deux paramètres
+                            </li>
+                        </ul>
+
+                        <div class="answer-zone code">
+                            <strong>Écrivez votre code ici :</strong>
+                        </div>
+
+                        <p><strong>Questions :</strong></p>
+                        <p>1. Que se passe-t-il si vous visitez <code class="code-inline">/projet/abc</code> (avec la contrainte whereNumber) ?</p>
+                        <div class="answer-zone"></div>
+
+                        <p>2. Quelle est la différence entre <code class="code-inline">{id}</code> et <code class="code-inline">{id?}</code> ?</p>
+                        <div class="answer-zone"></div>
+                    </div>
+                </div>
+
+                <!-- Exercice 1.3 -->
+                <div class="exercise">
+                    <div class="exercise-header">
+                        <h4>Exercice 1.3 : Routes nommées</h4>
+                    </div>
+                    <div class="exercise-content">
+                        <p>Ajoutez des noms à vos routes avec la méthode <code class="code-inline">name()</code> :</p>
+
+                        <div class="code-block" data-language="PHP">
+                            <code><span class="comment">// Exemple</span>
+Route::<span class="function">get</span>(<span class="string">'/a-propos'</span>, ...)-><span class="function">name</span>(<span class="string">'about'</span>);
+Route::<span class="function">get</span>(<span class="string">'/contact'</span>, ...)-><span class="function">name</span>(<span class="string">'contact'</span>);
+Route::<span class="function">get</span>(<span class="string">'/projet/{id}'</span>, ...)-><span class="function">name</span>(<span class="string">'projets.show'</span>);</code>
+                        </div>
+
+                        <p>Vérifiez vos routes avec la commande :</p>
+                        <div class="command-line">php artisan route:list</div>
+
+                        <div class="screenshot-placeholder">
+                            <p><strong>Capture d'écran :</strong> Résultat de la commande route:list</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <hr class="page-break">
+
+            <!-- ==================== PARTIE 2 ==================== -->
+            <div class="section">
+                <h2 class="section-title">Partie 2 : Les Contrôleurs (35 min)</h2>
+
+                <!-- Exercice 2.1 -->
+                <div class="exercise">
+                    <div class="exercise-header">
+                        <h4>Exercice 2.1 : Créer le contrôleur ProjetController</h4>
+                    </div>
+                    <div class="exercise-content">
+                        <p>Créez un contrôleur de ressource pour gérer les projets :</p>
+
+                        <ol class="steps">
+                            <li>
+                                Exécutez la commande Artisan :
+                                <div class="command-line">php artisan make:controller ProjetController --resource</div>
+                            </li>
+                            <li>
+                                Ouvrez le fichier créé dans <code class="code-inline">app/Http/Controllers/ProjetController.php</code>
+                            </li>
+                            <li>
+                                Complétez les méthodes suivantes :
+                            </li>
+                        </ol>
+
+                        <div class="code-block" data-language="PHP">
+                            <code><span class="keyword">&lt;?php</span>
+
+<span class="keyword">namespace</span> App\Http\Controllers;
+
+<span class="keyword">use</span> Illuminate\Http\Request;
+
+<span class="keyword">class</span> <span class="function">ProjetController</span> <span class="keyword">extends</span> Controller
+{
+    <span class="comment">// Liste des projets</span>
+    <span class="keyword">public function</span> <span class="function">index</span>()
+    {
+        <span class="comment">// Retourner un tableau de projets (simulé)</span>
+        <span class="variable">$projets</span> = [
+            [<span class="string">'id'</span> => <span class="number">1</span>, <span class="string">'nom'</span> => <span class="string">'Site E-commerce'</span>, <span class="string">'statut'</span> => <span class="string">'En cours'</span>],
+            [<span class="string">'id'</span> => <span class="number">2</span>, <span class="string">'nom'</span> => <span class="string">'Application Mobile'</span>, <span class="string">'statut'</span> => <span class="string">'Terminé'</span>],
+            [<span class="string">'id'</span> => <span class="number">3</span>, <span class="string">'nom'</span> => <span class="string">'API REST'</span>, <span class="string">'statut'</span> => <span class="string">'En attente'</span>],
+        ];
+
+        <span class="keyword">return</span> <span class="function">response</span>()-><span class="function">json</span>(<span class="variable">$projets</span>);
+    }
+
+    <span class="comment">// Afficher un projet spécifique</span>
+    <span class="keyword">public function</span> <span class="function">show</span>(<span class="variable">$id</span>)
+    {
+        <span class="comment">// À compléter : retourner les détails du projet $id</span>
+    }
+
+    <span class="comment">// Formulaire de création</span>
+    <span class="keyword">public function</span> <span class="function">create</span>()
+    {
+        <span class="keyword">return</span> <span class="string">"Formulaire de création de projet"</span>;
+    }
+
+    <span class="comment">// Enregistrer un nouveau projet</span>
+    <span class="keyword">public function</span> <span class="function">store</span>(Request <span class="variable">$request</span>)
+    {
+        <span class="comment">// À compléter : afficher les données reçues</span>
+    }
+}</code>
+                        </div>
+
+                        <p><strong>Complétez les méthodes show() et store()</strong></p>
+                        <div class="answer-zone code">
+                            <strong>Code de la méthode show() :</strong>
+                        </div>
+
+                        <div class="answer-zone code">
+                            <strong>Code de la méthode store() :</strong>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Exercice 2.2 -->
+                <div class="exercise">
+                    <div class="exercise-header">
+                        <h4>Exercice 2.2 : Lier les routes au contrôleur</h4>
+                    </div>
+                    <div class="exercise-content">
+                        <p>Dans <code class="code-inline">routes/web.php</code>, remplacez vos anciennes routes par :</p>
+
+                        <div class="code-block" data-language="PHP">
+                            <code><span class="keyword">use</span> App\Http\Controllers\ProjetController;
+
+<span class="comment">// Route resource pour les projets</span>
+Route::<span class="function">resource</span>(<span class="string">'projets'</span>, ProjetController::<span class="keyword">class</span>);</code>
+                        </div>
+
+                        <p>Exécutez <code class="code-inline">php artisan route:list</code> et répondez :</p>
+
+                        <p>1. Combien de routes ont été créées automatiquement ?</p>
+                        <div class="answer-zone"></div>
+
+                        <p>2. Quelle est l'URL pour accéder à la méthode <code class="code-inline">edit</code> du projet 5 ?</p>
+                        <div class="answer-zone"></div>
+
+                        <p>3. Quelle méthode HTTP est utilisée pour la route <code class="code-inline">projets.destroy</code> ?</p>
+                        <div class="answer-zone"></div>
+                    </div>
+                </div>
+
+                <!-- Exercice 2.3 -->
+                <div class="exercise">
+                    <div class="exercise-header">
+                        <h4>Exercice 2.3 : Créer le contrôleur TacheController</h4>
+                    </div>
+                    <div class="exercise-content">
+                        <p>Créez un deuxième contrôleur pour gérer les tâches :</p>
+
+                        <div class="command-line">php artisan make:controller TacheController --resource</div>
+
+                        <p>Implémentez les méthodes suivantes :</p>
+
+                        <ul class="task-list">
+                            <li data-task="a">
+                                <strong>index()</strong> : retourne une liste de 5 tâches (simulées)
+                            </li>
+                            <li data-task="b">
+                                <strong>show($id)</strong> : retourne les détails d'une tâche
+                            </li>
+                            <li data-task="c">
+                                <strong>store(Request $request)</strong> : affiche les données reçues en JSON
+                            </li>
+                        </ul>
+
+                        <div class="info-box note">
+                            <div class="info-box-title">Structure d'une tâche</div>
+                            <div class="code-block" data-language="PHP">
+                                <code>[
+    <span class="string">'id'</span> => <span class="number">1</span>,
+    <span class="string">'titre'</span> => <span class="string">'Créer la base de données'</span>,
+    <span class="string">'description'</span> => <span class="string">'Définir le schéma de la BDD'</span>,
+    <span class="string">'statut'</span> => <span class="string">'todo'</span>, <span class="comment">// todo, in_progress, done</span>
+    <span class="string">'priorite'</span> => <span class="string">'haute'</span> <span class="comment">// basse, moyenne, haute</span>
+]</code>
+                            </div>
+                        </div>
+
+                        <p>Ajoutez la route resource dans web.php :</p>
+                        <div class="code-block" data-language="PHP">
+                            <code>Route::<span class="function">resource</span>(<span class="string">'taches'</span>, TacheController::<span class="keyword">class</span>);</code>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <hr class="page-break">
+
+            <!-- ==================== PARTIE 3 ==================== -->
+            <div class="section">
+                <h2 class="section-title">Partie 3 : Organisation Avancée (20 min)</h2>
+
+                <!-- Exercice 3.1 -->
+                <div class="exercise">
+                    <div class="exercise-header">
+                        <h4>Exercice 3.1 : Groupes de routes</h4>
+                    </div>
+                    <div class="exercise-content">
+                        <p>Organisez vos routes avec des préfixes :</p>
+
+                        <div class="code-block" data-language="PHP">
+                            <code><span class="comment">// Routes publiques</span>
+Route::<span class="function">get</span>(<span class="string">'/'</span>, <span class="keyword">function</span>() {
+    <span class="keyword">return</span> <span class="string">'Bienvenue sur TaskFlow'</span>;
+})-><span class="function">name</span>(<span class="string">'home'</span>);
+
+Route::<span class="function">get</span>(<span class="string">'/a-propos'</span>, <span class="keyword">function</span>() {
+    <span class="keyword">return</span> <span class="string">'À propos de TaskFlow'</span>;
+})-><span class="function">name</span>(<span class="string">'about'</span>);
+
+<span class="comment">// Routes de l'application (préfixe /app)</span>
+Route::<span class="function">prefix</span>(<span class="string">'app'</span>)-><span class="function">name</span>(<span class="string">'app.'</span>)-><span class="function">group</span>(<span class="keyword">function</span>() {
+    Route::<span class="function">resource</span>(<span class="string">'projets'</span>, ProjetController::<span class="keyword">class</span>);
+    Route::<span class="function">resource</span>(<span class="string">'taches'</span>, TacheController::<span class="keyword">class</span>);
+});
+
+<span class="comment">// Routes API (préfixe /api)</span>
+Route::<span class="function">prefix</span>(<span class="string">'api'</span>)-><span class="function">name</span>(<span class="string">'api.'</span>)-><span class="function">group</span>(<span class="keyword">function</span>() {
+    Route::<span class="function">get</span>(<span class="string">'/projets'</span>, [ProjetController::<span class="keyword">class</span>, <span class="string">'index'</span>])
+        -><span class="function">name</span>(<span class="string">'projets.index'</span>);
+    Route::<span class="function">get</span>(<span class="string">'/taches'</span>, [TacheController::<span class="keyword">class</span>, <span class="string">'index'</span>])
+        -><span class="function">name</span>(<span class="string">'taches.index'</span>);
+});</code>
+                        </div>
+
+                        <p>Après avoir ajouté ce code, répondez :</p>
+
+                        <p>1. Quelle est l'URL complète pour créer un nouveau projet ?</p>
+                        <div class="answer-zone"></div>
+
+                        <p>2. Quel est le nom complet de la route pour lister les tâches dans l'application ?</p>
+                        <div class="answer-zone"></div>
+                    </div>
+                </div>
+
+                <!-- Exercice 3.2 -->
+                <div class="exercise">
+                    <div class="exercise-header">
+                        <h4>Exercice 3.2 : Tâches imbriquées dans les projets</h4>
+                    </div>
+                    <div class="exercise-content">
+                        <p>Les tâches appartiennent à un projet. Créez des routes imbriquées :</p>
+
+                        <div class="code-block" data-language="PHP">
+                            <code><span class="comment">// URL : /projets/{projet}/taches</span>
+Route::<span class="function">resource</span>(<span class="string">'projets.taches'</span>, TacheController::<span class="keyword">class</span>);</code>
+                        </div>
+
+                        <p>Modifiez la méthode <code class="code-inline">index</code> de TacheController pour accepter l'ID du projet :</p>
+
+                        <div class="code-block" data-language="PHP">
+                            <code><span class="keyword">public function</span> <span class="function">index</span>(<span class="variable">$projetId</span>)
+{
+    <span class="comment">// Simuler les tâches du projet</span>
+    <span class="variable">$taches</span> = [
+        [<span class="string">'id'</span> => <span class="number">1</span>, <span class="string">'projet_id'</span> => <span class="variable">$projetId</span>, <span class="string">'titre'</span> => <span class="string">'Tâche 1'</span>],
+        [<span class="string">'id'</span> => <span class="number">2</span>, <span class="string">'projet_id'</span> => <span class="variable">$projetId</span>, <span class="string">'titre'</span> => <span class="string">'Tâche 2'</span>],
+    ];
+
+    <span class="keyword">return</span> <span class="function">response</span>()-><span class="function">json</span>([
+        <span class="string">'projet_id'</span> => <span class="variable">$projetId</span>,
+        <span class="string">'taches'</span> => <span class="variable">$taches</span>
+    ]);
+}</code>
+                        </div>
+
+                        <p>Testez l'URL <code class="code-inline">/projets/1/taches</code> et faites une capture :</p>
+                        <div class="screenshot-placeholder">
+                            <p><strong>Capture d'écran :</strong> Résultat de /projets/1/taches</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ==================== BARÈME ==================== -->
+            <div class="evaluation-box">
+                <h3>Barème d'évaluation</h3>
+                <div class="evaluation-grid">
+                    <div class="evaluation-item">
+                        <span class="criteria">Routes simples (1.1)</span>
+                    </div>
+                    <div class="evaluation-item">
+                        <span class="criteria">Routes avec paramètres (1.2)</span>
+                    </div>
+                    <div class="evaluation-item">
+                        <span class="criteria">Routes nommées (1.3)</span>
+                    </div>
+                    <div class="evaluation-item">
+                        <span class="criteria">ProjetController (2.1)</span>
+                    </div>
+                    <div class="evaluation-item">
+                        <span class="criteria">Routes resource (2.2)</span>
+                    </div>
+                    <div class="evaluation-item">
+                        <span class="criteria">TacheController (2.3)</span>
+                    </div>
+                    <div class="evaluation-item">
+                        <span class="criteria">Groupes de routes (3.1)</span>
+                    </div>
+                    <div class="evaluation-item">
+                        <span class="criteria">Routes imbriquées (3.2)</span>
+                    </div>
+                </div>
+                <div class="evaluation-total">
+                    <span>Total</span>
+                </div>
+            </div>
+
+            <!-- ==================== BONUS ==================== -->
+            <div class="bonus-box">
+                <h3>Exercice Bonus</h3>
+                <ol>
+                    <li>
+                        Créez un contrôleur <code class="code-inline">DashboardController</code> avec une méthode <code class="code-inline">index</code> qui retourne un résumé :
+                        <ul>
+                            <li>Nombre total de projets</li>
+                            <li>Nombre de tâches par statut</li>
+                        </ul>
+                    </li>
+                    <li>
+                        Ajoutez une route <code class="code-inline">/dashboard</code> qui utilise ce contrôleur
+                    </li>
+                    <li>
+                        Créez un middleware fictif qui ajoute un header "X-TaskFlow-Version: 1.0" à toutes les réponses
+                    </li>
+                </ol>
+            </div>
+
+            <!-- ==================== LIVRABLES ==================== -->
+            <div class="deliverables-box">
+                <h3>Livrables à rendre</h3>
+                <ul class="deliverables-list">
+                    <li>Fichier routes/web.php complet</li>
+                    <li>Fichier ProjetController.php</li>
+                    <li>Fichier TacheController.php</li>
+                    <li>Captures d'écran des tests dans le navigateur</li>
+                    <li>Capture de la commande php artisan route:list</li>
+                    <li>Réponses aux questions</li>
+                </ul>
+            </div>
+
+        </div>
+
+        <!-- ==================== FOOTER ==================== -->
+        <div class="doc-footer">
+            <span>ISIM Médenine | Développement Web Avancé | 2025-2026</span>
+            <span>M. JARRAY Mondher</span>
+        </div>
+
+    </div>
+</body>
+
+</html>

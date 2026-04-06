@@ -1,0 +1,1105 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chapitre 1 - Introduction à Laravel 11 | ISIMED</title>
+    <link rel="stylesheet" href="../css/slides.css">
+</head>
+
+<body>
+    <div class="presentation">
+
+        <!-- ==================== SLIDE 1 : PAGE DE TITRE ==================== -->
+        <div class="slide title-slide">
+            <div class="slide-header">
+                <div class="logo-container">
+                    <img src="../assets/isim-logo.jpeg" alt="ISIM Logo" class="logo">
+                    <div class="institution">
+                        <strong>ISIM</strong> Institut Supérieur d'Informatique<br>de Médenine
+                    </div>
+                </div>
+                <div class="chapter-info">
+                    Année Universitaire<br>
+                    <strong>2025-2026</strong>
+                </div>
+            </div>
+            <div class="slide-content">
+                <h1 class="main-title">Développement Web Avancé</h1>
+                <h2 class="course-title">Framework Laravel 11</h2>
+                <div class="chapter-title">Chapitre 1 : Introduction à Laravel</div>
+                <div class="info-grid">
+                    <div class="info-item">
+                        <label>Enseignant</label>
+                        <span>M. JARRAY Mondher</span>
+                    </div>
+                    <div class="info-item">
+                        <label>Classe</label>
+                        <span>MP1ILC</span>
+                    </div>
+                    <div class="info-item">
+                        <label>Semestre</label>
+                        <span>S1</span>
+                    </div>
+                    <div class="info-item">
+                        <label>Durée</label>
+                        <span>1h30</span>
+                    </div>
+                </div>
+            </div>
+            <div class="slide-footer">
+                <span class="author">M. JARRAY Mondher | ISIM Médenine</span>
+                <span class="page-number">1</span>
+            </div>
+        </div>
+
+        <!-- ==================== SLIDE 2 : OBJECTIFS ==================== -->
+        <div class="slide">
+            <div class="slide-header">
+                <div class="logo-container">
+                    <img src="../assets/isim-logo.jpeg" alt="ISIM Logo" class="logo">
+                    <div class="institution">
+                        <strong>ISIM</strong> Développement Web Avancé
+                    </div>
+                </div>
+                <div class="chapter-info">
+                    Chapitre 1<br>
+                    <span class="chapter-number">Introduction</span>
+                </div>
+            </div>
+            <div class="slide-title">
+                <h1>Objectifs du Chapitre</h1>
+            </div>
+            <div class="slide-content">
+                <ul class="objectives-list">
+                    <li>Comprendre ce qu'est un framework PHP et pourquoi l'utiliser</li>
+                    <li>Découvrir Laravel et son histoire</li>
+                    <li>Maîtriser l'architecture MVC (Modèle-Vue-Contrôleur)</li>
+                    <li>Installer Laravel 11 sur votre machine</li>
+                    <li>Explorer la structure d'un projet Laravel</li>
+                    <li>Créer votre première application Laravel</li>
+                </ul>
+            </div>
+            <div class="slide-footer">
+                <span class="author">M. JARRAY Mondher | ISIM Médenine</span>
+                <span class="page-number">2</span>
+            </div>
+        </div>
+
+        <!-- ==================== SLIDE 3 : PLAN DU CHAPITRE ==================== -->
+        <div class="slide">
+            <div class="slide-header">
+                <div class="logo-container">
+                    <img src="../assets/isim-logo.jpeg" alt="ISIM Logo" class="logo">
+                    <div class="institution">
+                        <strong>ISIM</strong> Développement Web Avancé
+                    </div>
+                </div>
+                <div class="chapter-info">
+                    Chapitre 1<br>
+                    <span class="chapter-number">Introduction</span>
+                </div>
+            </div>
+            <div class="slide-title">
+                <h1>Plan du Chapitre</h1>
+            </div>
+            <div class="slide-content">
+                <ol>
+                    <li><strong>Pourquoi utiliser un framework ?</strong>
+                        <ul>
+                            <li>Les limites du PHP natif</li>
+                            <li>Les avantages d'un framework</li>
+                        </ul>
+                    </li>
+                    <li><strong>Présentation de Laravel</strong>
+                        <ul>
+                            <li>Histoire et évolution</li>
+                            <li>Pourquoi choisir Laravel ?</li>
+                        </ul>
+                    </li>
+                    <li><strong>L'architecture MVC</strong>
+                        <ul>
+                            <li>Le Modèle</li>
+                            <li>La Vue</li>
+                            <li>Le Contrôleur</li>
+                        </ul>
+                    </li>
+                    <li><strong>Installation et Configuration</strong></li>
+                    <li><strong>Structure d'un projet Laravel</strong></li>
+                </ol>
+            </div>
+            <div class="slide-footer">
+                <span class="author">M. JARRAY Mondher | ISIM Médenine</span>
+                <span class="page-number">3</span>
+            </div>
+        </div>
+
+        <!-- ==================== SLIDE 4 : POURQUOI UN FRAMEWORK ==================== -->
+        <div class="slide">
+            <div class="slide-header">
+                <div class="logo-container">
+                    <img src="../assets/isim-logo.jpeg" alt="ISIM Logo" class="logo">
+                    <div class="institution">
+                        <strong>ISIM</strong> Développement Web Avancé
+                    </div>
+                </div>
+                <div class="chapter-info">
+                    Chapitre 1<br>
+                    <span class="chapter-number">Introduction</span>
+                </div>
+            </div>
+            <div class="slide-title">
+                <h1>1. Pourquoi utiliser un Framework ?</h1>
+                <p class="subtitle">Les limites du développement PHP classique</p>
+            </div>
+            <div class="slide-content">
+                <h3>Le problème avec PHP natif</h3>
+                <p>Quand on développe un site web en PHP sans framework, on rencontre plusieurs difficultés :</p>
+
+                <div class="two-columns">
+                    <div class="column">
+                        <h4>❌ Sans Framework</h4>
+                        <ul>
+                            <li>Code mélangé (PHP + HTML)</li>
+                            <li>Pas de structure claire</li>
+                            <li>Sécurité difficile à gérer</li>
+                            <li>Répétition du même code</li>
+                            <li>Maintenance compliquée</li>
+                            <li>Travail en équipe difficile</li>
+                        </ul>
+                    </div>
+                    <div class="column">
+                        <h4>✅ Avec Framework</h4>
+                        <ul>
+                            <li>Code bien organisé</li>
+                            <li>Structure MVC claire</li>
+                            <li>Sécurité intégrée</li>
+                            <li>Code réutilisable</li>
+                            <li>Maintenance facile</li>
+                            <li>Collaboration simplifiée</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="info-box note">
+                    <div class="info-box-title">📝 Définition</div>
+                    Un <strong>framework</strong> est un ensemble d'outils et de règles qui facilitent le développement d'applications. Il fournit une structure de base et des fonctionnalités prêtes à l'emploi.
+                </div>
+            </div>
+            <div class="slide-footer">
+                <span class="author">M. JARRAY Mondher | ISIM Médenine</span>
+                <span class="page-number">4</span>
+            </div>
+        </div>
+
+        <!-- ==================== SLIDE 5 : EXEMPLE CODE SANS/AVEC FRAMEWORK ==================== -->
+        <div class="slide">
+            <div class="slide-header">
+                <div class="logo-container">
+                    <img src="../assets/isim-logo.jpeg" alt="ISIM Logo" class="logo">
+                    <div class="institution">
+                        <strong>ISIM</strong> Développement Web Avancé
+                    </div>
+                </div>
+                <div class="chapter-info">
+                    Chapitre 1<br>
+                    <span class="chapter-number">Introduction</span>
+                </div>
+            </div>
+            <div class="slide-title">
+                <h1>Exemple : PHP Natif vs Laravel</h1>
+                <p class="subtitle">Afficher une liste d'utilisateurs depuis la base de données</p>
+            </div>
+            <div class="slide-content">
+                <h4>❌ Avec PHP natif (code mélangé)</h4>
+                <div class="code-block" data-language="PHP">
+                    <code><span class="keyword">&lt;?php</span>
+<span class="variable">$conn</span> = <span class="function">mysqli_connect</span>(<span class="string">"localhost"</span>, <span class="string">"root"</span>, <span class="string">""</span>, <span class="string">"mabase"</span>);
+<span class="variable">$result</span> = <span class="function">mysqli_query</span>(<span class="variable">$conn</span>, <span class="string">"SELECT * FROM users"</span>);
+<span class="keyword">?&gt;</span>
+<span class="keyword">&lt;html&gt;</span>
+<span class="keyword">&lt;body&gt;</span>
+    <span class="keyword">&lt;?php while</span>(<span class="variable">$user</span> = <span class="function">mysqli_fetch_assoc</span>(<span class="variable">$result</span>)) { <span class="keyword">?&gt;</span>
+        &lt;p&gt;<span class="keyword">&lt;?=</span> <span class="variable">$user</span>[<span class="string">'name'</span>] <span class="keyword">?&gt;</span>&lt;/p&gt;
+    <span class="keyword">&lt;?php</span> } <span class="keyword">?&gt;</span>
+<span class="keyword">&lt;/body&gt;</span>
+<span class="keyword">&lt;/html&gt;</span></code>
+                </div>
+
+                <h4>✅ Avec Laravel (code propre et séparé)</h4>
+                <div class="code-block" data-language="PHP - Contrôleur">
+                    <code><span class="comment">// Dans le contrôleur</span>
+<span class="keyword">public function</span> <span class="function">index</span>()
+{
+    <span class="variable">$users</span> = User::<span class="function">all</span>();
+    <span class="keyword">return</span> <span class="function">view</span>(<span class="string">'users.index'</span>, [<span class="string">'users'</span> => <span class="variable">$users</span>]);
+}</code>
+                </div>
+
+                <div class="code-block" data-language="Blade - Vue">
+                    <code><span class="comment">{{-- Dans la vue Blade --}}</span>
+<span class="keyword">@foreach</span>(<span class="variable">$users</span> <span class="keyword">as</span> <span class="variable">$user</span>)
+    &lt;p&gt;{{ <span class="variable">$user</span>-><span class="variable">name</span> }}&lt;/p&gt;
+<span class="keyword">@endforeach</span></code>
+                </div>
+            </div>
+            <div class="slide-footer">
+                <span class="author">M. JARRAY Mondher | ISIM Médenine</span>
+                <span class="page-number">5</span>
+            </div>
+        </div>
+
+        <!-- ==================== SLIDE 6 : PRÉSENTATION DE LARAVEL ==================== -->
+        <div class="slide">
+            <div class="slide-header">
+                <div class="logo-container">
+                    <img src="../assets/isim-logo.jpeg" alt="ISIM Logo" class="logo">
+                    <div class="institution">
+                        <strong>ISIM</strong> Développement Web Avancé
+                    </div>
+                </div>
+                <div class="chapter-info">
+                    Chapitre 1<br>
+                    <span class="chapter-number">Introduction</span>
+                </div>
+            </div>
+            <div class="slide-title">
+                <h1>2. Présentation de Laravel</h1>
+                <p class="subtitle">Le framework PHP le plus populaire au monde</p>
+            </div>
+            <div class="slide-content">
+                <div class="two-columns">
+                    <div class="column">
+                        <h3>Qu'est-ce que Laravel ?</h3>
+                        <p>Laravel est un <strong>framework PHP open source</strong> créé par <strong>Taylor Otwell</strong> en 2011.</p>
+                        <p>Il est conçu pour rendre le développement web :</p>
+                        <ul>
+                            <li>Plus <strong>rapide</strong></li>
+                            <li>Plus <strong>agréable</strong></li>
+                            <li>Plus <strong>structuré</strong></li>
+                        </ul>
+
+                        <h4>Philosophie de Laravel</h4>
+                        <p><em>"Le développement doit être une expérience créative et agréable"</em></p>
+                    </div>
+                    <div class="column">
+                        <h3>Évolution des versions</h3>
+                        <table>
+                            <tr>
+                                <th>Version</th>
+                                <th>Année</th>
+                            </tr>
+                            <tr>
+                                <td>Laravel 1.0</td>
+                                <td>2011</td>
+                            </tr>
+                            <tr>
+                                <td>Laravel 4.0</td>
+                                <td>2013</td>
+                            </tr>
+                            <tr>
+                                <td>Laravel 5.0</td>
+                                <td>2015</td>
+                            </tr>
+                            <tr>
+                                <td>Laravel 8.0</td>
+                                <td>2020</td>
+                            </tr>
+                            <tr>
+                                <td>Laravel 10.0</td>
+                                <td>2023</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Laravel 11.0</strong></td>
+                                <td><strong>2024</strong></td>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+            </div>
+            <div class="slide-footer">
+                <span class="author">M. JARRAY Mondher | ISIM Médenine</span>
+                <span class="page-number">6</span>
+            </div>
+        </div>
+
+        <!-- ==================== SLIDE 7 : POURQUOI CHOISIR LARAVEL ==================== -->
+        <div class="slide">
+            <div class="slide-header">
+                <div class="logo-container">
+                    <img src="../assets/isim-logo.jpeg" alt="ISIM Logo" class="logo">
+                    <div class="institution">
+                        <strong>ISIM</strong> Développement Web Avancé
+                    </div>
+                </div>
+                <div class="chapter-info">
+                    Chapitre 1<br>
+                    <span class="chapter-number">Introduction</span>
+                </div>
+            </div>
+            <div class="slide-title">
+                <h1>Pourquoi choisir Laravel ?</h1>
+                <p class="subtitle">Les avantages qui font la différence</p>
+            </div>
+            <div class="slide-content">
+                <div class="highlight-box">
+                    <h4>🏆 Laravel est le framework PHP #1 mondial</h4>
+                    <p>Plus de 75 000 étoiles sur GitHub et une communauté très active</p>
+                </div>
+
+                <div class="two-columns">
+                    <div class="column">
+                        <h4>🛠️ Fonctionnalités Intégrées</h4>
+                        <ul>
+                            <li><strong>Eloquent ORM</strong> - Gestion simple de la base de données</li>
+                            <li><strong>Blade</strong> - Moteur de templates puissant</li>
+                            <li><strong>Artisan</strong> - Outil en ligne de commande</li>
+                            <li><strong>Migrations</strong> - Gestion des versions de la BDD</li>
+                            <li><strong>Authentification</strong> - Système de login prêt à l'emploi</li>
+                        </ul>
+                    </div>
+                    <div class="column">
+                        <h4>📚 Écosystème Riche</h4>
+                        <ul>
+                            <li><strong>Laravel Breeze</strong> - Authentification simple</li>
+                            <li><strong>Laravel Sanctum</strong> - API tokens</li>
+                            <li><strong>Laravel Sail</strong> - Environnement Docker</li>
+                            <li><strong>Laravel Forge</strong> - Déploiement serveur</li>
+                            <li><strong>Laravel Nova</strong> - Panel d'administration</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="info-box success">
+                    <div class="info-box-title">✅ Entreprises qui utilisent Laravel</div>
+                    BBC, Pfizer, 9GAG, TourRadar, Invoice Ninja, et des milliers d'autres...
+                </div>
+            </div>
+            <div class="slide-footer">
+                <span class="author">M. JARRAY Mondher | ISIM Médenine</span>
+                <span class="page-number">7</span>
+            </div>
+        </div>
+
+        <!-- ==================== SLIDE 8 : ARCHITECTURE MVC ==================== -->
+        <div class="slide">
+            <div class="slide-header">
+                <div class="logo-container">
+                    <img src="../assets/isim-logo.jpeg" alt="ISIM Logo" class="logo">
+                    <div class="institution">
+                        <strong>ISIM</strong> Développement Web Avancé
+                    </div>
+                </div>
+                <div class="chapter-info">
+                    Chapitre 1<br>
+                    <span class="chapter-number">Introduction</span>
+                </div>
+            </div>
+            <div class="slide-title">
+                <h1>3. L'Architecture MVC</h1>
+                <p class="subtitle">Modèle - Vue - Contrôleur</p>
+            </div>
+            <div class="slide-content">
+                <p>MVC est un <strong>patron de conception</strong> (design pattern) qui sépare l'application en 3 parties distinctes :</p>
+
+                <div class="architecture-box">
+                    <div class="mvc-diagram">
+                        <div class="mvc-component model">
+                            <h5>📦 Modèle</h5>
+                            <p>Données<br>Base de données</p>
+                        </div>
+                        <div class="mvc-arrow">↔</div>
+                        <div class="mvc-component controller">
+                            <h5>⚙️ Contrôleur</h5>
+                            <p>Logique<br>Traitement</p>
+                        </div>
+                        <div class="mvc-arrow">↔</div>
+                        <div class="mvc-component view">
+                            <h5>🖥️ Vue</h5>
+                            <p>Affichage<br>Interface</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="info-box note">
+                    <div class="info-box-title">💡 Pourquoi séparer le code ?</div>
+                    <ul>
+                        <li><strong>Maintenance</strong> : Modifier une partie sans toucher aux autres</li>
+                        <li><strong>Réutilisation</strong> : Utiliser le même modèle avec différentes vues</li>
+                        <li><strong>Travail en équipe</strong> : Un développeur par couche</li>
+                        <li><strong>Tests</strong> : Tester chaque partie séparément</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="slide-footer">
+                <span class="author">M. JARRAY Mondher | ISIM Médenine</span>
+                <span class="page-number">8</span>
+            </div>
+        </div>
+
+        <!-- ==================== SLIDE 9 : MVC DÉTAILLÉ ==================== -->
+        <div class="slide">
+            <div class="slide-header">
+                <div class="logo-container">
+                    <img src="../assets/isim-logo.jpeg" alt="ISIM Logo" class="logo">
+                    <div class="institution">
+                        <strong>ISIM</strong> Développement Web Avancé
+                    </div>
+                </div>
+                <div class="chapter-info">
+                    Chapitre 1<br>
+                    <span class="chapter-number">Introduction</span>
+                </div>
+            </div>
+            <div class="slide-title">
+                <h1>Les 3 Composants du MVC</h1>
+                <p class="subtitle">Rôle de chaque couche</p>
+            </div>
+            <div class="slide-content">
+                <h3>📦 Le Modèle (Model)</h3>
+                <ul>
+                    <li>Représente les <strong>données</strong> de l'application</li>
+                    <li>Gère la communication avec la <strong>base de données</strong></li>
+                    <li>Contient les <strong>règles métier</strong> (validation, calculs...)</li>
+                    <li>Dans Laravel : fichiers dans <code class="code-inline">app/Models/</code></li>
+                </ul>
+
+                <h3>🖥️ La Vue (View)</h3>
+                <ul>
+                    <li>Gère l'<strong>affichage</strong> à l'utilisateur</li>
+                    <li>Contient le code <strong>HTML</strong> et la mise en page</li>
+                    <li>N'effectue <strong>aucun traitement</strong> logique</li>
+                    <li>Dans Laravel : fichiers <code class="code-inline">.blade.php</code> dans <code class="code-inline">resources/views/</code></li>
+                </ul>
+
+                <h3>⚙️ Le Contrôleur (Controller)</h3>
+                <ul>
+                    <li>Fait le <strong>lien</strong> entre le Modèle et la Vue</li>
+                    <li>Reçoit les <strong>requêtes</strong> de l'utilisateur</li>
+                    <li>Traite les données et choisit quelle <strong>vue afficher</strong></li>
+                    <li>Dans Laravel : fichiers dans <code class="code-inline">app/Http/Controllers/</code></li>
+                </ul>
+            </div>
+            <div class="slide-footer">
+                <span class="author">M. JARRAY Mondher | ISIM Médenine</span>
+                <span class="page-number">9</span>
+            </div>
+        </div>
+
+        <!-- ==================== SLIDE 10 : CYCLE DE VIE REQUÊTE ==================== -->
+        <div class="slide">
+            <div class="slide-header">
+                <div class="logo-container">
+                    <img src="../assets/isim-logo.jpeg" alt="ISIM Logo" class="logo">
+                    <div class="institution">
+                        <strong>ISIM</strong> Développement Web Avancé
+                    </div>
+                </div>
+                <div class="chapter-info">
+                    Chapitre 1<br>
+                    <span class="chapter-number">Introduction</span>
+                </div>
+            </div>
+            <div class="slide-title">
+                <h1>Cycle d'une Requête Laravel</h1>
+                <p class="subtitle">De la demande à la réponse</p>
+            </div>
+            <div class="slide-content">
+                <p>Quand un utilisateur visite une page, voici ce qui se passe :</p>
+
+                <ol class="steps">
+                    <li>
+                        <strong>L'utilisateur</strong> tape une URL dans son navigateur<br>
+                        <em>Exemple : http://monsite.com/utilisateurs</em>
+                    </li>
+                    <li>
+                        <strong>Le Routeur</strong> reçoit la requête et trouve le bon contrôleur<br>
+                        <em>Route::get('/utilisateurs', [UserController::class, 'index'])</em>
+                    </li>
+                    <li>
+                        <strong>Le Contrôleur</strong> traite la demande<br>
+                        <em>Il demande les données au Modèle</em>
+                    </li>
+                    <li>
+                        <strong>Le Modèle</strong> récupère les données depuis la base<br>
+                        <em>User::all() → retourne tous les utilisateurs</em>
+                    </li>
+                    <li>
+                        <strong>Le Contrôleur</strong> envoie les données à la Vue<br>
+                        <em>return view('users.index', ['users' => $users])</em>
+                    </li>
+                    <li>
+                        <strong>La Vue</strong> génère le HTML final<br>
+                        <em>La page s'affiche dans le navigateur</em>
+                    </li>
+                </ol>
+            </div>
+            <div class="slide-footer">
+                <span class="author">M. JARRAY Mondher | ISIM Médenine</span>
+                <span class="page-number">10</span>
+            </div>
+        </div>
+
+        <!-- ==================== SLIDE 11 : PRÉREQUIS INSTALLATION ==================== -->
+        <div class="slide">
+            <div class="slide-header">
+                <div class="logo-container">
+                    <img src="../assets/isim-logo.jpeg" alt="ISIM Logo" class="logo">
+                    <div class="institution">
+                        <strong>ISIM</strong> Développement Web Avancé
+                    </div>
+                </div>
+                <div class="chapter-info">
+                    Chapitre 1<br>
+                    <span class="chapter-number">Introduction</span>
+                </div>
+            </div>
+            <div class="slide-title">
+                <h1>4. Installation de Laravel 11</h1>
+                <p class="subtitle">Prérequis techniques</p>
+            </div>
+            <div class="slide-content">
+                <h3>Configuration requise</h3>
+                <p>Avant d'installer Laravel 11, vous devez avoir :</p>
+
+                <div class="table-container">
+                    <table>
+                        <tr>
+                            <th>Logiciel</th>
+                            <th>Version minimale</th>
+                            <th>Recommandé</th>
+                        </tr>
+                        <tr>
+                            <td><strong>PHP</strong></td>
+                            <td>8.2</td>
+                            <td>8.3+</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Composer</strong></td>
+                            <td>2.0</td>
+                            <td>2.6+</td>
+                        </tr>
+                        <tr>
+                            <td><strong>MySQL / MariaDB</strong></td>
+                            <td>5.7 / 10.3</td>
+                            <td>8.0 / 10.6+</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Node.js</strong> (optionnel)</td>
+                            <td>18</td>
+                            <td>20+</td>
+                        </tr>
+                    </table>
+                </div>
+
+                <h3>Extensions PHP requises</h3>
+                <p>Ces extensions doivent être activées dans votre <code class="code-inline">php.ini</code> :</p>
+                <ul>
+                    <li>Ctype, cURL, DOM, Fileinfo, Filter</li>
+                    <li>Hash, Mbstring, OpenSSL, PCRE, PDO</li>
+                    <li>Session, Tokenizer, XML</li>
+                </ul>
+
+                <div class="info-box tip">
+                    <div class="info-box-title">💡 Astuce</div>
+                    Utilisez <strong>XAMPP</strong>, <strong>WAMP</strong> ou <strong>Laragon</strong> pour avoir tout préconfiguré.
+                </div>
+            </div>
+            <div class="slide-footer">
+                <span class="author">M. JARRAY Mondher | ISIM Médenine</span>
+                <span class="page-number">11</span>
+            </div>
+        </div>
+
+        <!-- ==================== SLIDE 12 : INSTALLATION COMPOSER ==================== -->
+        <div class="slide">
+            <div class="slide-header">
+                <div class="logo-container">
+                    <img src="../assets/isim-logo.jpeg" alt="ISIM Logo" class="logo">
+                    <div class="institution">
+                        <strong>ISIM</strong> Développement Web Avancé
+                    </div>
+                </div>
+                <div class="chapter-info">
+                    Chapitre 1<br>
+                    <span class="chapter-number">Introduction</span>
+                </div>
+            </div>
+            <div class="slide-title">
+                <h1>Qu'est-ce que Composer ?</h1>
+                <p class="subtitle">Le gestionnaire de dépendances PHP</p>
+            </div>
+            <div class="slide-content">
+                <div class="info-box note">
+                    <div class="info-box-title">📦 Définition</div>
+                    <strong>Composer</strong> est un outil qui permet d'installer et de gérer les bibliothèques (packages) PHP dont votre projet a besoin.
+                </div>
+
+                <h3>Pourquoi Composer ?</h3>
+                <ul>
+                    <li>Télécharge automatiquement les packages nécessaires</li>
+                    <li>Gère les versions et les dépendances</li>
+                    <li>Charge automatiquement les classes (autoload)</li>
+                </ul>
+
+                <h3>Installation de Composer</h3>
+                <p><strong>Sur Windows :</strong> Téléchargez l'installateur sur <a href="https://getcomposer.org">getcomposer.org</a></p>
+
+                <p><strong>Vérifier l'installation :</strong></p>
+                <div class="command-line">composer --version</div>
+
+                <h3>Le fichier composer.json</h3>
+                <p>Ce fichier liste toutes les dépendances de votre projet :</p>
+                <div class="code-block" data-language="JSON">
+                    <code>{
+    <span class="string">"require"</span>: {
+        <span class="string">"php"</span>: <span class="string">"^8.2"</span>,
+        <span class="string">"laravel/framework"</span>: <span class="string">"^11.0"</span>
+    }
+}</code>
+                </div>
+            </div>
+            <div class="slide-footer">
+                <span class="author">M. JARRAY Mondher | ISIM Médenine</span>
+                <span class="page-number">12</span>
+            </div>
+        </div>
+
+        <!-- ==================== SLIDE 13 : CRÉATION PROJET LARAVEL ==================== -->
+        <div class="slide">
+            <div class="slide-header">
+                <div class="logo-container">
+                    <img src="../assets/isim-logo.jpeg" alt="ISIM Logo" class="logo">
+                    <div class="institution">
+                        <strong>ISIM</strong> Développement Web Avancé
+                    </div>
+                </div>
+                <div class="chapter-info">
+                    Chapitre 1<br>
+                    <span class="chapter-number">Introduction</span>
+                </div>
+            </div>
+            <div class="slide-title">
+                <h1>Créer un Nouveau Projet Laravel</h1>
+                <p class="subtitle">Deux méthodes disponibles</p>
+            </div>
+            <div class="slide-content">
+                <h3>Méthode 1 : Avec l'installateur Laravel (recommandé)</h3>
+                <p>D'abord, installez l'installateur global :</p>
+                <div class="command-line">composer global require laravel/installer</div>
+
+                <p>Puis créez votre projet :</p>
+                <div class="command-line">laravel new mon-projet</div>
+
+                <h3>Méthode 2 : Avec Composer directement</h3>
+                <div class="command-line">composer create-project laravel/laravel mon-projet</div>
+
+                <div class="info-box success">
+                    <div class="info-box-title">✅ Résultat</div>
+                    <p>Laravel va télécharger tous les fichiers nécessaires et créer un nouveau dossier <code class="code-inline">mon-projet</code> avec l'application prête à l'emploi.</p>
+                </div>
+
+                <h3>Lancer le serveur de développement</h3>
+                <div class="command-line">cd mon-projet</div>
+                <div class="command-line">php artisan serve</div>
+                <p>Ouvrez votre navigateur à l'adresse : <strong>http://localhost:8000</strong></p>
+            </div>
+            <div class="slide-footer">
+                <span class="author">M. JARRAY Mondher | ISIM Médenine</span>
+                <span class="page-number">13</span>
+            </div>
+        </div>
+
+        <!-- ==================== SLIDE 14 : STRUCTURE DU PROJET ==================== -->
+        <div class="slide">
+            <div class="slide-header">
+                <div class="logo-container">
+                    <img src="../assets/isim-logo.jpeg" alt="ISIM Logo" class="logo">
+                    <div class="institution">
+                        <strong>ISIM</strong> Développement Web Avancé
+                    </div>
+                </div>
+                <div class="chapter-info">
+                    Chapitre 1<br>
+                    <span class="chapter-number">Introduction</span>
+                </div>
+            </div>
+            <div class="slide-title">
+                <h1>5. Structure d'un Projet Laravel 11</h1>
+                <p class="subtitle">Organisation des dossiers</p>
+            </div>
+            <div class="slide-content">
+                <div class="file-tree">
+<span class="folder">mon-projet/</span>
+    <span class="folder">app/</span>                    <span class="comment"># Code principal de l'application</span>
+        <span class="folder">Http/Controllers/</span>   <span class="comment"># Les contrôleurs</span>
+        <span class="folder">Models/</span>             <span class="comment"># Les modèles (Eloquent)</span>
+        <span class="folder">Providers/</span>          <span class="comment"># Les fournisseurs de services</span>
+    <span class="folder">bootstrap/</span>              <span class="comment"># Démarrage de l'application</span>
+    <span class="folder">config/</span>                 <span class="comment"># Fichiers de configuration</span>
+    <span class="folder">database/</span>               <span class="comment"># Migrations, seeders, factories</span>
+    <span class="folder">public/</span>                 <span class="comment"># Point d'entrée web (index.php)</span>
+    <span class="folder">resources/</span>              <span class="comment"># Vues, CSS, JavaScript</span>
+        <span class="folder">views/</span>              <span class="comment"># Fichiers Blade (.blade.php)</span>
+    <span class="folder">routes/</span>                 <span class="comment"># Définition des routes</span>
+        <span class="file">web.php</span>             <span class="comment"># Routes web principales</span>
+    <span class="folder">storage/</span>                <span class="comment"># Fichiers générés, logs, cache</span>
+    <span class="folder">tests/</span>                  <span class="comment"># Tests automatisés</span>
+    <span class="folder">vendor/</span>                 <span class="comment"># Dépendances (ne pas modifier)</span>
+    <span class="file">.env</span>                    <span class="comment"># Variables d'environnement</span>
+    <span class="file">composer.json</span>           <span class="comment"># Dépendances du projet</span>
+                </div>
+            </div>
+            <div class="slide-footer">
+                <span class="author">M. JARRAY Mondher | ISIM Médenine</span>
+                <span class="page-number">14</span>
+            </div>
+        </div>
+
+        <!-- ==================== SLIDE 15 : DOSSIERS IMPORTANTS ==================== -->
+        <div class="slide">
+            <div class="slide-header">
+                <div class="logo-container">
+                    <img src="../assets/isim-logo.jpeg" alt="ISIM Logo" class="logo">
+                    <div class="institution">
+                        <strong>ISIM</strong> Développement Web Avancé
+                    </div>
+                </div>
+                <div class="chapter-info">
+                    Chapitre 1<br>
+                    <span class="chapter-number">Introduction</span>
+                </div>
+            </div>
+            <div class="slide-title">
+                <h1>Les Dossiers Importants</h1>
+                <p class="subtitle">Ce que vous devez connaître</p>
+            </div>
+            <div class="slide-content">
+                <div class="two-columns">
+                    <div class="column">
+                        <h4>📁 app/</h4>
+                        <p>Contient le code principal de votre application :</p>
+                        <ul>
+                            <li><strong>Models/</strong> : Classes qui représentent vos tables</li>
+                            <li><strong>Http/Controllers/</strong> : Logique de traitement</li>
+                            <li><strong>Http/Middleware/</strong> : Filtres des requêtes</li>
+                        </ul>
+
+                        <h4>📁 routes/</h4>
+                        <p>Définit les URLs de votre application :</p>
+                        <ul>
+                            <li><strong>web.php</strong> : Routes pour les pages web</li>
+                            <li><strong>api.php</strong> : Routes pour l'API</li>
+                        </ul>
+                    </div>
+                    <div class="column">
+                        <h4>📁 resources/views/</h4>
+                        <p>Contient les fichiers Blade pour l'affichage :</p>
+                        <ul>
+                            <li>Templates HTML avec syntaxe Blade</li>
+                            <li>Extension : <code class="code-inline">.blade.php</code></li>
+                        </ul>
+
+                        <h4>📁 database/</h4>
+                        <p>Gestion de la base de données :</p>
+                        <ul>
+                            <li><strong>migrations/</strong> : Structure des tables</li>
+                            <li><strong>seeders/</strong> : Données de test</li>
+                            <li><strong>factories/</strong> : Génération de fausses données</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="info-box warning">
+                    <div class="info-box-title">⚠️ Important</div>
+                    Le dossier <code class="code-inline">vendor/</code> contient les packages installés par Composer. <strong>Ne modifiez jamais</strong> son contenu !
+                </div>
+            </div>
+            <div class="slide-footer">
+                <span class="author">M. JARRAY Mondher | ISIM Médenine</span>
+                <span class="page-number">15</span>
+            </div>
+        </div>
+
+        <!-- ==================== SLIDE 16 : FICHIER .ENV ==================== -->
+        <div class="slide">
+            <div class="slide-header">
+                <div class="logo-container">
+                    <img src="../assets/isim-logo.jpeg" alt="ISIM Logo" class="logo">
+                    <div class="institution">
+                        <strong>ISIM</strong> Développement Web Avancé
+                    </div>
+                </div>
+                <div class="chapter-info">
+                    Chapitre 1<br>
+                    <span class="chapter-number">Introduction</span>
+                </div>
+            </div>
+            <div class="slide-title">
+                <h1>Le Fichier .env</h1>
+                <p class="subtitle">Configuration de l'environnement</p>
+            </div>
+            <div class="slide-content">
+                <p>Le fichier <code class="code-inline">.env</code> contient les paramètres spécifiques à votre environnement (local, production...).</p>
+
+                <div class="code-block" data-language="ENV">
+                    <code><span class="comment"># Nom de l'application</span>
+<span class="variable">APP_NAME</span>=<span class="string">TaskFlow</span>
+<span class="variable">APP_ENV</span>=<span class="string">local</span>
+<span class="variable">APP_DEBUG</span>=<span class="string">true</span>
+<span class="variable">APP_URL</span>=<span class="string">http://localhost</span>
+
+<span class="comment"># Configuration de la base de données</span>
+<span class="variable">DB_CONNECTION</span>=<span class="string">mysql</span>
+<span class="variable">DB_HOST</span>=<span class="string">127.0.0.1</span>
+<span class="variable">DB_PORT</span>=<span class="string">3306</span>
+<span class="variable">DB_DATABASE</span>=<span class="string">taskflow</span>
+<span class="variable">DB_USERNAME</span>=<span class="string">root</span>
+<span class="variable">DB_PASSWORD</span>=<span class="string"></span>
+
+<span class="comment"># Configuration du mail</span>
+<span class="variable">MAIL_MAILER</span>=<span class="string">smtp</span>
+<span class="variable">MAIL_HOST</span>=<span class="string">mailhog</span>
+<span class="variable">MAIL_PORT</span>=<span class="string">1025</span></code>
+                </div>
+
+                <div class="info-box danger">
+                    <div class="info-box-title">🔒 Sécurité</div>
+                    <ul>
+                        <li>Le fichier <code class="code-inline">.env</code> contient des informations sensibles (mots de passe)</li>
+                        <li><strong>Ne jamais le partager</strong> ni le mettre sur Git</li>
+                        <li>Il est automatiquement ignoré dans <code class="code-inline">.gitignore</code></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="slide-footer">
+                <span class="author">M. JARRAY Mondher | ISIM Médenine</span>
+                <span class="page-number">16</span>
+            </div>
+        </div>
+
+        <!-- ==================== SLIDE 17 : ARTISAN ==================== -->
+        <div class="slide">
+            <div class="slide-header">
+                <div class="logo-container">
+                    <img src="../assets/isim-logo.jpeg" alt="ISIM Logo" class="logo">
+                    <div class="institution">
+                        <strong>ISIM</strong> Développement Web Avancé
+                    </div>
+                </div>
+                <div class="chapter-info">
+                    Chapitre 1<br>
+                    <span class="chapter-number">Introduction</span>
+                </div>
+            </div>
+            <div class="slide-title">
+                <h1>Artisan : L'Outil en Ligne de Commande</h1>
+                <p class="subtitle">Votre assistant Laravel</p>
+            </div>
+            <div class="slide-content">
+                <p><strong>Artisan</strong> est un outil puissant qui vous aide à effectuer des tâches courantes rapidement.</p>
+
+                <h3>Commandes essentielles</h3>
+                <div class="table-container">
+                    <table>
+                        <tr>
+                            <th>Commande</th>
+                            <th>Description</th>
+                        </tr>
+                        <tr>
+                            <td><code class="code-inline">php artisan serve</code></td>
+                            <td>Démarrer le serveur de développement</td>
+                        </tr>
+                        <tr>
+                            <td><code class="code-inline">php artisan list</code></td>
+                            <td>Voir toutes les commandes disponibles</td>
+                        </tr>
+                        <tr>
+                            <td><code class="code-inline">php artisan make:controller NomController</code></td>
+                            <td>Créer un nouveau contrôleur</td>
+                        </tr>
+                        <tr>
+                            <td><code class="code-inline">php artisan make:model Nom</code></td>
+                            <td>Créer un nouveau modèle</td>
+                        </tr>
+                        <tr>
+                            <td><code class="code-inline">php artisan migrate</code></td>
+                            <td>Exécuter les migrations</td>
+                        </tr>
+                        <tr>
+                            <td><code class="code-inline">php artisan route:list</code></td>
+                            <td>Lister toutes les routes</td>
+                        </tr>
+                    </table>
+                </div>
+
+                <div class="info-box tip">
+                    <div class="info-box-title">💡 Astuce</div>
+                    Utilisez <code class="code-inline">php artisan help commande</code> pour avoir de l'aide sur une commande spécifique.
+                </div>
+            </div>
+            <div class="slide-footer">
+                <span class="author">M. JARRAY Mondher | ISIM Médenine</span>
+                <span class="page-number">17</span>
+            </div>
+        </div>
+
+        <!-- ==================== SLIDE 18 : NOUVEAUTÉS LARAVEL 11 ==================== -->
+        <div class="slide">
+            <div class="slide-header">
+                <div class="logo-container">
+                    <img src="../assets/isim-logo.jpeg" alt="ISIM Logo" class="logo">
+                    <div class="institution">
+                        <strong>ISIM</strong> Développement Web Avancé
+                    </div>
+                </div>
+                <div class="chapter-info">
+                    Chapitre 1<br>
+                    <span class="chapter-number">Introduction</span>
+                </div>
+            </div>
+            <div class="slide-title">
+                <h1>Nouveautés de Laravel 11</h1>
+                <p class="subtitle">Ce qui change par rapport aux versions précédentes</p>
+            </div>
+            <div class="slide-content">
+                <h3>🆕 Principales nouveautés</h3>
+
+                <div class="two-columns">
+                    <div class="column">
+                        <h4>Structure simplifiée</h4>
+                        <ul>
+                            <li>Moins de fichiers de configuration</li>
+                            <li>Dossier <code class="code-inline">app/</code> plus léger</li>
+                            <li>Un seul fichier <code class="code-inline">bootstrap/app.php</code></li>
+                        </ul>
+
+                        <h4>PHP 8.2 minimum</h4>
+                        <ul>
+                            <li>Meilleures performances</li>
+                            <li>Nouvelles fonctionnalités PHP</li>
+                        </ul>
+                    </div>
+                    <div class="column">
+                        <h4>Nouveaux outils</h4>
+                        <ul>
+                            <li>Health checks intégrés</li>
+                            <li>Rotation des clés simplifiée</li>
+                            <li>Laravel Reverb (WebSockets)</li>
+                        </ul>
+
+                        <h4>SQLite par défaut</h4>
+                        <ul>
+                            <li>Plus besoin de MySQL pour démarrer</li>
+                            <li>Idéal pour le développement local</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="highlight-box">
+                    <h4>📅 Support à long terme</h4>
+                    <p>Laravel 11 sera supporté jusqu'en <strong>février 2027</strong> (corrections de bugs) et <strong>août 2027</strong> (sécurité).</p>
+                </div>
+            </div>
+            <div class="slide-footer">
+                <span class="author">M. JARRAY Mondher | ISIM Médenine</span>
+                <span class="page-number">18</span>
+            </div>
+        </div>
+
+        <!-- ==================== SLIDE 19 : RÉSUMÉ ==================== -->
+        <div class="slide">
+            <div class="slide-header">
+                <div class="logo-container">
+                    <img src="../assets/isim-logo.jpeg" alt="ISIM Logo" class="logo">
+                    <div class="institution">
+                        <strong>ISIM</strong> Développement Web Avancé
+                    </div>
+                </div>
+                <div class="chapter-info">
+                    Chapitre 1<br>
+                    <span class="chapter-number">Introduction</span>
+                </div>
+            </div>
+            <div class="slide-title">
+                <h1>Résumé du Chapitre</h1>
+                <p class="subtitle">Ce qu'il faut retenir</p>
+            </div>
+            <div class="slide-content">
+                <div class="summary-grid">
+                    <div class="summary-item">
+                        <h5>🎯 Framework</h5>
+                        <p>Un framework facilite et structure le développement</p>
+                    </div>
+                    <div class="summary-item">
+                        <h5>🏗️ MVC</h5>
+                        <p>Modèle - Vue - Contrôleur sépare les responsabilités</p>
+                    </div>
+                    <div class="summary-item">
+                        <h5>📦 Composer</h5>
+                        <p>Gestionnaire de dépendances PHP</p>
+                    </div>
+                    <div class="summary-item">
+                        <h5>⚡ Artisan</h5>
+                        <p>Outil CLI pour générer du code</p>
+                    </div>
+                </div>
+
+                <h3>Points clés à retenir</h3>
+                <ul>
+                    <li>Laravel est le framework PHP le plus populaire</li>
+                    <li>L'architecture MVC sépare le code en 3 couches</li>
+                    <li>Le fichier <code class="code-inline">.env</code> contient la configuration de l'environnement</li>
+                    <li>Utilisez <code class="code-inline">php artisan</code> pour les tâches courantes</li>
+                    <li>Ne modifiez jamais le dossier <code class="code-inline">vendor/</code></li>
+                </ul>
+
+                <div class="info-box note">
+                    <div class="info-box-title">📚 Prochain chapitre</div>
+                    <strong>Chapitre 2 :</strong> Routage et Contrôleurs - Comment gérer les URLs et créer des contrôleurs.
+                </div>
+            </div>
+            <div class="slide-footer">
+                <span class="author">M. JARRAY Mondher | ISIM Médenine</span>
+                <span class="page-number">19</span>
+            </div>
+        </div>
+
+        <!-- ==================== SLIDE 20 : QUESTIONS ==================== -->
+        <div class="slide">
+            <div class="slide-header">
+                <div class="logo-container">
+                    <img src="../assets/isim-logo.jpeg" alt="ISIM Logo" class="logo">
+                    <div class="institution">
+                        <strong>ISIM</strong> Développement Web Avancé
+                    </div>
+                </div>
+                <div class="chapter-info">
+                    Chapitre 1<br>
+                    <span class="chapter-number">Introduction</span>
+                </div>
+            </div>
+            <div class="slide-title">
+                <h1>Questions ?</h1>
+            </div>
+            <div class="slide-content" style="display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center;">
+                <div style="font-size: 4rem; margin-bottom: 30px;">🤔</div>
+                <h3>Avez-vous des questions sur ce chapitre ?</h3>
+                <p style="margin-top: 20px; color: var(--isim-gray);">N'hésitez pas à poser vos questions maintenant<br>ou par email après le cours.</p>
+
+                <div style="margin-top: 40px; padding: 30px; background: var(--isim-blue-bg); border-radius: 10px;">
+                    <h4 style="color: var(--isim-blue-dark);">Prochaine séance : TP 1</h4>
+                    <p>Installation de Laravel et création de votre premier projet</p>
+                </div>
+            </div>
+            <div class="slide-footer">
+                <span class="author">M. JARRAY Mondher | ISIM Médenine</span>
+                <span class="page-number">20</span>
+            </div>
+        </div>
+
+    </div>
+</body>
+
+</html>

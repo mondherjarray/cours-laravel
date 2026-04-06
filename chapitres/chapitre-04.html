@@ -1,0 +1,1264 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chapitre 4 - Bases de Données et Migrations | ISIMED</title>
+    <link rel="stylesheet" href="../css/slides.css">
+</head>
+<body>
+    <div class="presentation">
+
+        <!-- ==================== SLIDE 1 : TITRE ==================== -->
+        <div class="slide title-slide">
+            <div class="slide-header">
+                <div class="logo-container">
+                    <img src="../assets/isim-logo.jpeg" alt="ISIM Logo" class="logo">
+                    <div class="institution">
+                        <strong>ISIM</strong>
+                        Institut Supérieur d'Informatique<br>de Médenine
+                    </div>
+                </div>
+                <div class="chapter-info">
+                    Année Universitaire<br>
+                    <strong>2025-2026</strong>
+                </div>
+            </div>
+            <div class="slide-content">
+                <h1 class="main-title">Développement Web Avancé</h1>
+                <h2 class="course-title">Framework Laravel 11</h2>
+                <div class="chapter-title">Chapitre 4 : Bases de Données et Migrations</div>
+                <div class="info-grid">
+                    <div class="info-item">
+                        <label>Enseignant</label>
+                        <span>M. JARRAY Mondher</span>
+                    </div>
+                    <div class="info-item">
+                        <label>Classe</label>
+                        <span>MP1ILC</span>
+                    </div>
+                    <div class="info-item">
+                        <label>Semestre</label>
+                        <span>S1</span>
+                    </div>
+                    <div class="info-item">
+                        <label>Durée</label>
+                        <span>1h30</span>
+                    </div>
+                </div>
+            </div>
+            <div class="slide-footer">
+                <span class="author">M. JARRAY Mondher | ISIM Médenine</span>
+                <span class="page-number">1</span>
+            </div>
+        </div>
+
+        <!-- ==================== SLIDE 2 : OBJECTIFS ==================== -->
+        <div class="slide">
+            <div class="slide-header">
+                <div class="logo-container">
+                    <img src="../assets/isim-logo.jpeg" alt="ISIM Logo" class="logo">
+                    <div class="institution">
+                        <strong>ISIM</strong>
+                        Développement Web Avancé
+                    </div>
+                </div>
+                <div class="chapter-info">
+                    Chapitre 4<br>
+                    <span class="chapter-number">BDD</span>
+                </div>
+            </div>
+            <div class="slide-title">
+                <h1>Objectifs du Chapitre</h1>
+            </div>
+            <div class="slide-content">
+                <ul class="objectives-list">
+                    <li>Configurer la connexion à la base de données</li>
+                    <li>Comprendre et créer des migrations</li>
+                    <li>Définir la structure des tables avec les migrations</li>
+                    <li>Utiliser les seeders pour remplir les tables</li>
+                    <li>Utiliser les factories pour générer des données de test</li>
+                    <li>Concevoir le schéma de la base TaskFlow</li>
+                </ul>
+            </div>
+            <div class="slide-footer">
+                <span class="author">M. JARRAY Mondher | ISIM Médenine</span>
+                <span class="page-number">2</span>
+            </div>
+        </div>
+
+        <!-- ==================== SLIDE 3 : PLAN ==================== -->
+        <div class="slide">
+            <div class="slide-header">
+                <div class="logo-container">
+                    <img src="../assets/isim-logo.jpeg" alt="ISIM Logo" class="logo">
+                    <div class="institution">
+                        <strong>ISIM</strong>
+                        Développement Web Avancé
+                    </div>
+                </div>
+                <div class="chapter-info">
+                    Chapitre 4<br>
+                    <span class="chapter-number">BDD</span>
+                </div>
+            </div>
+            <div class="slide-title">
+                <h1>Plan du Chapitre</h1>
+            </div>
+            <div class="slide-content">
+                <ol>
+                    <li><strong>Configuration de la Base de Données</strong>
+                        <ul>
+                            <li>Le fichier .env</li>
+                            <li>SQLite vs MySQL</li>
+                        </ul>
+                    </li>
+                    <li><strong>Les Migrations</strong>
+                        <ul>
+                            <li>Qu'est-ce qu'une migration ?</li>
+                            <li>Créer et exécuter des migrations</li>
+                            <li>Types de colonnes</li>
+                        </ul>
+                    </li>
+                    <li><strong>Clés Étrangères et Relations</strong></li>
+                    <li><strong>Les Seeders</strong></li>
+                    <li><strong>Les Factories</strong></li>
+                    <li><strong>Schéma TaskFlow</strong></li>
+                </ol>
+            </div>
+            <div class="slide-footer">
+                <span class="author">M. JARRAY Mondher | ISIM Médenine</span>
+                <span class="page-number">3</span>
+            </div>
+        </div>
+
+        <!-- ==================== SLIDE 4 : CONFIGURATION BDD ==================== -->
+        <div class="slide">
+            <div class="slide-header">
+                <div class="logo-container">
+                    <img src="../assets/isim-logo.jpeg" alt="ISIM Logo" class="logo">
+                    <div class="institution">
+                        <strong>ISIM</strong>
+                        Développement Web Avancé
+                    </div>
+                </div>
+                <div class="chapter-info">
+                    Chapitre 4<br>
+                    <span class="chapter-number">BDD</span>
+                </div>
+            </div>
+            <div class="slide-title">
+                <h1>1. Configuration de la Base de Données</h1>
+                <p class="subtitle">Fichier .env</p>
+            </div>
+            <div class="slide-content">
+                <p>La configuration de la base de données se fait dans le fichier <code class="code-inline">.env</code></p>
+
+                <h3>Configuration MySQL</h3>
+                <div class="code-block" data-language="ENV">
+<code><span class="variable">DB_CONNECTION</span>=<span class="string">mysql</span>
+<span class="variable">DB_HOST</span>=<span class="string">127.0.0.1</span>
+<span class="variable">DB_PORT</span>=<span class="string">3306</span>
+<span class="variable">DB_DATABASE</span>=<span class="string">taskflow</span>
+<span class="variable">DB_USERNAME</span>=<span class="string">root</span>
+<span class="variable">DB_PASSWORD</span>=<span class="string"></span></code>
+                </div>
+
+                <h3>Configuration SQLite (Laravel 11 par défaut)</h3>
+                <div class="code-block" data-language="ENV">
+<code><span class="variable">DB_CONNECTION</span>=<span class="string">sqlite</span>
+<span class="comment"># Le fichier sera créé dans database/database.sqlite</span></code>
+                </div>
+
+                <div class="two-columns">
+                    <div class="column">
+                        <h4>SQLite</h4>
+                        <ul>
+                            <li>Pas de serveur à installer</li>
+                            <li>Un seul fichier</li>
+                            <li>Idéal pour le développement</li>
+                        </ul>
+                    </div>
+                    <div class="column">
+                        <h4>MySQL</h4>
+                        <ul>
+                            <li>Plus performant</li>
+                            <li>Multi-utilisateurs</li>
+                            <li>Recommandé en production</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="info-box tip">
+                    <div class="info-box-title">Pour MySQL</div>
+                    Créez d'abord la base de données dans phpMyAdmin ou avec la commande : <code class="code-inline">CREATE DATABASE taskflow;</code>
+                </div>
+            </div>
+            <div class="slide-footer">
+                <span class="author">M. JARRAY Mondher | ISIM Médenine</span>
+                <span class="page-number">4</span>
+            </div>
+        </div>
+
+        <!-- ==================== SLIDE 5 : QU'EST-CE QU'UNE MIGRATION ==================== -->
+        <div class="slide">
+            <div class="slide-header">
+                <div class="logo-container">
+                    <img src="../assets/isim-logo.jpeg" alt="ISIM Logo" class="logo">
+                    <div class="institution">
+                        <strong>ISIM</strong>
+                        Développement Web Avancé
+                    </div>
+                </div>
+                <div class="chapter-info">
+                    Chapitre 4<br>
+                    <span class="chapter-number">BDD</span>
+                </div>
+            </div>
+            <div class="slide-title">
+                <h1>2. Qu'est-ce qu'une Migration ?</h1>
+                <p class="subtitle">Versionnement de la base de données</p>
+            </div>
+            <div class="slide-content">
+                <div class="info-box note">
+                    <div class="info-box-title">Définition</div>
+                    Une <strong>migration</strong> est un fichier PHP qui décrit les modifications à apporter à la structure de la base de données. C'est comme un "historique des changements" pour vos tables.
+                </div>
+
+                <h3>Pourquoi utiliser les migrations ?</h3>
+                <div class="two-columns">
+                    <div class="column">
+                        <h4>❌ Sans migrations</h4>
+                        <ul>
+                            <li>Scripts SQL manuels</li>
+                            <li>Difficile à partager</li>
+                            <li>Pas de versionnement</li>
+                            <li>Erreurs fréquentes</li>
+                        </ul>
+                    </div>
+                    <div class="column">
+                        <h4>✅ Avec migrations</h4>
+                        <ul>
+                            <li>Code PHP versionné</li>
+                            <li>Partageable via Git</li>
+                            <li>Annulation possible</li>
+                            <li>Équipe synchronisée</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <h3>Emplacement des migrations</h3>
+                <div class="file-tree"><pre>
+<span class="folder">database/</span>
+    <span class="folder">migrations/</span>
+        <span class="file">2024_01_01_000000_create_users_table.php</span>
+        <span class="file">2024_01_01_000001_create_cache_table.php</span>
+        <span class="file">2024_01_15_100000_create_projets_table.php</span>
+</pre></div>
+
+                <div class="info-box note">
+                    <div class="info-box-title">Format du nom</div>
+                    <code class="code-inline">YYYY_MM_DD_HHMMSS_nom_de_la_migration.php</code><br>
+                    Le timestamp garantit l'ordre d'exécution.
+                </div>
+            </div>
+            <div class="slide-footer">
+                <span class="author">M. JARRAY Mondher | ISIM Médenine</span>
+                <span class="page-number">5</span>
+            </div>
+        </div>
+
+        <!-- ==================== SLIDE 6 : CRÉER UNE MIGRATION ==================== -->
+        <div class="slide">
+            <div class="slide-header">
+                <div class="logo-container">
+                    <img src="../assets/isim-logo.jpeg" alt="ISIM Logo" class="logo">
+                    <div class="institution">
+                        <strong>ISIM</strong>
+                        Développement Web Avancé
+                    </div>
+                </div>
+                <div class="chapter-info">
+                    Chapitre 4<br>
+                    <span class="chapter-number">BDD</span>
+                </div>
+            </div>
+            <div class="slide-title">
+                <h1>Créer une Migration</h1>
+                <p class="subtitle">Commande Artisan</p>
+            </div>
+            <div class="slide-content">
+                <h3>Créer une migration pour une nouvelle table</h3>
+                <div class="command-line">php artisan make:migration create_projets_table</div>
+
+                <h3>Structure du fichier généré</h3>
+                <div class="code-block" data-language="PHP">
+<code><span class="keyword">&lt;?php</span>
+
+<span class="keyword">use</span> Illuminate\Database\Migrations\Migration;
+<span class="keyword">use</span> Illuminate\Database\Schema\Blueprint;
+<span class="keyword">use</span> Illuminate\Support\Facades\Schema;
+
+<span class="keyword">return new class extends</span> Migration
+{
+    <span class="comment">/**
+     * Exécuter la migration (créer la table)
+     */</span>
+    <span class="keyword">public function</span> <span class="function">up</span>(): <span class="keyword">void</span>
+    {
+        Schema::<span class="function">create</span>(<span class="string">'projets'</span>, <span class="keyword">function</span> (Blueprint <span class="variable">$table</span>) {
+            <span class="variable">$table</span>-><span class="function">id</span>();
+            <span class="variable">$table</span>-><span class="function">timestamps</span>();
+        });
+    }
+
+    <span class="comment">/**
+     * Annuler la migration (supprimer la table)
+     */</span>
+    <span class="keyword">public function</span> <span class="function">down</span>(): <span class="keyword">void</span>
+    {
+        Schema::<span class="function">dropIfExists</span>(<span class="string">'projets'</span>);
+    }
+};</code>
+                </div>
+
+                <div class="info-box note">
+                    <div class="info-box-title">Méthodes up() et down()</div>
+                    <ul>
+                        <li><strong>up()</strong> : Ce qu'il faut faire (créer la table)</li>
+                        <li><strong>down()</strong> : Comment annuler (supprimer la table)</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="slide-footer">
+                <span class="author">M. JARRAY Mondher | ISIM Médenine</span>
+                <span class="page-number">6</span>
+            </div>
+        </div>
+
+        <!-- ==================== SLIDE 7 : TYPES DE COLONNES ==================== -->
+        <div class="slide">
+            <div class="slide-header">
+                <div class="logo-container">
+                    <img src="../assets/isim-logo.jpeg" alt="ISIM Logo" class="logo">
+                    <div class="institution">
+                        <strong>ISIM</strong>
+                        Développement Web Avancé
+                    </div>
+                </div>
+                <div class="chapter-info">
+                    Chapitre 4<br>
+                    <span class="chapter-number">BDD</span>
+                </div>
+            </div>
+            <div class="slide-title">
+                <h1>Types de Colonnes</h1>
+                <p class="subtitle">Définir la structure de vos tables</p>
+            </div>
+            <div class="slide-content">
+                <div class="table-container">
+                    <table>
+                        <tr>
+                            <th>Méthode</th>
+                            <th>Type SQL</th>
+                            <th>Exemple</th>
+                        </tr>
+                        <tr>
+                            <td><code class="code-inline">id()</code></td>
+                            <td>BIGINT AUTO_INCREMENT</td>
+                            <td>Clé primaire</td>
+                        </tr>
+                        <tr>
+                            <td><code class="code-inline">string('nom')</code></td>
+                            <td>VARCHAR(255)</td>
+                            <td>Texte court</td>
+                        </tr>
+                        <tr>
+                            <td><code class="code-inline">text('description')</code></td>
+                            <td>TEXT</td>
+                            <td>Texte long</td>
+                        </tr>
+                        <tr>
+                            <td><code class="code-inline">integer('age')</code></td>
+                            <td>INTEGER</td>
+                            <td>Nombre entier</td>
+                        </tr>
+                        <tr>
+                            <td><code class="code-inline">boolean('actif')</code></td>
+                            <td>BOOLEAN</td>
+                            <td>Vrai/Faux</td>
+                        </tr>
+                        <tr>
+                            <td><code class="code-inline">date('date_debut')</code></td>
+                            <td>DATE</td>
+                            <td>Date</td>
+                        </tr>
+                        <tr>
+                            <td><code class="code-inline">datetime('publie_le')</code></td>
+                            <td>DATETIME</td>
+                            <td>Date et heure</td>
+                        </tr>
+                        <tr>
+                            <td><code class="code-inline">timestamps()</code></td>
+                            <td>created_at, updated_at</td>
+                            <td>Dates auto</td>
+                        </tr>
+                        <tr>
+                            <td><code class="code-inline">enum('statut', [...])</code></td>
+                            <td>ENUM</td>
+                            <td>Valeurs limitées</td>
+                        </tr>
+                        <tr>
+                            <td><code class="code-inline">foreignId('user_id')</code></td>
+                            <td>BIGINT UNSIGNED</td>
+                            <td>Clé étrangère</td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+            <div class="slide-footer">
+                <span class="author">M. JARRAY Mondher | ISIM Médenine</span>
+                <span class="page-number">7</span>
+            </div>
+        </div>
+
+        <!-- ==================== SLIDE 8 : MODIFICATEURS DE COLONNES ==================== -->
+        <div class="slide">
+            <div class="slide-header">
+                <div class="logo-container">
+                    <img src="../assets/isim-logo.jpeg" alt="ISIM Logo" class="logo">
+                    <div class="institution">
+                        <strong>ISIM</strong>
+                        Développement Web Avancé
+                    </div>
+                </div>
+                <div class="chapter-info">
+                    Chapitre 4<br>
+                    <span class="chapter-number">BDD</span>
+                </div>
+            </div>
+            <div class="slide-title">
+                <h1>Modificateurs de Colonnes</h1>
+                <p class="subtitle">Options supplémentaires</p>
+            </div>
+            <div class="slide-content">
+                <div class="code-block" data-language="PHP">
+<code>Schema::<span class="function">create</span>(<span class="string">'projets'</span>, <span class="keyword">function</span> (Blueprint <span class="variable">$table</span>) {
+    <span class="variable">$table</span>-><span class="function">id</span>();
+
+    <span class="comment">// Obligatoire (par défaut)</span>
+    <span class="variable">$table</span>-><span class="function">string</span>(<span class="string">'nom'</span>);
+
+    <span class="comment">// Nullable (peut être vide)</span>
+    <span class="variable">$table</span>-><span class="function">text</span>(<span class="string">'description'</span>)-><span class="function">nullable</span>();
+
+    <span class="comment">// Valeur par défaut</span>
+    <span class="variable">$table</span>-><span class="function">string</span>(<span class="string">'statut'</span>)-><span class="function">default</span>(<span class="string">'en_attente'</span>);
+
+    <span class="comment">// Valeur unique</span>
+    <span class="variable">$table</span>-><span class="function">string</span>(<span class="string">'email'</span>)-><span class="function">unique</span>();
+
+    <span class="comment">// Longueur personnalisée</span>
+    <span class="variable">$table</span>-><span class="function">string</span>(<span class="string">'code'</span>, <span class="number">10</span>);
+
+    <span class="comment">// Index pour recherche rapide</span>
+    <span class="variable">$table</span>-><span class="function">string</span>(<span class="string">'slug'</span>)-><span class="function">index</span>();
+
+    <span class="comment">// Combinaison</span>
+    <span class="variable">$table</span>-><span class="function">date</span>(<span class="string">'date_fin'</span>)-><span class="function">nullable</span>()-><span class="function">index</span>();
+
+    <span class="variable">$table</span>-><span class="function">timestamps</span>();
+});</code>
+                </div>
+
+                <div class="info-box tip">
+                    <div class="info-box-title">Chaînage</div>
+                    Vous pouvez chaîner plusieurs modificateurs : <code class="code-inline">->nullable()->default('valeur')->index()</code>
+                </div>
+            </div>
+            <div class="slide-footer">
+                <span class="author">M. JARRAY Mondher | ISIM Médenine</span>
+                <span class="page-number">8</span>
+            </div>
+        </div>
+
+        <!-- ==================== SLIDE 9 : EXEMPLE COMPLET ==================== -->
+        <div class="slide">
+            <div class="slide-header">
+                <div class="logo-container">
+                    <img src="../assets/isim-logo.jpeg" alt="ISIM Logo" class="logo">
+                    <div class="institution">
+                        <strong>ISIM</strong>
+                        Développement Web Avancé
+                    </div>
+                </div>
+                <div class="chapter-info">
+                    Chapitre 4<br>
+                    <span class="chapter-number">BDD</span>
+                </div>
+            </div>
+            <div class="slide-title">
+                <h1>Exemple : Table Projets</h1>
+                <p class="subtitle">Migration complète pour TaskFlow</p>
+            </div>
+            <div class="slide-content">
+                <div class="code-block" data-language="PHP">
+<code><span class="keyword">public function</span> <span class="function">up</span>(): <span class="keyword">void</span>
+{
+    Schema::<span class="function">create</span>(<span class="string">'projets'</span>, <span class="keyword">function</span> (Blueprint <span class="variable">$table</span>) {
+        <span class="comment">// Clé primaire</span>
+        <span class="variable">$table</span>-><span class="function">id</span>();
+
+        <span class="comment">// Informations du projet</span>
+        <span class="variable">$table</span>-><span class="function">string</span>(<span class="string">'nom'</span>);
+        <span class="variable">$table</span>-><span class="function">text</span>(<span class="string">'description'</span>)-><span class="function">nullable</span>();
+
+        <span class="comment">// Statut avec valeur par défaut</span>
+        <span class="variable">$table</span>-><span class="function">enum</span>(<span class="string">'statut'</span>, [<span class="string">'en_attente'</span>, <span class="string">'en_cours'</span>, <span class="string">'termine'</span>])
+              -><span class="function">default</span>(<span class="string">'en_attente'</span>);
+
+        <span class="comment">// Dates</span>
+        <span class="variable">$table</span>-><span class="function">date</span>(<span class="string">'date_debut'</span>)-><span class="function">nullable</span>();
+        <span class="variable">$table</span>-><span class="function">date</span>(<span class="string">'date_fin'</span>)-><span class="function">nullable</span>();
+
+        <span class="comment">// Propriétaire du projet (clé étrangère)</span>
+        <span class="variable">$table</span>-><span class="function">foreignId</span>(<span class="string">'user_id'</span>)
+              -><span class="function">constrained</span>()
+              -><span class="function">onDelete</span>(<span class="string">'cascade'</span>);
+
+        <span class="comment">// Timestamps automatiques</span>
+        <span class="variable">$table</span>-><span class="function">timestamps</span>();
+    });
+}</code>
+                </div>
+
+                <div class="info-box success">
+                    <div class="info-box-title">Résultat</div>
+                    Cette migration crée une table <code class="code-inline">projets</code> avec toutes les colonnes nécessaires et une relation avec la table <code class="code-inline">users</code>.
+                </div>
+            </div>
+            <div class="slide-footer">
+                <span class="author">M. JARRAY Mondher | ISIM Médenine</span>
+                <span class="page-number">9</span>
+            </div>
+        </div>
+
+        <!-- ==================== SLIDE 10 : COMMANDES MIGRATION ==================== -->
+        <div class="slide">
+            <div class="slide-header">
+                <div class="logo-container">
+                    <img src="../assets/isim-logo.jpeg" alt="ISIM Logo" class="logo">
+                    <div class="institution">
+                        <strong>ISIM</strong>
+                        Développement Web Avancé
+                    </div>
+                </div>
+                <div class="chapter-info">
+                    Chapitre 4<br>
+                    <span class="chapter-number">BDD</span>
+                </div>
+            </div>
+            <div class="slide-title">
+                <h1>Commandes de Migration</h1>
+                <p class="subtitle">Exécuter et gérer les migrations</p>
+            </div>
+            <div class="slide-content">
+                <div class="table-container">
+                    <table>
+                        <tr>
+                            <th>Commande</th>
+                            <th>Description</th>
+                        </tr>
+                        <tr>
+                            <td><code class="code-inline">php artisan migrate</code></td>
+                            <td>Exécuter toutes les migrations en attente</td>
+                        </tr>
+                        <tr>
+                            <td><code class="code-inline">php artisan migrate:status</code></td>
+                            <td>Voir l'état des migrations</td>
+                        </tr>
+                        <tr>
+                            <td><code class="code-inline">php artisan migrate:rollback</code></td>
+                            <td>Annuler la dernière migration</td>
+                        </tr>
+                        <tr>
+                            <td><code class="code-inline">php artisan migrate:reset</code></td>
+                            <td>Annuler toutes les migrations</td>
+                        </tr>
+                        <tr>
+                            <td><code class="code-inline">php artisan migrate:fresh</code></td>
+                            <td>Supprimer toutes les tables et re-migrer</td>
+                        </tr>
+                        <tr>
+                            <td><code class="code-inline">php artisan migrate:refresh</code></td>
+                            <td>Rollback + migrate</td>
+                        </tr>
+                    </table>
+                </div>
+
+                <div class="info-box danger">
+                    <div class="info-box-title">Attention</div>
+                    <code class="code-inline">migrate:fresh</code> et <code class="code-inline">migrate:reset</code> suppriment toutes les données ! À utiliser uniquement en développement.
+                </div>
+
+                <div class="info-box tip">
+                    <div class="info-box-title">Commande courante en développement</div>
+                    <div class="command-line">php artisan migrate:fresh --seed</div>
+                    Recréer toutes les tables et insérer les données de test.
+                </div>
+            </div>
+            <div class="slide-footer">
+                <span class="author">M. JARRAY Mondher | ISIM Médenine</span>
+                <span class="page-number">10</span>
+            </div>
+        </div>
+
+        <!-- ==================== SLIDE 11 : CLÉS ÉTRANGÈRES ==================== -->
+        <div class="slide">
+            <div class="slide-header">
+                <div class="logo-container">
+                    <img src="../assets/isim-logo.jpeg" alt="ISIM Logo" class="logo">
+                    <div class="institution">
+                        <strong>ISIM</strong>
+                        Développement Web Avancé
+                    </div>
+                </div>
+                <div class="chapter-info">
+                    Chapitre 4<br>
+                    <span class="chapter-number">BDD</span>
+                </div>
+            </div>
+            <div class="slide-title">
+                <h1>3. Clés Étrangères</h1>
+                <p class="subtitle">Lier les tables entre elles</p>
+            </div>
+            <div class="slide-content">
+                <h3>Méthode moderne (Laravel 7+)</h3>
+                <div class="code-block" data-language="PHP">
+<code><span class="comment">// Crée une colonne user_id + contrainte de clé étrangère</span>
+<span class="variable">$table</span>-><span class="function">foreignId</span>(<span class="string">'user_id'</span>)-><span class="function">constrained</span>();
+
+<span class="comment">// Avec action de suppression</span>
+<span class="variable">$table</span>-><span class="function">foreignId</span>(<span class="string">'user_id'</span>)
+      -><span class="function">constrained</span>()
+      -><span class="function">onDelete</span>(<span class="string">'cascade'</span>);  <span class="comment">// Supprimer les projets si user supprimé</span>
+
+<span class="comment">// Référencer une autre table</span>
+<span class="variable">$table</span>-><span class="function">foreignId</span>(<span class="string">'projet_id'</span>)
+      -><span class="function">constrained</span>(<span class="string">'projets'</span>)
+      -><span class="function">onDelete</span>(<span class="string">'cascade'</span>);</code>
+                </div>
+
+                <h3>Actions de suppression</h3>
+                <div class="table-container">
+                    <table>
+                        <tr>
+                            <th>Action</th>
+                            <th>Comportement</th>
+                        </tr>
+                        <tr>
+                            <td><code class="code-inline">cascade</code></td>
+                            <td>Supprimer les enregistrements liés</td>
+                        </tr>
+                        <tr>
+                            <td><code class="code-inline">restrict</code></td>
+                            <td>Empêcher la suppression si des liens existent</td>
+                        </tr>
+                        <tr>
+                            <td><code class="code-inline">set null</code></td>
+                            <td>Mettre la clé étrangère à NULL</td>
+                        </tr>
+                    </table>
+                </div>
+
+                <div class="info-box note">
+                    <div class="info-box-title">Ordre des migrations</div>
+                    La table référencée doit exister avant ! Users doit être créé avant Projets.
+                </div>
+            </div>
+            <div class="slide-footer">
+                <span class="author">M. JARRAY Mondher | ISIM Médenine</span>
+                <span class="page-number">11</span>
+            </div>
+        </div>
+
+        <!-- ==================== SLIDE 12 : SEEDERS ==================== -->
+        <div class="slide">
+            <div class="slide-header">
+                <div class="logo-container">
+                    <img src="../assets/isim-logo.jpeg" alt="ISIM Logo" class="logo">
+                    <div class="institution">
+                        <strong>ISIM</strong>
+                        Développement Web Avancé
+                    </div>
+                </div>
+                <div class="chapter-info">
+                    Chapitre 4<br>
+                    <span class="chapter-number">BDD</span>
+                </div>
+            </div>
+            <div class="slide-title">
+                <h1>4. Les Seeders</h1>
+                <p class="subtitle">Remplir la base avec des données</p>
+            </div>
+            <div class="slide-content">
+                <div class="info-box note">
+                    <div class="info-box-title">Définition</div>
+                    Un <strong>seeder</strong> est une classe qui insère des données dans la base de données. Utile pour les données de test ou les données initiales.
+                </div>
+
+                <h3>Créer un seeder</h3>
+                <div class="command-line">php artisan make:seeder ProjetSeeder</div>
+
+                <h3>Exemple de seeder</h3>
+                <div class="code-block" data-language="PHP">
+<code><span class="comment">// database/seeders/ProjetSeeder.php</span>
+<span class="keyword">use</span> App\Models\Projet;
+
+<span class="keyword">class</span> <span class="function">ProjetSeeder</span> <span class="keyword">extends</span> Seeder
+{
+    <span class="keyword">public function</span> <span class="function">run</span>(): <span class="keyword">void</span>
+    {
+        Projet::<span class="function">create</span>([
+            <span class="string">'nom'</span> => <span class="string">'Site E-commerce'</span>,
+            <span class="string">'description'</span> => <span class="string">'Boutique en ligne'</span>,
+            <span class="string">'statut'</span> => <span class="string">'en_cours'</span>,
+            <span class="string">'user_id'</span> => <span class="number">1</span>,
+        ]);
+
+        Projet::<span class="function">create</span>([
+            <span class="string">'nom'</span> => <span class="string">'Application Mobile'</span>,
+            <span class="string">'description'</span> => <span class="string">'App iOS et Android'</span>,
+            <span class="string">'statut'</span> => <span class="string">'en_attente'</span>,
+            <span class="string">'user_id'</span> => <span class="number">1</span>,
+        ]);
+    }
+}</code>
+                </div>
+
+                <h3>Exécuter les seeders</h3>
+                <div class="command-line">php artisan db:seed --class=ProjetSeeder</div>
+            </div>
+            <div class="slide-footer">
+                <span class="author">M. JARRAY Mondher | ISIM Médenine</span>
+                <span class="page-number">12</span>
+            </div>
+        </div>
+
+        <!-- ==================== SLIDE 13 : DATABASE SEEDER ==================== -->
+        <div class="slide">
+            <div class="slide-header">
+                <div class="logo-container">
+                    <img src="../assets/isim-logo.jpeg" alt="ISIM Logo" class="logo">
+                    <div class="institution">
+                        <strong>ISIM</strong>
+                        Développement Web Avancé
+                    </div>
+                </div>
+                <div class="chapter-info">
+                    Chapitre 4<br>
+                    <span class="chapter-number">BDD</span>
+                </div>
+            </div>
+            <div class="slide-title">
+                <h1>DatabaseSeeder Principal</h1>
+                <p class="subtitle">Centraliser l'exécution des seeders</p>
+            </div>
+            <div class="slide-content">
+                <p>Le fichier <code class="code-inline">DatabaseSeeder.php</code> appelle tous les autres seeders :</p>
+
+                <div class="code-block" data-language="PHP">
+<code><span class="comment">// database/seeders/DatabaseSeeder.php</span>
+<span class="keyword">class</span> <span class="function">DatabaseSeeder</span> <span class="keyword">extends</span> Seeder
+{
+    <span class="keyword">public function</span> <span class="function">run</span>(): <span class="keyword">void</span>
+    {
+        <span class="comment">// Appeler les seeders dans l'ordre</span>
+        <span class="variable">$this</span>-><span class="function">call</span>([
+            UserSeeder::<span class="keyword">class</span>,
+            ProjetSeeder::<span class="keyword">class</span>,
+            TacheSeeder::<span class="keyword">class</span>,
+        ]);
+
+        <span class="comment">// Ou créer directement des données</span>
+        User::<span class="function">factory</span>(<span class="number">10</span>)-><span class="function">create</span>();
+    }
+}</code>
+                </div>
+
+                <h3>Commandes</h3>
+                <div class="table-container">
+                    <table>
+                        <tr>
+                            <th>Commande</th>
+                            <th>Description</th>
+                        </tr>
+                        <tr>
+                            <td><code class="code-inline">php artisan db:seed</code></td>
+                            <td>Exécuter DatabaseSeeder</td>
+                        </tr>
+                        <tr>
+                            <td><code class="code-inline">php artisan migrate:fresh --seed</code></td>
+                            <td>Recréer les tables + seeder</td>
+                        </tr>
+                        <tr>
+                            <td><code class="code-inline">php artisan db:seed --class=NomSeeder</code></td>
+                            <td>Exécuter un seeder spécifique</td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+            <div class="slide-footer">
+                <span class="author">M. JARRAY Mondher | ISIM Médenine</span>
+                <span class="page-number">13</span>
+            </div>
+        </div>
+
+        <!-- ==================== SLIDE 14 : FACTORIES ==================== -->
+        <div class="slide">
+            <div class="slide-header">
+                <div class="logo-container">
+                    <img src="../assets/isim-logo.jpeg" alt="ISIM Logo" class="logo">
+                    <div class="institution">
+                        <strong>ISIM</strong>
+                        Développement Web Avancé
+                    </div>
+                </div>
+                <div class="chapter-info">
+                    Chapitre 4<br>
+                    <span class="chapter-number">BDD</span>
+                </div>
+            </div>
+            <div class="slide-title">
+                <h1>5. Les Factories</h1>
+                <p class="subtitle">Générer des données aléatoires</p>
+            </div>
+            <div class="slide-content">
+                <div class="info-box note">
+                    <div class="info-box-title">Définition</div>
+                    Une <strong>factory</strong> génère des données fictives réalistes grâce à la bibliothèque Faker. Idéal pour créer des données de test en masse.
+                </div>
+
+                <h3>Créer une factory</h3>
+                <div class="command-line">php artisan make:factory ProjetFactory</div>
+
+                <div class="code-block" data-language="PHP">
+<code><span class="comment">// database/factories/ProjetFactory.php</span>
+<span class="keyword">class</span> <span class="function">ProjetFactory</span> <span class="keyword">extends</span> Factory
+{
+    <span class="keyword">public function</span> <span class="function">definition</span>(): <span class="keyword">array</span>
+    {
+        <span class="keyword">return</span> [
+            <span class="string">'nom'</span> => <span class="function">fake</span>()-><span class="function">sentence</span>(<span class="number">3</span>),
+            <span class="string">'description'</span> => <span class="function">fake</span>()-><span class="function">paragraph</span>(),
+            <span class="string">'statut'</span> => <span class="function">fake</span>()-><span class="function">randomElement</span>([
+                <span class="string">'en_attente'</span>, <span class="string">'en_cours'</span>, <span class="string">'termine'</span>
+            ]),
+            <span class="string">'date_debut'</span> => <span class="function">fake</span>()-><span class="function">dateTimeBetween</span>(<span class="string">'-1 month'</span>, <span class="string">'now'</span>),
+            <span class="string">'user_id'</span> => User::<span class="function">factory</span>(),
+        ];
+    }
+}</code>
+                </div>
+
+                <h3>Utiliser la factory</h3>
+                <div class="code-block" data-language="PHP">
+<code><span class="comment">// Créer 1 projet</span>
+Projet::<span class="function">factory</span>()-><span class="function">create</span>();
+
+<span class="comment">// Créer 50 projets</span>
+Projet::<span class="function">factory</span>(<span class="number">50</span>)-><span class="function">create</span>();
+
+<span class="comment">// Avec un statut spécifique</span>
+Projet::<span class="function">factory</span>()-><span class="function">create</span>([<span class="string">'statut'</span> => <span class="string">'termine'</span>]);</code>
+                </div>
+            </div>
+            <div class="slide-footer">
+                <span class="author">M. JARRAY Mondher | ISIM Médenine</span>
+                <span class="page-number">14</span>
+            </div>
+        </div>
+
+        <!-- ==================== SLIDE 15 : FAKER ==================== -->
+        <div class="slide">
+            <div class="slide-header">
+                <div class="logo-container">
+                    <img src="../assets/isim-logo.jpeg" alt="ISIM Logo" class="logo">
+                    <div class="institution">
+                        <strong>ISIM</strong>
+                        Développement Web Avancé
+                    </div>
+                </div>
+                <div class="chapter-info">
+                    Chapitre 4<br>
+                    <span class="chapter-number">BDD</span>
+                </div>
+            </div>
+            <div class="slide-title">
+                <h1>Méthodes Faker Utiles</h1>
+                <p class="subtitle">Générer des données réalistes</p>
+            </div>
+            <div class="slide-content">
+                <div class="table-container">
+                    <table>
+                        <tr>
+                            <th>Méthode</th>
+                            <th>Résultat exemple</th>
+                        </tr>
+                        <tr>
+                            <td><code class="code-inline">fake()->name()</code></td>
+                            <td>Ahmed Ben Ali</td>
+                        </tr>
+                        <tr>
+                            <td><code class="code-inline">fake()->email()</code></td>
+                            <td>ahmed@example.com</td>
+                        </tr>
+                        <tr>
+                            <td><code class="code-inline">fake()->sentence(5)</code></td>
+                            <td>Lorem ipsum dolor sit amet.</td>
+                        </tr>
+                        <tr>
+                            <td><code class="code-inline">fake()->paragraph()</code></td>
+                            <td>Un paragraphe complet...</td>
+                        </tr>
+                        <tr>
+                            <td><code class="code-inline">fake()->numberBetween(1, 100)</code></td>
+                            <td>42</td>
+                        </tr>
+                        <tr>
+                            <td><code class="code-inline">fake()->date()</code></td>
+                            <td>2024-05-15</td>
+                        </tr>
+                        <tr>
+                            <td><code class="code-inline">fake()->boolean()</code></td>
+                            <td>true ou false</td>
+                        </tr>
+                        <tr>
+                            <td><code class="code-inline">fake()->randomElement([...])</code></td>
+                            <td>Un élément du tableau</td>
+                        </tr>
+                        <tr>
+                            <td><code class="code-inline">fake()->url()</code></td>
+                            <td>https://example.com</td>
+                        </tr>
+                        <tr>
+                            <td><code class="code-inline">fake()->imageUrl()</code></td>
+                            <td>URL d'une image placeholder</td>
+                        </tr>
+                    </table>
+                </div>
+
+                <div class="info-box tip">
+                    <div class="info-box-title">Localisation</div>
+                    Configurez la langue dans <code class="code-inline">config/app.php</code> : <code class="code-inline">'faker_locale' => 'fr_FR'</code>
+                </div>
+            </div>
+            <div class="slide-footer">
+                <span class="author">M. JARRAY Mondher | ISIM Médenine</span>
+                <span class="page-number">15</span>
+            </div>
+        </div>
+
+        <!-- ==================== SLIDE 16 : SCHÉMA TASKFLOW ==================== -->
+        <div class="slide">
+            <div class="slide-header">
+                <div class="logo-container">
+                    <img src="../assets/isim-logo.jpeg" alt="ISIM Logo" class="logo">
+                    <div class="institution">
+                        <strong>ISIM</strong>
+                        Développement Web Avancé
+                    </div>
+                </div>
+                <div class="chapter-info">
+                    Chapitre 4<br>
+                    <span class="chapter-number">BDD</span>
+                </div>
+            </div>
+            <div class="slide-title">
+                <h1>6. Schéma Base de Données TaskFlow</h1>
+                <p class="subtitle">Structure complète du projet</p>
+            </div>
+            <div class="slide-content">
+                <div class="architecture-box">
+                    <h4 style="text-align: center; margin-bottom: 20px;">Diagramme des Tables</h4>
+                    <div class="mvc-diagram" style="flex-wrap: wrap;">
+                        <div class="mvc-component" style="border-color: #3498db; min-width: 180px;">
+                            <h5>users</h5>
+                            <p style="font-size: 0.85rem; text-align: left;">
+                                id<br>
+                                name<br>
+                                email<br>
+                                password<br>
+                                timestamps
+                            </p>
+                        </div>
+                        <div class="mvc-arrow">1 → N</div>
+                        <div class="mvc-component" style="border-color: #27ae60; min-width: 180px;">
+                            <h5>projets</h5>
+                            <p style="font-size: 0.85rem; text-align: left;">
+                                id<br>
+                                nom<br>
+                                description<br>
+                                statut<br>
+                                user_id (FK)<br>
+                                timestamps
+                            </p>
+                        </div>
+                        <div class="mvc-arrow">1 → N</div>
+                        <div class="mvc-component" style="border-color: #e74c3c; min-width: 180px;">
+                            <h5>taches</h5>
+                            <p style="font-size: 0.85rem; text-align: left;">
+                                id<br>
+                                titre<br>
+                                description<br>
+                                statut, priorite<br>
+                                projet_id (FK)<br>
+                                user_id (FK)<br>
+                                timestamps
+                            </p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="info-box note">
+                    <div class="info-box-title">Relations</div>
+                    <ul>
+                        <li>Un <strong>User</strong> a plusieurs <strong>Projets</strong> (1:N)</li>
+                        <li>Un <strong>Projet</strong> a plusieurs <strong>Tâches</strong> (1:N)</li>
+                        <li>Une <strong>Tâche</strong> est assignée à un <strong>User</strong> (N:1)</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="slide-footer">
+                <span class="author">M. JARRAY Mondher | ISIM Médenine</span>
+                <span class="page-number">16</span>
+            </div>
+        </div>
+
+        <!-- ==================== SLIDE 17 : MIGRATION TACHES ==================== -->
+        <div class="slide">
+            <div class="slide-header">
+                <div class="logo-container">
+                    <img src="../assets/isim-logo.jpeg" alt="ISIM Logo" class="logo">
+                    <div class="institution">
+                        <strong>ISIM</strong>
+                        Développement Web Avancé
+                    </div>
+                </div>
+                <div class="chapter-info">
+                    Chapitre 4<br>
+                    <span class="chapter-number">BDD</span>
+                </div>
+            </div>
+            <div class="slide-title">
+                <h1>Migration : Table Tâches</h1>
+                <p class="subtitle">Exemple complet avec relations</p>
+            </div>
+            <div class="slide-content">
+                <div class="code-block" data-language="PHP">
+<code>Schema::<span class="function">create</span>(<span class="string">'taches'</span>, <span class="keyword">function</span> (Blueprint <span class="variable">$table</span>) {
+    <span class="variable">$table</span>-><span class="function">id</span>();
+
+    <span class="comment">// Informations de la tâche</span>
+    <span class="variable">$table</span>-><span class="function">string</span>(<span class="string">'titre'</span>);
+    <span class="variable">$table</span>-><span class="function">text</span>(<span class="string">'description'</span>)-><span class="function">nullable</span>();
+
+    <span class="comment">// Statut et priorité</span>
+    <span class="variable">$table</span>-><span class="function">enum</span>(<span class="string">'statut'</span>, [<span class="string">'todo'</span>, <span class="string">'in_progress'</span>, <span class="string">'done'</span>])
+          -><span class="function">default</span>(<span class="string">'todo'</span>);
+    <span class="variable">$table</span>-><span class="function">enum</span>(<span class="string">'priorite'</span>, [<span class="string">'basse'</span>, <span class="string">'moyenne'</span>, <span class="string">'haute'</span>])
+          -><span class="function">default</span>(<span class="string">'moyenne'</span>);
+
+    <span class="comment">// Date d'échéance</span>
+    <span class="variable">$table</span>-><span class="function">date</span>(<span class="string">'date_echeance'</span>)-><span class="function">nullable</span>();
+
+    <span class="comment">// Relations</span>
+    <span class="variable">$table</span>-><span class="function">foreignId</span>(<span class="string">'projet_id'</span>)
+          -><span class="function">constrained</span>()
+          -><span class="function">onDelete</span>(<span class="string">'cascade'</span>);
+
+    <span class="variable">$table</span>-><span class="function">foreignId</span>(<span class="string">'user_id'</span>)
+          -><span class="function">nullable</span>()
+          -><span class="function">constrained</span>()
+          -><span class="function">onDelete</span>(<span class="string">'set null'</span>);
+
+    <span class="variable">$table</span>-><span class="function">timestamps</span>();
+});</code>
+                </div>
+            </div>
+            <div class="slide-footer">
+                <span class="author">M. JARRAY Mondher | ISIM Médenine</span>
+                <span class="page-number">17</span>
+            </div>
+        </div>
+
+        <!-- ==================== SLIDE 18 : BONNES PRATIQUES ==================== -->
+        <div class="slide">
+            <div class="slide-header">
+                <div class="logo-container">
+                    <img src="../assets/isim-logo.jpeg" alt="ISIM Logo" class="logo">
+                    <div class="institution">
+                        <strong>ISIM</strong>
+                        Développement Web Avancé
+                    </div>
+                </div>
+                <div class="chapter-info">
+                    Chapitre 4<br>
+                    <span class="chapter-number">BDD</span>
+                </div>
+            </div>
+            <div class="slide-title">
+                <h1>Bonnes Pratiques</h1>
+                <p class="subtitle">Conseils pour bien gérer vos migrations</p>
+            </div>
+            <div class="slide-content">
+                <div class="two-columns">
+                    <div class="column">
+                        <h4>✅ À Faire</h4>
+                        <ul>
+                            <li>Une migration = une modification</li>
+                            <li>Noms explicites pour les tables</li>
+                            <li>Toujours définir la méthode <code class="code-inline">down()</code></li>
+                            <li>Utiliser les clés étrangères</li>
+                            <li>Créer des index sur les colonnes recherchées</li>
+                            <li>Versionner les migrations avec Git</li>
+                        </ul>
+                    </div>
+                    <div class="column">
+                        <h4>❌ À Éviter</h4>
+                        <ul>
+                            <li>Modifier une migration déjà exécutée en prod</li>
+                            <li>Supprimer des migrations exécutées</li>
+                            <li>Oublier les contraintes de clés étrangères</li>
+                            <li>Mettre des données dans les migrations</li>
+                            <li>Ignorer l'ordre des migrations</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="info-box tip">
+                    <div class="info-box-title">Astuce de développement</div>
+                    <p>Pendant le développement, utilisez <code class="code-inline">php artisan migrate:fresh --seed</code> pour repartir de zéro. En production, créez une nouvelle migration pour chaque modification.</p>
+                </div>
+            </div>
+            <div class="slide-footer">
+                <span class="author">M. JARRAY Mondher | ISIM Médenine</span>
+                <span class="page-number">18</span>
+            </div>
+        </div>
+
+        <!-- ==================== SLIDE 19 : RÉSUMÉ ==================== -->
+        <div class="slide">
+            <div class="slide-header">
+                <div class="logo-container">
+                    <img src="../assets/isim-logo.jpeg" alt="ISIM Logo" class="logo">
+                    <div class="institution">
+                        <strong>ISIM</strong>
+                        Développement Web Avancé
+                    </div>
+                </div>
+                <div class="chapter-info">
+                    Chapitre 4<br>
+                    <span class="chapter-number">BDD</span>
+                </div>
+            </div>
+            <div class="slide-title">
+                <h1>Résumé du Chapitre</h1>
+            </div>
+            <div class="slide-content">
+                <div class="summary-grid">
+                    <div class="summary-item">
+                        <h5>Migrations</h5>
+                        <p>Versionnement de la structure BDD</p>
+                    </div>
+                    <div class="summary-item">
+                        <h5>Seeders</h5>
+                        <p>Insertion de données initiales</p>
+                    </div>
+                    <div class="summary-item">
+                        <h5>Factories</h5>
+                        <p>Génération de données de test</p>
+                    </div>
+                    <div class="summary-item">
+                        <h5>Faker</h5>
+                        <p>Données aléatoires réalistes</p>
+                    </div>
+                </div>
+
+                <h3>Commandes essentielles</h3>
+                <div class="table-container">
+                    <table>
+                        <tr>
+                            <th>Commande</th>
+                            <th>Action</th>
+                        </tr>
+                        <tr>
+                            <td><code class="code-inline">php artisan make:migration</code></td>
+                            <td>Créer une migration</td>
+                        </tr>
+                        <tr>
+                            <td><code class="code-inline">php artisan migrate</code></td>
+                            <td>Exécuter les migrations</td>
+                        </tr>
+                        <tr>
+                            <td><code class="code-inline">php artisan migrate:fresh --seed</code></td>
+                            <td>Reset complet + données</td>
+                        </tr>
+                        <tr>
+                            <td><code class="code-inline">php artisan make:seeder</code></td>
+                            <td>Créer un seeder</td>
+                        </tr>
+                        <tr>
+                            <td><code class="code-inline">php artisan make:factory</code></td>
+                            <td>Créer une factory</td>
+                        </tr>
+                    </table>
+                </div>
+
+                <div class="info-box note">
+                    <div class="info-box-title">Prochain chapitre</div>
+                    <strong>Chapitre 5 :</strong> Eloquent ORM - Manipuler les données avec des modèles
+                </div>
+            </div>
+            <div class="slide-footer">
+                <span class="author">M. JARRAY Mondher | ISIM Médenine</span>
+                <span class="page-number">19</span>
+            </div>
+        </div>
+
+        <!-- ==================== SLIDE 20 : QUESTIONS ==================== -->
+        <div class="slide">
+            <div class="slide-header">
+                <div class="logo-container">
+                    <img src="../assets/isim-logo.jpeg" alt="ISIM Logo" class="logo">
+                    <div class="institution">
+                        <strong>ISIM</strong>
+                        Développement Web Avancé
+                    </div>
+                </div>
+                <div class="chapter-info">
+                    Chapitre 4<br>
+                    <span class="chapter-number">BDD</span>
+                </div>
+            </div>
+            <div class="slide-title">
+                <h1>Questions ?</h1>
+            </div>
+            <div class="slide-content" style="display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center;">
+                <div style="font-size: 4rem; margin-bottom: 30px;">🤔</div>
+                <h3>Avez-vous des questions sur les migrations et les seeders ?</h3>
+
+                <div style="margin-top: 40px; padding: 30px; background: var(--isim-blue-bg); border-radius: 10px;">
+                    <h4 style="color: var(--isim-blue-dark);">Prochaine séance : TP 4</h4>
+                    <p>Création de la base de données TaskFlow</p>
+                </div>
+            </div>
+            <div class="slide-footer">
+                <span class="author">M. JARRAY Mondher | ISIM Médenine</span>
+                <span class="page-number">20</span>
+            </div>
+        </div>
+
+    </div>
+</body>
+</html>

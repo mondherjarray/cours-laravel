@@ -1,0 +1,1237 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chapitre 10 - Déploiement et Bonnes Pratiques | Laravel 11</title>
+    <link rel="stylesheet" href="../css/slides.css">
+</head>
+<body>
+    <div class="presentation">
+
+        <!-- ==================== SLIDE 1 : Page de titre ==================== -->
+        <div class="slide title-slide">
+            <div class="slide-header">
+                <div class="logo-container">
+                    <img src="../assets/isim-logo.jpeg" alt="ISIM Logo" class="logo">
+                    <div class="institution">
+                        <strong>ISIM</strong>
+                        Institut Supérieur d'Informatique de Médenine
+                    </div>
+                </div>
+                <div class="chapter-info">
+                    <div class="chapter-number">Chapitre 10</div>
+                    Développement Web Avancé
+                </div>
+            </div>
+            <div class="slide-content">
+                <h1 class="main-title">Laravel 11</h1>
+                <h2 class="course-title">Développement Web Avancé</h2>
+                <div class="chapter-title">Chapitre 10 : Déploiement et Bonnes Pratiques</div>
+                <div class="info-grid">
+                    <div class="info-item">
+                        <label>Enseignant</label>
+                        <span>M. JARRAY Mondher</span>
+                    </div>
+                    <div class="info-item">
+                        <label>Classe</label>
+                        <span>MP1ILC</span>
+                    </div>
+                    <div class="info-item">
+                        <label>Année Universitaire</label>
+                        <span>2025-2026</span>
+                    </div>
+                    <div class="info-item">
+                        <label>Durée</label>
+                        <span>1h30</span>
+                    </div>
+                </div>
+            </div>
+            <div class="slide-footer">
+                <span class="author">M. JARRAY Mondher - ISIM Médenine</span>
+                <span class="page-number">1</span>
+            </div>
+        </div>
+
+        <!-- ==================== SLIDE 2 : Objectifs ==================== -->
+        <div class="slide">
+            <div class="slide-header">
+                <div class="logo-container">
+                    <img src="../assets/isim-logo.jpeg" alt="ISIM Logo" class="logo">
+                    <div class="institution">
+                        <strong>ISIM</strong>
+                        Institut Supérieur d'Informatique de Médenine
+                    </div>
+                </div>
+                <div class="chapter-info">
+                    <div class="chapter-number">Ch. 10</div>
+                    Déploiement
+                </div>
+            </div>
+            <div class="slide-title">
+                <h1>Objectifs du Chapitre</h1>
+            </div>
+            <div class="slide-content">
+                <ul class="objectives-list">
+                    <li>Écrire des tests unitaires et fonctionnels avec PHPUnit</li>
+                    <li>Optimiser les performances de l'application</li>
+                    <li>Appliquer les bonnes pratiques de sécurité</li>
+                    <li>Préparer l'application pour la production</li>
+                    <li>Déployer sur différentes plateformes cloud</li>
+                    <li>Mettre en place le monitoring et la maintenance</li>
+                </ul>
+            </div>
+            <div class="slide-footer">
+                <span class="author">M. JARRAY Mondher - ISIM Médenine</span>
+                <span class="page-number">2</span>
+            </div>
+        </div>
+
+        <!-- ==================== SLIDE 3 : Plan ==================== -->
+        <div class="slide">
+            <div class="slide-header">
+                <div class="logo-container">
+                    <img src="../assets/isim-logo.jpeg" alt="ISIM Logo" class="logo">
+                    <div class="institution">
+                        <strong>ISIM</strong>
+                        Institut Supérieur d'Informatique de Médenine
+                    </div>
+                </div>
+                <div class="chapter-info">
+                    <div class="chapter-number">Ch. 10</div>
+                    Déploiement
+                </div>
+            </div>
+            <div class="slide-title">
+                <h1>Plan du Chapitre</h1>
+            </div>
+            <div class="slide-content">
+                <div class="two-columns">
+                    <div class="column">
+                        <h4>Partie 1 : Tests & Qualité</h4>
+                        <ol>
+                            <li>Introduction aux tests</li>
+                            <li>Tests unitaires</li>
+                            <li>Tests de fonctionnalité</li>
+                            <li>Tests de base de données</li>
+                            <li>Couverture de code</li>
+                            <li>CI/CD avec GitHub Actions</li>
+                        </ol>
+                    </div>
+                    <div class="column">
+                        <h4>Partie 2 : Production</h4>
+                        <ol start="7">
+                            <li>Optimisation des performances</li>
+                            <li>Cache et compilation</li>
+                            <li>Sécurité</li>
+                            <li>Configuration production</li>
+                            <li>Déploiement</li>
+                            <li>Monitoring et logs</li>
+                        </ol>
+                    </div>
+                </div>
+            </div>
+            <div class="slide-footer">
+                <span class="author">M. JARRAY Mondher - ISIM Médenine</span>
+                <span class="page-number">3</span>
+            </div>
+        </div>
+
+        <!-- ==================== SLIDE 4 : Introduction Tests ==================== -->
+        <div class="slide">
+            <div class="slide-header">
+                <div class="logo-container">
+                    <img src="../assets/isim-logo.jpeg" alt="ISIM Logo" class="logo">
+                    <div class="institution">
+                        <strong>ISIM</strong>
+                        Institut Supérieur d'Informatique de Médenine
+                    </div>
+                </div>
+                <div class="chapter-info">
+                    <div class="chapter-number">Ch. 10</div>
+                    Tests
+                </div>
+            </div>
+            <div class="slide-title">
+                <h1>Introduction aux Tests</h1>
+                <p class="subtitle">Pourquoi tester ?</p>
+            </div>
+            <div class="slide-content">
+                <div class="two-columns">
+                    <div class="column">
+                        <div class="info-box note">
+                            <div class="info-box-title">Avantages des tests</div>
+                            <ul>
+                                <li>Détection précoce des bugs</li>
+                                <li>Confiance lors des refactorings</li>
+                                <li>Documentation du code</li>
+                                <li>Meilleure qualité globale</li>
+                                <li>Facilite le travail en équipe</li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="column">
+                        <h4>Types de tests Laravel</h4>
+                        <table>
+                            <tr>
+                                <th>Type</th>
+                                <th>Objectif</th>
+                            </tr>
+                            <tr>
+                                <td>Unit</td>
+                                <td>Tester une classe/méthode isolée</td>
+                            </tr>
+                            <tr>
+                                <td>Feature</td>
+                                <td>Tester des fonctionnalités complètes</td>
+                            </tr>
+                            <tr>
+                                <td>Browser</td>
+                                <td>Tester l'interface (Dusk)</td>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+
+                <h4>Structure des tests</h4>
+                <div class="file-tree"><pre>
+<span class="folder">tests/</span>
+    <span class="folder">Feature/</span>        <span class="comment">// Tests fonctionnels (HTTP, BDD)</span>
+    <span class="folder">Unit/</span>           <span class="comment">// Tests unitaires (classes isolées)</span>
+    <span class="file">TestCase.php</span>    <span class="comment">// Classe de base</span>
+    <span class="file">Pest.php</span>        <span class="comment">// Config Pest (optionnel)</span>
+</pre></div>
+            </div>
+            <div class="slide-footer">
+                <span class="author">M. JARRAY Mondher - ISIM Médenine</span>
+                <span class="page-number">4</span>
+            </div>
+        </div>
+
+        <!-- ==================== SLIDE 5 : Tests Unitaires ==================== -->
+        <div class="slide">
+            <div class="slide-header">
+                <div class="logo-container">
+                    <img src="../assets/isim-logo.jpeg" alt="ISIM Logo" class="logo">
+                    <div class="institution">
+                        <strong>ISIM</strong>
+                        Institut Supérieur d'Informatique de Médenine
+                    </div>
+                </div>
+                <div class="chapter-info">
+                    <div class="chapter-number">Ch. 10</div>
+                    Tests
+                </div>
+            </div>
+            <div class="slide-title">
+                <h1>Tests Unitaires</h1>
+                <p class="subtitle">Tester des classes isolées</p>
+            </div>
+            <div class="slide-content">
+                <div class="command-line">php artisan make:test ProjectServiceTest --unit</div>
+
+                <div class="code-block" data-language="PHP">
+<code><span class="comment">// tests/Unit/ProjectServiceTest.php</span>
+<span class="keyword">namespace</span> Tests\Unit;
+
+<span class="keyword">use</span> Tests\TestCase;
+<span class="keyword">use</span> App\Services\ProjectService;
+<span class="keyword">use</span> App\Models\Project;
+
+<span class="keyword">class</span> <span class="function">ProjectServiceTest</span> <span class="keyword">extends</span> TestCase
+{
+    <span class="keyword">public function</span> <span class="function">test_calculates_project_progress_correctly</span>(): <span class="keyword">void</span>
+    {
+        <span class="variable">$service</span> = <span class="keyword">new</span> <span class="function">ProjectService</span>();
+        <span class="variable">$project</span> = Project::<span class="function">factory</span>()-><span class="function">make</span>([
+            <span class="string">'total_tasks'</span> => <span class="number">10</span>,
+            <span class="string">'completed_tasks'</span> => <span class="number">5</span>,
+        ]);
+
+        <span class="variable">$progress</span> = <span class="variable">$service</span>-><span class="function">calculateProgress</span>(<span class="variable">$project</span>);
+
+        <span class="variable">$this</span>-><span class="function">assertEquals</span>(<span class="number">50</span>, <span class="variable">$progress</span>);
+    }
+
+    <span class="keyword">public function</span> <span class="function">test_returns_zero_progress_when_no_tasks</span>(): <span class="keyword">void</span>
+    {
+        <span class="variable">$service</span> = <span class="keyword">new</span> <span class="function">ProjectService</span>();
+        <span class="variable">$project</span> = Project::<span class="function">factory</span>()-><span class="function">make</span>([<span class="string">'total_tasks'</span> => <span class="number">0</span>]);
+
+        <span class="variable">$progress</span> = <span class="variable">$service</span>-><span class="function">calculateProgress</span>(<span class="variable">$project</span>);
+
+        <span class="variable">$this</span>-><span class="function">assertEquals</span>(<span class="number">0</span>, <span class="variable">$progress</span>);
+    }
+}</code>
+                </div>
+
+                <div class="command-line">php artisan test --filter=ProjectServiceTest</div>
+            </div>
+            <div class="slide-footer">
+                <span class="author">M. JARRAY Mondher - ISIM Médenine</span>
+                <span class="page-number">5</span>
+            </div>
+        </div>
+
+        <!-- ==================== SLIDE 6 : Tests Feature ==================== -->
+        <div class="slide">
+            <div class="slide-header">
+                <div class="logo-container">
+                    <img src="../assets/isim-logo.jpeg" alt="ISIM Logo" class="logo">
+                    <div class="institution">
+                        <strong>ISIM</strong>
+                        Institut Supérieur d'Informatique de Médenine
+                    </div>
+                </div>
+                <div class="chapter-info">
+                    <div class="chapter-number">Ch. 10</div>
+                    Tests
+                </div>
+            </div>
+            <div class="slide-title">
+                <h1>Tests de Fonctionnalité</h1>
+                <p class="subtitle">Tester les requêtes HTTP</p>
+            </div>
+            <div class="slide-content">
+                <div class="command-line">php artisan make:test ProjectControllerTest</div>
+
+                <div class="code-block" data-language="PHP">
+<code><span class="comment">// tests/Feature/ProjectControllerTest.php</span>
+<span class="keyword">namespace</span> Tests\Feature;
+
+<span class="keyword">use</span> Tests\TestCase;
+<span class="keyword">use</span> App\Models\User;
+<span class="keyword">use</span> App\Models\Project;
+<span class="keyword">use</span> Illuminate\Foundation\Testing\RefreshDatabase;
+
+<span class="keyword">class</span> <span class="function">ProjectControllerTest</span> <span class="keyword">extends</span> TestCase
+{
+    <span class="keyword">use</span> RefreshDatabase;
+
+    <span class="keyword">public function</span> <span class="function">test_user_can_view_projects_list</span>(): <span class="keyword">void</span>
+    {
+        <span class="variable">$user</span> = User::<span class="function">factory</span>()-><span class="function">create</span>();
+        Project::<span class="function">factory</span>(<span class="number">3</span>)-><span class="function">create</span>([<span class="string">'user_id'</span> => <span class="variable">$user</span>->id]);
+
+        <span class="variable">$response</span> = <span class="variable">$this</span>-><span class="function">actingAs</span>(<span class="variable">$user</span>)
+            -><span class="function">get</span>(<span class="string">'/projets'</span>);
+
+        <span class="variable">$response</span>-><span class="function">assertStatus</span>(<span class="number">200</span>)
+            -><span class="function">assertViewIs</span>(<span class="string">'projets.index'</span>)
+            -><span class="function">assertViewHas</span>(<span class="string">'projets'</span>);
+    }
+
+    <span class="keyword">public function</span> <span class="function">test_user_can_create_project</span>(): <span class="keyword">void</span>
+    {
+        <span class="variable">$user</span> = User::<span class="function">factory</span>()-><span class="function">create</span>();
+
+        <span class="variable">$response</span> = <span class="variable">$this</span>-><span class="function">actingAs</span>(<span class="variable">$user</span>)-><span class="function">post</span>(<span class="string">'/projets'</span>, [
+            <span class="string">'name'</span> => <span class="string">'Mon Projet Test'</span>,
+            <span class="string">'description'</span> => <span class="string">'Description du projet'</span>,
+        ]);
+
+        <span class="variable">$response</span>-><span class="function">assertRedirect</span>();
+        <span class="variable">$this</span>-><span class="function">assertDatabaseHas</span>(<span class="string">'projects'</span>, [<span class="string">'name'</span> => <span class="string">'Mon Projet Test'</span>]);
+    }
+}</code>
+                </div>
+            </div>
+            <div class="slide-footer">
+                <span class="author">M. JARRAY Mondher - ISIM Médenine</span>
+                <span class="page-number">6</span>
+            </div>
+        </div>
+
+        <!-- ==================== SLIDE 7 : Tests API ==================== -->
+        <div class="slide">
+            <div class="slide-header">
+                <div class="logo-container">
+                    <img src="../assets/isim-logo.jpeg" alt="ISIM Logo" class="logo">
+                    <div class="institution">
+                        <strong>ISIM</strong>
+                        Institut Supérieur d'Informatique de Médenine
+                    </div>
+                </div>
+                <div class="chapter-info">
+                    <div class="chapter-number">Ch. 10</div>
+                    Tests
+                </div>
+            </div>
+            <div class="slide-title">
+                <h1>Tests d'API</h1>
+                <p class="subtitle">Tester les endpoints JSON</p>
+            </div>
+            <div class="slide-content">
+                <div class="code-block" data-language="PHP">
+<code><span class="comment">// tests/Feature/Api/ProjectApiTest.php</span>
+<span class="keyword">class</span> <span class="function">ProjectApiTest</span> <span class="keyword">extends</span> TestCase
+{
+    <span class="keyword">use</span> RefreshDatabase;
+
+    <span class="keyword">public function</span> <span class="function">test_api_returns_projects_list</span>(): <span class="keyword">void</span>
+    {
+        <span class="variable">$user</span> = User::<span class="function">factory</span>()-><span class="function">create</span>();
+        Project::<span class="function">factory</span>(<span class="number">3</span>)-><span class="function">create</span>();
+
+        <span class="variable">$response</span> = <span class="variable">$this</span>-><span class="function">actingAs</span>(<span class="variable">$user</span>, <span class="string">'sanctum'</span>)
+            -><span class="function">getJson</span>(<span class="string">'/api/projects'</span>);
+
+        <span class="variable">$response</span>-><span class="function">assertStatus</span>(<span class="number">200</span>)
+            -><span class="function">assertJsonCount</span>(<span class="number">3</span>, <span class="string">'data'</span>)
+            -><span class="function">assertJsonStructure</span>([
+                <span class="string">'data'</span> => [
+                    <span class="string">'*'</span> => [<span class="string">'id'</span>, <span class="string">'name'</span>, <span class="string">'description'</span>, <span class="string">'created_at'</span>]
+                ]
+            ]);
+    }
+
+    <span class="keyword">public function</span> <span class="function">test_unauthenticated_user_cannot_access_api</span>(): <span class="keyword">void</span>
+    {
+        <span class="variable">$response</span> = <span class="variable">$this</span>-><span class="function">getJson</span>(<span class="string">'/api/projects'</span>);
+
+        <span class="variable">$response</span>-><span class="function">assertStatus</span>(<span class="number">401</span>);
+    }
+
+    <span class="keyword">public function</span> <span class="function">test_validation_fails_with_invalid_data</span>(): <span class="keyword">void</span>
+    {
+        <span class="variable">$user</span> = User::<span class="function">factory</span>()-><span class="function">create</span>();
+
+        <span class="variable">$response</span> = <span class="variable">$this</span>-><span class="function">actingAs</span>(<span class="variable">$user</span>, <span class="string">'sanctum'</span>)
+            -><span class="function">postJson</span>(<span class="string">'/api/projects'</span>, [<span class="string">'name'</span> => <span class="string">''</span>]);
+
+        <span class="variable">$response</span>-><span class="function">assertStatus</span>(<span class="number">422</span>)
+            -><span class="function">assertJsonValidationErrors</span>([<span class="string">'name'</span>]);
+    }
+}</code>
+                </div>
+            </div>
+            <div class="slide-footer">
+                <span class="author">M. JARRAY Mondher - ISIM Médenine</span>
+                <span class="page-number">7</span>
+            </div>
+        </div>
+
+        <!-- ==================== SLIDE 8 : Exécuter les tests ==================== -->
+        <div class="slide">
+            <div class="slide-header">
+                <div class="logo-container">
+                    <img src="../assets/isim-logo.jpeg" alt="ISIM Logo" class="logo">
+                    <div class="institution">
+                        <strong>ISIM</strong>
+                        Institut Supérieur d'Informatique de Médenine
+                    </div>
+                </div>
+                <div class="chapter-info">
+                    <div class="chapter-number">Ch. 10</div>
+                    Tests
+                </div>
+            </div>
+            <div class="slide-title">
+                <h1>Exécuter les Tests</h1>
+                <p class="subtitle">Commandes et configuration</p>
+            </div>
+            <div class="slide-content">
+                <h4>Commandes de test</h4>
+                <div class="command-line">php artisan test</div>
+                <div class="command-line">php artisan test --filter=ProjectTest</div>
+                <div class="command-line">php artisan test --parallel</div>
+                <div class="command-line">php artisan test --coverage</div>
+
+                <h4>Configuration phpunit.xml</h4>
+                <div class="code-block" data-language="XML">
+<code><span class="comment">&lt;!-- phpunit.xml --&gt;</span>
+&lt;php&gt;
+    <span class="comment">&lt;!-- Utiliser une base SQLite en mémoire pour les tests --&gt;</span>
+    &lt;env name=<span class="string">"DB_CONNECTION"</span> value=<span class="string">"sqlite"</span>/&gt;
+    &lt;env name=<span class="string">"DB_DATABASE"</span> value=<span class="string">":memory:"</span>/&gt;
+
+    <span class="comment">&lt;!-- Désactiver les services externes --&gt;</span>
+    &lt;env name=<span class="string">"MAIL_MAILER"</span> value=<span class="string">"array"</span>/&gt;
+    &lt;env name=<span class="string">"QUEUE_CONNECTION"</span> value=<span class="string">"sync"</span>/&gt;
+    &lt;env name=<span class="string">"CACHE_DRIVER"</span> value=<span class="string">"array"</span>/&gt;
+&lt;/php&gt;</code>
+                </div>
+
+                <div class="info-box success">
+                    <div class="info-box-title">Bonnes pratiques</div>
+                    <ul>
+                        <li>Utilisez <code class="code-inline">RefreshDatabase</code> pour réinitialiser la BDD entre les tests</li>
+                        <li>Nommez vos tests de manière descriptive : <code class="code-inline">test_user_can_create_project</code></li>
+                        <li>Un test = une assertion principale</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="slide-footer">
+                <span class="author">M. JARRAY Mondher - ISIM Médenine</span>
+                <span class="page-number">8</span>
+            </div>
+        </div>
+
+        <!-- ==================== SLIDE 9 : Optimisation ==================== -->
+        <div class="slide">
+            <div class="slide-header">
+                <div class="logo-container">
+                    <img src="../assets/isim-logo.jpeg" alt="ISIM Logo" class="logo">
+                    <div class="institution">
+                        <strong>ISIM</strong>
+                        Institut Supérieur d'Informatique de Médenine
+                    </div>
+                </div>
+                <div class="chapter-info">
+                    <div class="chapter-number">Ch. 10</div>
+                    Performance
+                </div>
+            </div>
+            <div class="slide-title">
+                <h1>Optimisation des Performances</h1>
+                <p class="subtitle">Commandes de cache et compilation</p>
+            </div>
+            <div class="slide-content">
+                <h4>Commandes d'optimisation pour la production</h4>
+                <div class="code-block" data-language="Bash">
+<code><span class="comment"># Optimiser tout en une commande</span>
+php artisan optimize
+
+<span class="comment"># Ou individuellement :</span>
+php artisan config:cache    <span class="comment"># Cache la configuration</span>
+php artisan route:cache     <span class="comment"># Cache les routes</span>
+php artisan view:cache      <span class="comment"># Compile les vues Blade</span>
+php artisan event:cache     <span class="comment"># Cache les événements</span>
+
+<span class="comment"># Composer en production</span>
+composer install --optimize-autoloader --no-dev
+
+<span class="comment"># Assets front-end</span>
+npm run build</code>
+                </div>
+
+                <h4>Nettoyer les caches (développement)</h4>
+                <div class="code-block" data-language="Bash">
+<code>php artisan optimize:clear  <span class="comment"># Nettoie tous les caches</span>
+
+<span class="comment"># Ou individuellement :</span>
+php artisan config:clear
+php artisan route:clear
+php artisan view:clear
+php artisan cache:clear</code>
+                </div>
+            </div>
+            <div class="slide-footer">
+                <span class="author">M. JARRAY Mondher - ISIM Médenine</span>
+                <span class="page-number">9</span>
+            </div>
+        </div>
+
+        <!-- ==================== SLIDE 10 : Eager Loading ==================== -->
+        <div class="slide">
+            <div class="slide-header">
+                <div class="logo-container">
+                    <img src="../assets/isim-logo.jpeg" alt="ISIM Logo" class="logo">
+                    <div class="institution">
+                        <strong>ISIM</strong>
+                        Institut Supérieur d'Informatique de Médenine
+                    </div>
+                </div>
+                <div class="chapter-info">
+                    <div class="chapter-number">Ch. 10</div>
+                    Performance
+                </div>
+            </div>
+            <div class="slide-title">
+                <h1>Éviter le Problème N+1</h1>
+                <p class="subtitle">Eager Loading des relations</p>
+            </div>
+            <div class="slide-content">
+                <div class="two-columns">
+                    <div class="column">
+                        <div class="info-box danger">
+                            <div class="info-box-title">Mauvais : N+1 requêtes</div>
+                            <div class="code-block" data-language="PHP">
+<code><span class="variable">$projects</span> = Project::<span class="function">all</span>();
+
+<span class="keyword">foreach</span> (<span class="variable">$projects</span> <span class="keyword">as</span> <span class="variable">$project</span>) {
+    <span class="comment">// 1 requête par projet!</span>
+    <span class="keyword">echo</span> <span class="variable">$project</span>->user->name;
+}
+<span class="comment">// = 1 + N requêtes</span></code>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="column">
+                        <div class="info-box success">
+                            <div class="info-box-title">Bon : Eager Loading</div>
+                            <div class="code-block" data-language="PHP">
+<code><span class="variable">$projects</span> = Project::<span class="function">with</span>(<span class="string">'user'</span>)
+    -><span class="function">get</span>();
+
+<span class="keyword">foreach</span> (<span class="variable">$projects</span> <span class="keyword">as</span> <span class="variable">$project</span>) {
+    <span class="comment">// Déjà chargé!</span>
+    <span class="keyword">echo</span> <span class="variable">$project</span>->user->name;
+}
+<span class="comment">// = 2 requêtes seulement</span></code>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <h4>Détecter les problèmes N+1</h4>
+                <div class="code-block" data-language="PHP">
+<code><span class="comment">// app/Providers/AppServiceProvider.php</span>
+<span class="keyword">use</span> Illuminate\Database\Eloquent\Model;
+
+<span class="keyword">public function</span> <span class="function">boot</span>(): <span class="keyword">void</span>
+{
+    <span class="comment">// En développement : déclenche une exception si lazy loading</span>
+    Model::<span class="function">preventLazyLoading</span>(! app()-><span class="function">isProduction</span>());
+}</code>
+                </div>
+            </div>
+            <div class="slide-footer">
+                <span class="author">M. JARRAY Mondher - ISIM Médenine</span>
+                <span class="page-number">10</span>
+            </div>
+        </div>
+
+        <!-- ==================== SLIDE 11 : Sécurité ==================== -->
+        <div class="slide">
+            <div class="slide-header">
+                <div class="logo-container">
+                    <img src="../assets/isim-logo.jpeg" alt="ISIM Logo" class="logo">
+                    <div class="institution">
+                        <strong>ISIM</strong>
+                        Institut Supérieur d'Informatique de Médenine
+                    </div>
+                </div>
+                <div class="chapter-info">
+                    <div class="chapter-number">Ch. 10</div>
+                    Sécurité
+                </div>
+            </div>
+            <div class="slide-title">
+                <h1>Sécurité de l'Application</h1>
+                <p class="subtitle">Protections essentielles</p>
+            </div>
+            <div class="slide-content">
+                <div class="two-columns">
+                    <div class="column">
+                        <h4>Protections intégrées</h4>
+                        <ul>
+                            <li><strong>CSRF :</strong> Token automatique via <code class="code-inline">@csrf</code></li>
+                            <li><strong>XSS :</strong> Échappement avec <code class="code-inline">{{ }}</code></li>
+                            <li><strong>SQL Injection :</strong> Eloquent/Query Builder</li>
+                            <li><strong>Mass Assignment :</strong> <code class="code-inline">$fillable</code></li>
+                            <li><strong>HTTPS :</strong> Forcer en production</li>
+                        </ul>
+                    </div>
+                    <div class="column">
+                        <h4>Bonnes pratiques</h4>
+                        <ul>
+                            <li>Valider toutes les entrées</li>
+                            <li>Utiliser les Policies/Gates</li>
+                            <li>Hasher les mots de passe</li>
+                            <li>Ne jamais exposer <code class="code-inline">.env</code></li>
+                            <li>Mettre à jour régulièrement</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <h4>Forcer HTTPS en production</h4>
+                <div class="code-block" data-language="PHP">
+<code><span class="comment">// app/Providers/AppServiceProvider.php</span>
+<span class="keyword">public function</span> <span class="function">boot</span>(): <span class="keyword">void</span>
+{
+    <span class="keyword">if</span> (app()-><span class="function">isProduction</span>()) {
+        URL::<span class="function">forceScheme</span>(<span class="string">'https'</span>);
+    }
+}</code>
+                </div>
+            </div>
+            <div class="slide-footer">
+                <span class="author">M. JARRAY Mondher - ISIM Médenine</span>
+                <span class="page-number">11</span>
+            </div>
+        </div>
+
+        <!-- ==================== SLIDE 12 : Configuration Production ==================== -->
+        <div class="slide">
+            <div class="slide-header">
+                <div class="logo-container">
+                    <img src="../assets/isim-logo.jpeg" alt="ISIM Logo" class="logo">
+                    <div class="institution">
+                        <strong>ISIM</strong>
+                        Institut Supérieur d'Informatique de Médenine
+                    </div>
+                </div>
+                <div class="chapter-info">
+                    <div class="chapter-number">Ch. 10</div>
+                    Production
+                </div>
+            </div>
+            <div class="slide-title">
+                <h1>Configuration Production</h1>
+                <p class="subtitle">Variables d'environnement essentielles</p>
+            </div>
+            <div class="slide-content">
+                <div class="code-block" data-language="ENV">
+<code><span class="comment"># .env Production</span>
+
+<span class="comment"># Application</span>
+APP_NAME=TaskFlow
+APP_ENV=production
+APP_DEBUG=<span class="keyword">false</span>           <span class="comment"># IMPORTANT: false en production!</span>
+APP_URL=https://taskflow.com
+
+<span class="comment"># Base de données</span>
+DB_CONNECTION=mysql
+DB_HOST=db.server.com
+DB_DATABASE=taskflow_prod
+DB_USERNAME=taskflow_user
+DB_PASSWORD=<span class="string">mot_de_passe_securise</span>
+
+<span class="comment"># Cache et Sessions</span>
+CACHE_DRIVER=redis
+SESSION_DRIVER=redis
+QUEUE_CONNECTION=redis
+
+<span class="comment"># Email</span>
+MAIL_MAILER=smtp
+MAIL_HOST=smtp.mailgun.org
+
+<span class="comment"># Logs</span>
+LOG_CHANNEL=stack
+LOG_LEVEL=error           <span class="comment"># Moins verbeux en production</span></code>
+                </div>
+
+                <div class="info-box danger">
+                    <div class="info-box-title">Important</div>
+                    <p><code class="code-inline">APP_DEBUG=false</code> est OBLIGATOIRE en production pour ne pas exposer d'informations sensibles.</p>
+                </div>
+            </div>
+            <div class="slide-footer">
+                <span class="author">M. JARRAY Mondher - ISIM Médenine</span>
+                <span class="page-number">12</span>
+            </div>
+        </div>
+
+        <!-- ==================== SLIDE 13 : Déploiement Manuel ==================== -->
+        <div class="slide">
+            <div class="slide-header">
+                <div class="logo-container">
+                    <img src="../assets/isim-logo.jpeg" alt="ISIM Logo" class="logo">
+                    <div class="institution">
+                        <strong>ISIM</strong>
+                        Institut Supérieur d'Informatique de Médenine
+                    </div>
+                </div>
+                <div class="chapter-info">
+                    <div class="chapter-number">Ch. 10</div>
+                    Déploiement
+                </div>
+            </div>
+            <div class="slide-title">
+                <h1>Déploiement sur un Serveur</h1>
+                <p class="subtitle">Checklist de déploiement</p>
+            </div>
+            <div class="slide-content">
+                <ol class="steps">
+                    <li>
+                        <strong>Cloner le projet sur le serveur</strong>
+                        <div class="command-line">git clone https://github.com/user/taskflow.git</div>
+                    </li>
+                    <li>
+                        <strong>Installer les dépendances</strong>
+                        <div class="command-line">composer install --optimize-autoloader --no-dev</div>
+                    </li>
+                    <li>
+                        <strong>Configurer l'environnement</strong>
+                        <div class="command-line">cp .env.example .env && php artisan key:generate</div>
+                    </li>
+                    <li>
+                        <strong>Exécuter les migrations et optimiser</strong>
+                        <div class="command-line">php artisan migrate --force && php artisan optimize</div>
+                    </li>
+                    <li>
+                        <strong>Configurer les permissions</strong>
+                        <div class="command-line">chmod -R 775 storage bootstrap/cache</div>
+                    </li>
+                </ol>
+            </div>
+            <div class="slide-footer">
+                <span class="author">M. JARRAY Mondher - ISIM Médenine</span>
+                <span class="page-number">13</span>
+            </div>
+        </div>
+
+        <!-- ==================== SLIDE 14 : Plateformes Cloud ==================== -->
+        <div class="slide">
+            <div class="slide-header">
+                <div class="logo-container">
+                    <img src="../assets/isim-logo.jpeg" alt="ISIM Logo" class="logo">
+                    <div class="institution">
+                        <strong>ISIM</strong>
+                        Institut Supérieur d'Informatique de Médenine
+                    </div>
+                </div>
+                <div class="chapter-info">
+                    <div class="chapter-number">Ch. 10</div>
+                    Déploiement
+                </div>
+            </div>
+            <div class="slide-title">
+                <h1>Plateformes de Déploiement</h1>
+                <p class="subtitle">Options pour Laravel</p>
+            </div>
+            <div class="slide-content">
+                <table>
+                    <tr>
+                        <th>Plateforme</th>
+                        <th>Type</th>
+                        <th>Avantages</th>
+                        <th>Prix</th>
+                    </tr>
+                    <tr>
+                        <td><span class="badge primary">Laravel Forge</span></td>
+                        <td>Provisioning</td>
+                        <td>Optimisé Laravel, déploiement Git</td>
+                        <td>12$/mois</td>
+                    </tr>
+                    <tr>
+                        <td><span class="badge success">Laravel Vapor</span></td>
+                        <td>Serverless</td>
+                        <td>Auto-scaling, AWS Lambda</td>
+                        <td>39$/mois</td>
+                    </tr>
+                    <tr>
+                        <td><span class="badge warning">Railway</span></td>
+                        <td>PaaS</td>
+                        <td>Simple, gratuit pour débuter</td>
+                        <td>Gratuit/5$</td>
+                    </tr>
+                    <tr>
+                        <td><span class="badge gray">DigitalOcean</span></td>
+                        <td>VPS</td>
+                        <td>Contrôle total, App Platform</td>
+                        <td>5$/mois</td>
+                    </tr>
+                    <tr>
+                        <td><span class="badge gray">Hostinger/OVH</span></td>
+                        <td>Shared/VPS</td>
+                        <td>Économique, support FR</td>
+                        <td>3-10$/mois</td>
+                    </tr>
+                </table>
+
+                <div class="info-box note">
+                    <div class="info-box-title">Recommandation pour apprendre</div>
+                    <p><strong>Railway</strong> ou <strong>DigitalOcean App Platform</strong> sont excellents pour commencer avec un déploiement simple et gratuit.</p>
+                </div>
+            </div>
+            <div class="slide-footer">
+                <span class="author">M. JARRAY Mondher - ISIM Médenine</span>
+                <span class="page-number">14</span>
+            </div>
+        </div>
+
+        <!-- ==================== SLIDE 15 : CI/CD ==================== -->
+        <div class="slide">
+            <div class="slide-header">
+                <div class="logo-container">
+                    <img src="../assets/isim-logo.jpeg" alt="ISIM Logo" class="logo">
+                    <div class="institution">
+                        <strong>ISIM</strong>
+                        Institut Supérieur d'Informatique de Médenine
+                    </div>
+                </div>
+                <div class="chapter-info">
+                    <div class="chapter-number">Ch. 10</div>
+                    CI/CD
+                </div>
+            </div>
+            <div class="slide-title">
+                <h1>CI/CD avec GitHub Actions</h1>
+                <p class="subtitle">Tests automatiques à chaque push</p>
+            </div>
+            <div class="slide-content">
+                <div class="code-block" data-language="YAML">
+<code><span class="comment"># .github/workflows/tests.yml</span>
+name: Tests
+
+on: [push, pull_request]
+
+jobs:
+  tests:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Setup PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: '8.2'
+          extensions: mbstring, pdo_sqlite
+
+      - name: Install dependencies
+        run: composer install --prefer-dist --no-progress
+
+      - name: Copy env
+        run: cp .env.example .env
+
+      - name: Generate key
+        run: php artisan key:generate
+
+      - name: Run tests
+        run: php artisan test</code>
+                </div>
+            </div>
+            <div class="slide-footer">
+                <span class="author">M. JARRAY Mondher - ISIM Médenine</span>
+                <span class="page-number">15</span>
+            </div>
+        </div>
+
+        <!-- ==================== SLIDE 16 : Monitoring ==================== -->
+        <div class="slide">
+            <div class="slide-header">
+                <div class="logo-container">
+                    <img src="../assets/isim-logo.jpeg" alt="ISIM Logo" class="logo">
+                    <div class="institution">
+                        <strong>ISIM</strong>
+                        Institut Supérieur d'Informatique de Médenine
+                    </div>
+                </div>
+                <div class="chapter-info">
+                    <div class="chapter-number">Ch. 10</div>
+                    Monitoring
+                </div>
+            </div>
+            <div class="slide-title">
+                <h1>Monitoring et Logs</h1>
+                <p class="subtitle">Surveiller l'application en production</p>
+            </div>
+            <div class="slide-content">
+                <div class="two-columns">
+                    <div class="column">
+                        <h4>Logs Laravel</h4>
+                        <div class="code-block" data-language="PHP">
+<code><span class="keyword">use</span> Illuminate\Support\Facades\Log;
+
+<span class="comment">// Niveaux de log</span>
+Log::<span class="function">debug</span>(<span class="string">'Debug info'</span>);
+Log::<span class="function">info</span>(<span class="string">'User logged in'</span>, [
+    <span class="string">'user_id'</span> => <span class="variable">$user</span>->id
+]);
+Log::<span class="function">warning</span>(<span class="string">'Rate limit approached'</span>);
+Log::<span class="function">error</span>(<span class="string">'Payment failed'</span>, [
+    <span class="string">'exception'</span> => <span class="variable">$e</span>-><span class="function">getMessage</span>()
+]);
+Log::<span class="function">critical</span>(<span class="string">'System down!'</span>);</code>
+                        </div>
+                    </div>
+                    <div class="column">
+                        <h4>Outils de monitoring</h4>
+                        <ul>
+                            <li><strong>Laravel Telescope</strong> - Debug en local</li>
+                            <li><strong>Laravel Pulse</strong> - Dashboard temps réel</li>
+                            <li><strong>Sentry</strong> - Tracking d'erreurs</li>
+                            <li><strong>Bugsnag</strong> - Monitoring d'exceptions</li>
+                            <li><strong>Laravel Horizon</strong> - Dashboard queues</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <h4>Installer Laravel Telescope (dev)</h4>
+                <div class="command-line">composer require laravel/telescope --dev</div>
+                <div class="command-line">php artisan telescope:install && php artisan migrate</div>
+            </div>
+            <div class="slide-footer">
+                <span class="author">M. JARRAY Mondher - ISIM Médenine</span>
+                <span class="page-number">16</span>
+            </div>
+        </div>
+
+        <!-- ==================== SLIDE 17 : Maintenance ==================== -->
+        <div class="slide">
+            <div class="slide-header">
+                <div class="logo-container">
+                    <img src="../assets/isim-logo.jpeg" alt="ISIM Logo" class="logo">
+                    <div class="institution">
+                        <strong>ISIM</strong>
+                        Institut Supérieur d'Informatique de Médenine
+                    </div>
+                </div>
+                <div class="chapter-info">
+                    <div class="chapter-number">Ch. 10</div>
+                    Maintenance
+                </div>
+            </div>
+            <div class="slide-title">
+                <h1>Mode Maintenance</h1>
+                <p class="subtitle">Pendant les mises à jour</p>
+            </div>
+            <div class="slide-content">
+                <h4>Activer le mode maintenance</h4>
+                <div class="code-block" data-language="Bash">
+<code><span class="comment"># Activer avec message personnalisé</span>
+php artisan down --with-secret=<span class="string">"token-secret"</span> --render=<span class="string">"errors::503"</span>
+
+<span class="comment"># Accéder malgré le mode maintenance (avec le secret)</span>
+<span class="comment"># https://taskflow.com/token-secret</span>
+
+<span class="comment"># Désactiver</span>
+php artisan up</code>
+                </div>
+
+                <h4>Tâches planifiées (Cron)</h4>
+                <div class="code-block" data-language="PHP">
+<code><span class="comment">// routes/console.php (Laravel 11)</span>
+<span class="keyword">use</span> Illuminate\Support\Facades\Schedule;
+
+Schedule::<span class="function">command</span>(<span class="string">'backup:run'</span>)-><span class="function">daily</span>();
+Schedule::<span class="function">command</span>(<span class="string">'queue:prune-failed'</span>)-><span class="function">daily</span>();
+Schedule::<span class="function">command</span>(<span class="string">'telescope:prune'</span>)-><span class="function">daily</span>();
+
+<span class="comment">// Sur le serveur (crontab -e)</span>
+<span class="comment">// * * * * * cd /path-to-project && php artisan schedule:run >> /dev/null 2>&1</span></code>
+                </div>
+
+                <div class="info-box note">
+                    <div class="info-box-title">Backup</div>
+                    <p>Utilisez <code class="code-inline">spatie/laravel-backup</code> pour automatiser les sauvegardes de la BDD et des fichiers.</p>
+                </div>
+            </div>
+            <div class="slide-footer">
+                <span class="author">M. JARRAY Mondher - ISIM Médenine</span>
+                <span class="page-number">17</span>
+            </div>
+        </div>
+
+        <!-- ==================== SLIDE 18 : Checklist Production ==================== -->
+        <div class="slide">
+            <div class="slide-header">
+                <div class="logo-container">
+                    <img src="../assets/isim-logo.jpeg" alt="ISIM Logo" class="logo">
+                    <div class="institution">
+                        <strong>ISIM</strong>
+                        Institut Supérieur d'Informatique de Médenine
+                    </div>
+                </div>
+                <div class="chapter-info">
+                    <div class="chapter-number">Ch. 10</div>
+                    Checklist
+                </div>
+            </div>
+            <div class="slide-title">
+                <h1>Checklist Avant Production</h1>
+                <p class="subtitle">Ne rien oublier</p>
+            </div>
+            <div class="slide-content">
+                <div class="two-columns">
+                    <div class="column">
+                        <div class="info-box success">
+                            <div class="info-box-title">Configuration</div>
+                            <ul>
+                                <li>APP_ENV=production</li>
+                                <li>APP_DEBUG=false</li>
+                                <li>APP_KEY générée</li>
+                                <li>BDD production configurée</li>
+                                <li>HTTPS forcé</li>
+                                <li>Mail configuré</li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="column">
+                        <div class="info-box note">
+                            <div class="info-box-title">Optimisation</div>
+                            <ul>
+                                <li>php artisan optimize</li>
+                                <li>npm run build</li>
+                                <li>composer --no-dev</li>
+                                <li>Cache Redis/Memcached</li>
+                                <li>Queue worker configuré</li>
+                                <li>Cron pour scheduler</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="info-box warning">
+                    <div class="info-box-title">Sécurité</div>
+                    <ul>
+                        <li>Fichier .env NON versionné et sécurisé</li>
+                        <li>Permissions correctes sur storage/ et bootstrap/cache/</li>
+                        <li>Certificat SSL installé</li>
+                        <li>Rate limiting activé</li>
+                        <li>Monitoring d'erreurs configuré</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="slide-footer">
+                <span class="author">M. JARRAY Mondher - ISIM Médenine</span>
+                <span class="page-number">18</span>
+            </div>
+        </div>
+
+        <!-- ==================== SLIDE 19 : Résumé Cours ==================== -->
+        <div class="slide">
+            <div class="slide-header">
+                <div class="logo-container">
+                    <img src="../assets/isim-logo.jpeg" alt="ISIM Logo" class="logo">
+                    <div class="institution">
+                        <strong>ISIM</strong>
+                        Institut Supérieur d'Informatique de Médenine
+                    </div>
+                </div>
+                <div class="chapter-info">
+                    <div class="chapter-number">Ch. 10</div>
+                    Résumé
+                </div>
+            </div>
+            <div class="slide-title">
+                <h1>Résumé du Cours Complet</h1>
+                <p class="subtitle">Laravel 11 - Développement Web Avancé</p>
+            </div>
+            <div class="slide-content">
+                <div class="summary-grid">
+                    <div class="summary-item">
+                        <h5>Ch. 1-3 : Fondamentaux</h5>
+                        <p>Routes, Contrôleurs, Vues Blade</p>
+                    </div>
+                    <div class="summary-item">
+                        <h5>Ch. 4-5 : Données</h5>
+                        <p>Migrations, Eloquent ORM, Relations</p>
+                    </div>
+                    <div class="summary-item">
+                        <h5>Ch. 6-7 : Formulaires & Auth</h5>
+                        <p>Validation, Breeze, Gates, Policies</p>
+                    </div>
+                    <div class="summary-item">
+                        <h5>Ch. 8-10 : Avancé</h5>
+                        <p>APIs, Services, Events, Déploiement</p>
+                    </div>
+                </div>
+
+                <div class="highlight-box">
+                    <h4>Projet TaskFlow Complété</h4>
+                    <p>Application de gestion de projets avec :</p>
+                    <ul>
+                        <li>Authentification et rôles utilisateurs</li>
+                        <li>CRUD complet pour projets et tâches</li>
+                        <li>API REST avec Sanctum</li>
+                        <li>Notifications et queues</li>
+                        <li>Tests automatisés</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="slide-footer">
+                <span class="author">M. JARRAY Mondher - ISIM Médenine</span>
+                <span class="page-number">19</span>
+            </div>
+        </div>
+
+        <!-- ==================== SLIDE 20 : Ressources ==================== -->
+        <div class="slide">
+            <div class="slide-header">
+                <div class="logo-container">
+                    <img src="../assets/isim-logo.jpeg" alt="ISIM Logo" class="logo">
+                    <div class="institution">
+                        <strong>ISIM</strong>
+                        Institut Supérieur d'Informatique de Médenine
+                    </div>
+                </div>
+                <div class="chapter-info">
+                    <div class="chapter-number">Ch. 10</div>
+                    Ressources
+                </div>
+            </div>
+            <div class="slide-title">
+                <h1>Ressources pour Continuer</h1>
+            </div>
+            <div class="slide-content">
+                <div class="two-columns">
+                    <div class="column">
+                        <h4>Documentation</h4>
+                        <ul>
+                            <li><strong>laravel.com/docs</strong> - Doc officielle</li>
+                            <li><strong>laracasts.com</strong> - Tutoriels vidéo</li>
+                            <li><strong>laravel-news.com</strong> - Actualités</li>
+                            <li><strong>laravel.io</strong> - Forum communauté</li>
+                        </ul>
+
+                        <h4>Packages utiles</h4>
+                        <ul>
+                            <li>spatie/laravel-permission</li>
+                            <li>spatie/laravel-backup</li>
+                            <li>barryvdh/laravel-debugbar</li>
+                            <li>livewire/livewire</li>
+                        </ul>
+                    </div>
+                    <div class="column">
+                        <h4>Outils</h4>
+                        <ul>
+                            <li><strong>Laravel Herd</strong> - Dev local (Mac/Win)</li>
+                            <li><strong>TablePlus</strong> - Client BDD</li>
+                            <li><strong>Postman/Insomnia</strong> - Test API</li>
+                            <li><strong>Ray</strong> - Debug avancé</li>
+                        </ul>
+
+                        <h4>Prochaines étapes</h4>
+                        <ul>
+                            <li>Livewire / Inertia.js</li>
+                            <li>Laravel Nova (Admin)</li>
+                            <li>Laravel Reverb (WebSockets)</li>
+                            <li>Microservices</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="slide-footer">
+                <span class="author">M. JARRAY Mondher - ISIM Médenine</span>
+                <span class="page-number">20</span>
+            </div>
+        </div>
+
+        <!-- ==================== SLIDE 21 : Fin ==================== -->
+        <div class="slide">
+            <div class="slide-header">
+                <div class="logo-container">
+                    <img src="../assets/isim-logo.jpeg" alt="ISIM Logo" class="logo">
+                    <div class="institution">
+                        <strong>ISIM</strong>
+                        Institut Supérieur d'Informatique de Médenine
+                    </div>
+                </div>
+                <div class="chapter-info">
+                    <div class="chapter-number">Ch. 10</div>
+                    Fin
+                </div>
+            </div>
+            <div class="slide-title">
+                <h1>Merci !</h1>
+            </div>
+            <div class="slide-content" style="display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center;">
+                <div class="architecture-box" style="max-width: 600px;">
+                    <h4>Cours Laravel 11 - Terminé</h4>
+                    <p style="font-size: 1.2rem; margin-top: 20px;">
+                        <strong>Félicitations !</strong>
+                    </p>
+                    <p style="margin-top: 15px;">
+                        Vous avez acquis les bases solides pour développer des applications web professionnelles avec Laravel.
+                    </p>
+                </div>
+                <div style="margin-top: 40px;">
+                    <p><strong>TP Final :</strong> Finaliser et déployer TaskFlow</p>
+                    <p style="margin-top: 20px; color: var(--isim-gray);">
+                        M. JARRAY Mondher - ISIM Médenine - 2025-2026
+                    </p>
+                </div>
+            </div>
+            <div class="slide-footer">
+                <span class="author">M. JARRAY Mondher - ISIM Médenine</span>
+                <span class="page-number">21</span>
+            </div>
+        </div>
+
+    </div>
+</body>
+</html>

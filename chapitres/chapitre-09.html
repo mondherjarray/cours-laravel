@@ -1,0 +1,1205 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chapitre 9 - Services et Architecture | Laravel 11</title>
+    <link rel="stylesheet" href="../css/slides.css">
+</head>
+<body>
+    <div class="presentation">
+
+        <!-- ==================== SLIDE 1 : Page de titre ==================== -->
+        <div class="slide title-slide">
+            <div class="slide-header">
+                <div class="logo-container">
+                    <img src="../assets/isim-logo.jpeg" alt="ISIM Logo" class="logo">
+                    <div class="institution">
+                        <strong>ISIM</strong>
+                        Institut Supérieur d'Informatique de Médenine
+                    </div>
+                </div>
+                <div class="chapter-info">
+                    <div class="chapter-number">Chapitre 09</div>
+                    Développement Web Avancé
+                </div>
+            </div>
+            <div class="slide-content">
+                <h1 class="main-title">Laravel 11</h1>
+                <h2 class="course-title">Développement Web Avancé</h2>
+                <div class="chapter-title">Chapitre 9 : Services et Architecture</div>
+                <div class="info-grid">
+                    <div class="info-item">
+                        <label>Enseignant</label>
+                        <span>M. JARRAY Mondher</span>
+                    </div>
+                    <div class="info-item">
+                        <label>Classe</label>
+                        <span>MP1ILC</span>
+                    </div>
+                    <div class="info-item">
+                        <label>Année Universitaire</label>
+                        <span>2025-2026</span>
+                    </div>
+                    <div class="info-item">
+                        <label>Durée</label>
+                        <span>1h30</span>
+                    </div>
+                </div>
+            </div>
+            <div class="slide-footer">
+                <span class="author">M. JARRAY Mondher - ISIM Médenine</span>
+                <span class="page-number">1</span>
+            </div>
+        </div>
+
+        <!-- ==================== SLIDE 2 : Objectifs ==================== -->
+        <div class="slide">
+            <div class="slide-header">
+                <div class="logo-container">
+                    <img src="../assets/isim-logo.jpeg" alt="ISIM Logo" class="logo">
+                    <div class="institution">
+                        <strong>ISIM</strong>
+                        Institut Supérieur d'Informatique de Médenine
+                    </div>
+                </div>
+                <div class="chapter-info">
+                    <div class="chapter-number">Ch. 09</div>
+                    Services
+                </div>
+            </div>
+            <div class="slide-title">
+                <h1>Objectifs du Chapitre</h1>
+            </div>
+            <div class="slide-content">
+                <ul class="objectives-list">
+                    <li>Comprendre le Service Container et l'injection de dépendances</li>
+                    <li>Créer et utiliser des Service Providers</li>
+                    <li>Maîtriser les Facades et leur fonctionnement</li>
+                    <li>Implémenter le pattern Events/Listeners</li>
+                    <li>Utiliser les Queues pour les tâches asynchrones</li>
+                    <li>Envoyer des notifications multi-canaux</li>
+                </ul>
+            </div>
+            <div class="slide-footer">
+                <span class="author">M. JARRAY Mondher - ISIM Médenine</span>
+                <span class="page-number">2</span>
+            </div>
+        </div>
+
+        <!-- ==================== SLIDE 3 : Plan ==================== -->
+        <div class="slide">
+            <div class="slide-header">
+                <div class="logo-container">
+                    <img src="../assets/isim-logo.jpeg" alt="ISIM Logo" class="logo">
+                    <div class="institution">
+                        <strong>ISIM</strong>
+                        Institut Supérieur d'Informatique de Médenine
+                    </div>
+                </div>
+                <div class="chapter-info">
+                    <div class="chapter-number">Ch. 09</div>
+                    Services
+                </div>
+            </div>
+            <div class="slide-title">
+                <h1>Plan du Chapitre</h1>
+            </div>
+            <div class="slide-content">
+                <div class="two-columns">
+                    <div class="column">
+                        <h4>Partie 1 : Architecture</h4>
+                        <ol>
+                            <li>Le Service Container</li>
+                            <li>Injection de dépendances</li>
+                            <li>Binding et résolution</li>
+                            <li>Service Providers</li>
+                            <li>Facades</li>
+                            <li>Créer une Facade</li>
+                        </ol>
+                    </div>
+                    <div class="column">
+                        <h4>Partie 2 : Événements</h4>
+                        <ol start="7">
+                            <li>Events et Listeners</li>
+                            <li>Créer des événements</li>
+                            <li>Queues et Jobs</li>
+                            <li>Configuration des queues</li>
+                            <li>Notifications</li>
+                            <li>Application TaskFlow</li>
+                        </ol>
+                    </div>
+                </div>
+            </div>
+            <div class="slide-footer">
+                <span class="author">M. JARRAY Mondher - ISIM Médenine</span>
+                <span class="page-number">3</span>
+            </div>
+        </div>
+
+        <!-- ==================== SLIDE 4 : Service Container ==================== -->
+        <div class="slide">
+            <div class="slide-header">
+                <div class="logo-container">
+                    <img src="../assets/isim-logo.jpeg" alt="ISIM Logo" class="logo">
+                    <div class="institution">
+                        <strong>ISIM</strong>
+                        Institut Supérieur d'Informatique de Médenine
+                    </div>
+                </div>
+                <div class="chapter-info">
+                    <div class="chapter-number">Ch. 09</div>
+                    Services
+                </div>
+            </div>
+            <div class="slide-title">
+                <h1>Le Service Container</h1>
+                <p class="subtitle">Le coeur de Laravel</p>
+            </div>
+            <div class="slide-content">
+                <div class="two-columns">
+                    <div class="column">
+                        <div class="info-box note">
+                            <div class="info-box-title">Définition</div>
+                            <p>Le <strong>Service Container</strong> (ou IoC Container) est un outil puissant pour gérer les dépendances de classes et effectuer l'injection de dépendances.</p>
+                        </div>
+                        <h4>Avantages</h4>
+                        <ul>
+                            <li>Gestion centralisée des dépendances</li>
+                            <li>Code plus testable</li>
+                            <li>Couplage faible entre les classes</li>
+                            <li>Flexibilité et extensibilité</li>
+                        </ul>
+                    </div>
+                    <div class="column">
+                        <h4>Sans injection (couplage fort)</h4>
+                        <div class="code-block" data-language="PHP">
+<code><span class="keyword">class</span> <span class="function">OrderController</span>
+{
+    <span class="keyword">public function</span> <span class="function">store</span>()
+    {
+        <span class="comment">// Dépendance créée manuellement</span>
+        <span class="variable">$payment</span> = <span class="keyword">new</span> <span class="function">StripePayment</span>();
+        <span class="variable">$payment</span>-><span class="function">process</span>();
+    }
+}</code>
+                        </div>
+                        <h4>Avec injection (couplage faible)</h4>
+                        <div class="code-block" data-language="PHP">
+<code><span class="keyword">class</span> <span class="function">OrderController</span>
+{
+    <span class="keyword">public function</span> <span class="function">store</span>(PaymentInterface <span class="variable">$payment</span>)
+    {
+        <span class="comment">// Dépendance injectée</span>
+        <span class="variable">$payment</span>-><span class="function">process</span>();
+    }
+}</code>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="slide-footer">
+                <span class="author">M. JARRAY Mondher - ISIM Médenine</span>
+                <span class="page-number">4</span>
+            </div>
+        </div>
+
+        <!-- ==================== SLIDE 5 : Injection de dépendances ==================== -->
+        <div class="slide">
+            <div class="slide-header">
+                <div class="logo-container">
+                    <img src="../assets/isim-logo.jpeg" alt="ISIM Logo" class="logo">
+                    <div class="institution">
+                        <strong>ISIM</strong>
+                        Institut Supérieur d'Informatique de Médenine
+                    </div>
+                </div>
+                <div class="chapter-info">
+                    <div class="chapter-number">Ch. 09</div>
+                    Services
+                </div>
+            </div>
+            <div class="slide-title">
+                <h1>Injection de Dépendances</h1>
+                <p class="subtitle">Automatique dans Laravel</p>
+            </div>
+            <div class="slide-content">
+                <p>Laravel résout automatiquement les dépendances dans les contrôleurs, les jobs, les listeners, etc.</p>
+
+                <div class="code-block" data-language="PHP">
+<code><span class="comment">// Injection dans le constructeur</span>
+<span class="keyword">class</span> <span class="function">ProjectController</span> <span class="keyword">extends</span> Controller
+{
+    <span class="keyword">public function</span> <span class="function">__construct</span>(
+        <span class="keyword">protected</span> ProjectService <span class="variable">$projectService</span>,
+        <span class="keyword">protected</span> NotificationService <span class="variable">$notifier</span>
+    ) {}
+
+    <span class="keyword">public function</span> <span class="function">store</span>(StoreProjectRequest <span class="variable">$request</span>)
+    {
+        <span class="variable">$project</span> = <span class="variable">$this</span>->projectService-><span class="function">create</span>(<span class="variable">$request</span>-><span class="function">validated</span>());
+        <span class="variable">$this</span>->notifier-><span class="function">send</span>(<span class="string">'Projet créé !'</span>);
+        <span class="keyword">return</span> <span class="function">redirect</span>()-><span class="function">route</span>(<span class="string">'projets.show'</span>, <span class="variable">$project</span>);
+    }
+}
+
+<span class="comment">// Injection dans une méthode</span>
+<span class="keyword">public function</span> <span class="function">report</span>(ReportGenerator <span class="variable">$generator</span>)
+{
+    <span class="keyword">return</span> <span class="variable">$generator</span>-><span class="function">generate</span>();
+}</code>
+                </div>
+
+                <div class="info-box success">
+                    <div class="info-box-title">Résolution automatique</div>
+                    <p>Laravel crée automatiquement les instances des classes typées dans les paramètres. Pas besoin de configuration pour les classes concrètes.</p>
+                </div>
+            </div>
+            <div class="slide-footer">
+                <span class="author">M. JARRAY Mondher - ISIM Médenine</span>
+                <span class="page-number">5</span>
+            </div>
+        </div>
+
+        <!-- ==================== SLIDE 6 : Binding ==================== -->
+        <div class="slide">
+            <div class="slide-header">
+                <div class="logo-container">
+                    <img src="../assets/isim-logo.jpeg" alt="ISIM Logo" class="logo">
+                    <div class="institution">
+                        <strong>ISIM</strong>
+                        Institut Supérieur d'Informatique de Médenine
+                    </div>
+                </div>
+                <div class="chapter-info">
+                    <div class="chapter-number">Ch. 09</div>
+                    Services
+                </div>
+            </div>
+            <div class="slide-title">
+                <h1>Binding (Liaison)</h1>
+                <p class="subtitle">Lier des interfaces à des implémentations</p>
+            </div>
+            <div class="slide-content">
+                <div class="code-block" data-language="PHP">
+<code><span class="comment">// app/Providers/AppServiceProvider.php</span>
+<span class="keyword">use</span> App\Contracts\PaymentInterface;
+<span class="keyword">use</span> App\Services\StripePayment;
+
+<span class="keyword">public function</span> <span class="function">register</span>(): <span class="keyword">void</span>
+{
+    <span class="comment">// Binding simple : nouvelle instance à chaque résolution</span>
+    <span class="variable">$this</span>->app-><span class="function">bind</span>(PaymentInterface::<span class="keyword">class</span>, StripePayment::<span class="keyword">class</span>);
+
+    <span class="comment">// Singleton : même instance partagée</span>
+    <span class="variable">$this</span>->app-><span class="function">singleton</span>(ReportGenerator::<span class="keyword">class</span>, <span class="keyword">function</span> (<span class="variable">$app</span>) {
+        <span class="keyword">return new</span> <span class="function">ReportGenerator</span>(
+            <span class="variable">$app</span>-><span class="function">make</span>(ProjectRepository::<span class="keyword">class</span>)
+        );
+    });
+
+    <span class="comment">// Instance spécifique</span>
+    <span class="variable">$this</span>->app-><span class="function">instance</span>(<span class="string">'config.api'</span>, [<span class="string">'key'</span> => <span class="string">'secret'</span>]);
+}
+
+<span class="comment">// Utilisation</span>
+<span class="keyword">public function</span> <span class="function">pay</span>(PaymentInterface <span class="variable">$payment</span>)
+{
+    <span class="comment">// Laravel injecte automatiquement StripePayment</span>
+    <span class="variable">$payment</span>-><span class="function">charge</span>(<span class="number">100</span>);
+}</code>
+                </div>
+            </div>
+            <div class="slide-footer">
+                <span class="author">M. JARRAY Mondher - ISIM Médenine</span>
+                <span class="page-number">6</span>
+            </div>
+        </div>
+
+        <!-- ==================== SLIDE 7 : Service Providers ==================== -->
+        <div class="slide">
+            <div class="slide-header">
+                <div class="logo-container">
+                    <img src="../assets/isim-logo.jpeg" alt="ISIM Logo" class="logo">
+                    <div class="institution">
+                        <strong>ISIM</strong>
+                        Institut Supérieur d'Informatique de Médenine
+                    </div>
+                </div>
+                <div class="chapter-info">
+                    <div class="chapter-number">Ch. 09</div>
+                    Services
+                </div>
+            </div>
+            <div class="slide-title">
+                <h1>Service Providers</h1>
+                <p class="subtitle">Point d'entrée du bootstrapping</p>
+            </div>
+            <div class="slide-content">
+                <p>Les <strong>Service Providers</strong> sont le point central pour configurer et démarrer votre application.</p>
+
+                <h4>Créer un Service Provider</h4>
+                <div class="command-line">php artisan make:provider ProjectServiceProvider</div>
+
+                <div class="code-block" data-language="PHP">
+<code><span class="comment">// app/Providers/ProjectServiceProvider.php</span>
+<span class="keyword">namespace</span> App\Providers;
+
+<span class="keyword">use</span> Illuminate\Support\ServiceProvider;
+<span class="keyword">use</span> App\Services\ProjectService;
+<span class="keyword">use</span> App\Repositories\ProjectRepository;
+
+<span class="keyword">class</span> <span class="function">ProjectServiceProvider</span> <span class="keyword">extends</span> ServiceProvider
+{
+    <span class="comment">// Enregistrer les bindings (appelé en premier)</span>
+    <span class="keyword">public function</span> <span class="function">register</span>(): <span class="keyword">void</span>
+    {
+        <span class="variable">$this</span>->app-><span class="function">singleton</span>(ProjectService::<span class="keyword">class</span>, <span class="keyword">function</span> (<span class="variable">$app</span>) {
+            <span class="keyword">return new</span> <span class="function">ProjectService</span>(
+                <span class="variable">$app</span>-><span class="function">make</span>(ProjectRepository::<span class="keyword">class</span>)
+            );
+        });
+    }
+
+    <span class="comment">// Bootstrap : configuration après tous les register()</span>
+    <span class="keyword">public function</span> <span class="function">boot</span>(): <span class="keyword">void</span>
+    {
+        <span class="comment">// Publier des fichiers de config, views, etc.</span>
+    }
+}</code>
+                </div>
+            </div>
+            <div class="slide-footer">
+                <span class="author">M. JARRAY Mondher - ISIM Médenine</span>
+                <span class="page-number">7</span>
+            </div>
+        </div>
+
+        <!-- ==================== SLIDE 8 : Facades ==================== -->
+        <div class="slide">
+            <div class="slide-header">
+                <div class="logo-container">
+                    <img src="../assets/isim-logo.jpeg" alt="ISIM Logo" class="logo">
+                    <div class="institution">
+                        <strong>ISIM</strong>
+                        Institut Supérieur d'Informatique de Médenine
+                    </div>
+                </div>
+                <div class="chapter-info">
+                    <div class="chapter-number">Ch. 09</div>
+                    Services
+                </div>
+            </div>
+            <div class="slide-title">
+                <h1>Les Facades</h1>
+                <p class="subtitle">Syntaxe statique pour les services</p>
+            </div>
+            <div class="slide-content">
+                <div class="two-columns">
+                    <div class="column">
+                        <div class="info-box note">
+                            <div class="info-box-title">Définition</div>
+                            <p>Les <strong>Facades</strong> fournissent une syntaxe "statique" pour accéder aux services du container, tout en restant testables.</p>
+                        </div>
+                        <h4>Facades courantes</h4>
+                        <ul>
+                            <li><code class="code-inline">Auth</code> - Authentification</li>
+                            <li><code class="code-inline">Cache</code> - Système de cache</li>
+                            <li><code class="code-inline">DB</code> - Base de données</li>
+                            <li><code class="code-inline">Log</code> - Journalisation</li>
+                            <li><code class="code-inline">Mail</code> - Envoi d'emails</li>
+                            <li><code class="code-inline">Storage</code> - Fichiers</li>
+                        </ul>
+                    </div>
+                    <div class="column">
+                        <h4>Exemple d'utilisation</h4>
+                        <div class="code-block" data-language="PHP">
+<code><span class="keyword">use</span> Illuminate\Support\Facades\Cache;
+<span class="keyword">use</span> Illuminate\Support\Facades\Log;
+<span class="keyword">use</span> Illuminate\Support\Facades\Mail;
+
+<span class="comment">// Utilisation des Facades</span>
+Cache::<span class="function">put</span>(<span class="string">'key'</span>, <span class="string">'value'</span>, <span class="number">3600</span>);
+<span class="variable">$value</span> = Cache::<span class="function">get</span>(<span class="string">'key'</span>);
+
+Log::<span class="function">info</span>(<span class="string">'User logged in'</span>, [
+    <span class="string">'user_id'</span> => <span class="variable">$user</span>->id
+]);
+
+Mail::<span class="function">to</span>(<span class="variable">$user</span>)
+    -><span class="function">send</span>(<span class="keyword">new</span> <span class="function">WelcomeEmail</span>());</code>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="slide-footer">
+                <span class="author">M. JARRAY Mondher - ISIM Médenine</span>
+                <span class="page-number">8</span>
+            </div>
+        </div>
+
+        <!-- ==================== SLIDE 9 : Créer une Facade ==================== -->
+        <div class="slide">
+            <div class="slide-header">
+                <div class="logo-container">
+                    <img src="../assets/isim-logo.jpeg" alt="ISIM Logo" class="logo">
+                    <div class="institution">
+                        <strong>ISIM</strong>
+                        Institut Supérieur d'Informatique de Médenine
+                    </div>
+                </div>
+                <div class="chapter-info">
+                    <div class="chapter-number">Ch. 09</div>
+                    Services
+                </div>
+            </div>
+            <div class="slide-title">
+                <h1>Créer une Facade Personnalisée</h1>
+                <p class="subtitle">Pour vos propres services</p>
+            </div>
+            <div class="slide-content">
+                <div class="code-block" data-language="PHP">
+<code><span class="comment">// 1. Le Service</span>
+<span class="comment">// app/Services/StatisticsService.php</span>
+<span class="keyword">namespace</span> App\Services;
+
+<span class="keyword">class</span> <span class="function">StatisticsService</span>
+{
+    <span class="keyword">public function</span> <span class="function">getProjectsCount</span>(): <span class="keyword">int</span>
+    {
+        <span class="keyword">return</span> Project::<span class="function">count</span>();
+    }
+
+    <span class="keyword">public function</span> <span class="function">getTasksCompletedToday</span>(): <span class="keyword">int</span>
+    {
+        <span class="keyword">return</span> Task::<span class="function">whereDate</span>(<span class="string">'completed_at'</span>, <span class="function">today</span>())-><span class="function">count</span>();
+    }
+}
+
+<span class="comment">// 2. La Facade</span>
+<span class="comment">// app/Facades/Statistics.php</span>
+<span class="keyword">namespace</span> App\Facades;
+
+<span class="keyword">use</span> Illuminate\Support\Facades\Facade;
+
+<span class="keyword">class</span> <span class="function">Statistics</span> <span class="keyword">extends</span> Facade
+{
+    <span class="keyword">protected static function</span> <span class="function">getFacadeAccessor</span>(): <span class="keyword">string</span>
+    {
+        <span class="keyword">return</span> \App\Services\StatisticsService::<span class="keyword">class</span>;
+    }
+}
+
+<span class="comment">// 3. Utilisation</span>
+<span class="keyword">use</span> App\Facades\Statistics;
+<span class="variable">$count</span> = Statistics::<span class="function">getProjectsCount</span>();</code>
+                </div>
+            </div>
+            <div class="slide-footer">
+                <span class="author">M. JARRAY Mondher - ISIM Médenine</span>
+                <span class="page-number">9</span>
+            </div>
+        </div>
+
+        <!-- ==================== SLIDE 10 : Events Introduction ==================== -->
+        <div class="slide">
+            <div class="slide-header">
+                <div class="logo-container">
+                    <img src="../assets/isim-logo.jpeg" alt="ISIM Logo" class="logo">
+                    <div class="institution">
+                        <strong>ISIM</strong>
+                        Institut Supérieur d'Informatique de Médenine
+                    </div>
+                </div>
+                <div class="chapter-info">
+                    <div class="chapter-number">Ch. 09</div>
+                    Events
+                </div>
+            </div>
+            <div class="slide-title">
+                <h1>Events et Listeners</h1>
+                <p class="subtitle">Architecture événementielle</p>
+            </div>
+            <div class="slide-content">
+                <div class="two-columns">
+                    <div class="column">
+                        <div class="info-box note">
+                            <div class="info-box-title">Concept</div>
+                            <p>Les <strong>Events</strong> permettent de découpler votre code en notifiant d'autres parties de l'application quand quelque chose se produit.</p>
+                        </div>
+                        <h4>Avantages</h4>
+                        <ul>
+                            <li>Code découplé et maintenable</li>
+                            <li>Facilité d'ajouter des comportements</li>
+                            <li>Possibilité d'exécution asynchrone</li>
+                            <li>Tests plus simples</li>
+                        </ul>
+                    </div>
+                    <div class="column">
+                        <h4>Flux de fonctionnement</h4>
+                        <div class="architecture-box">
+                            <div class="mvc-diagram" style="flex-direction: column; gap: 15px;">
+                                <div class="mvc-component" style="border-color: #3498db;">
+                                    <h5>Action</h5>
+                                    <small>Projet créé</small>
+                                </div>
+                                <div class="mvc-arrow">↓</div>
+                                <div class="mvc-component" style="border-color: #e74c3c;">
+                                    <h5>Event</h5>
+                                    <small>ProjectCreated</small>
+                                </div>
+                                <div class="mvc-arrow">↓</div>
+                                <div class="mvc-component" style="border-color: #27ae60;">
+                                    <h5>Listeners</h5>
+                                    <small>Email, Log, Stats...</small>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="slide-footer">
+                <span class="author">M. JARRAY Mondher - ISIM Médenine</span>
+                <span class="page-number">10</span>
+            </div>
+        </div>
+
+        <!-- ==================== SLIDE 11 : Créer un Event ==================== -->
+        <div class="slide">
+            <div class="slide-header">
+                <div class="logo-container">
+                    <img src="../assets/isim-logo.jpeg" alt="ISIM Logo" class="logo">
+                    <div class="institution">
+                        <strong>ISIM</strong>
+                        Institut Supérieur d'Informatique de Médenine
+                    </div>
+                </div>
+                <div class="chapter-info">
+                    <div class="chapter-number">Ch. 09</div>
+                    Events
+                </div>
+            </div>
+            <div class="slide-title">
+                <h1>Créer un Event</h1>
+                <p class="subtitle">Définir ce qui s'est passé</p>
+            </div>
+            <div class="slide-content">
+                <h4>Créer l'événement</h4>
+                <div class="command-line">php artisan make:event ProjectCreated</div>
+
+                <div class="code-block" data-language="PHP">
+<code><span class="comment">// app/Events/ProjectCreated.php</span>
+<span class="keyword">namespace</span> App\Events;
+
+<span class="keyword">use</span> App\Models\Project;
+<span class="keyword">use</span> Illuminate\Foundation\Events\Dispatchable;
+<span class="keyword">use</span> Illuminate\Queue\SerializesModels;
+
+<span class="keyword">class</span> <span class="function">ProjectCreated</span>
+{
+    <span class="keyword">use</span> Dispatchable, SerializesModels;
+
+    <span class="keyword">public function</span> <span class="function">__construct</span>(
+        <span class="keyword">public</span> Project <span class="variable">$project</span>
+    ) {}
+}
+
+<span class="comment">// Déclencher l'événement dans le contrôleur</span>
+<span class="keyword">use</span> App\Events\ProjectCreated;
+
+<span class="keyword">public function</span> <span class="function">store</span>(Request <span class="variable">$request</span>)
+{
+    <span class="variable">$project</span> = Project::<span class="function">create</span>(<span class="variable">$request</span>-><span class="function">validated</span>());
+
+    <span class="comment">// Déclencher l'événement</span>
+    ProjectCreated::<span class="function">dispatch</span>(<span class="variable">$project</span>);
+    <span class="comment">// ou: event(new ProjectCreated($project));</span>
+
+    <span class="keyword">return</span> <span class="function">redirect</span>()-><span class="function">route</span>(<span class="string">'projets.show'</span>, <span class="variable">$project</span>);
+}</code>
+                </div>
+            </div>
+            <div class="slide-footer">
+                <span class="author">M. JARRAY Mondher - ISIM Médenine</span>
+                <span class="page-number">11</span>
+            </div>
+        </div>
+
+        <!-- ==================== SLIDE 12 : Créer un Listener ==================== -->
+        <div class="slide">
+            <div class="slide-header">
+                <div class="logo-container">
+                    <img src="../assets/isim-logo.jpeg" alt="ISIM Logo" class="logo">
+                    <div class="institution">
+                        <strong>ISIM</strong>
+                        Institut Supérieur d'Informatique de Médenine
+                    </div>
+                </div>
+                <div class="chapter-info">
+                    <div class="chapter-number">Ch. 09</div>
+                    Events
+                </div>
+            </div>
+            <div class="slide-title">
+                <h1>Créer un Listener</h1>
+                <p class="subtitle">Réagir à un événement</p>
+            </div>
+            <div class="slide-content">
+                <h4>Créer le listener</h4>
+                <div class="command-line">php artisan make:listener SendProjectCreatedNotification --event=ProjectCreated</div>
+
+                <div class="code-block" data-language="PHP">
+<code><span class="comment">// app/Listeners/SendProjectCreatedNotification.php</span>
+<span class="keyword">namespace</span> App\Listeners;
+
+<span class="keyword">use</span> App\Events\ProjectCreated;
+<span class="keyword">use</span> App\Notifications\ProjectCreatedNotification;
+<span class="keyword">use</span> Illuminate\Contracts\Queue\ShouldQueue;
+
+<span class="keyword">class</span> <span class="function">SendProjectCreatedNotification</span> <span class="keyword">implements</span> ShouldQueue
+{
+    <span class="keyword">public function</span> <span class="function">handle</span>(ProjectCreated <span class="variable">$event</span>): <span class="keyword">void</span>
+    {
+        <span class="variable">$project</span> = <span class="variable">$event</span>->project;
+        <span class="variable">$owner</span> = <span class="variable">$project</span>->user;
+
+        <span class="comment">// Envoyer une notification</span>
+        <span class="variable">$owner</span>-><span class="function">notify</span>(<span class="keyword">new</span> <span class="function">ProjectCreatedNotification</span>(<span class="variable">$project</span>));
+    }
+}</code>
+                </div>
+
+                <div class="info-box success">
+                    <div class="info-box-title">ShouldQueue</div>
+                    <p>En implémentant <code class="code-inline">ShouldQueue</code>, le listener s'exécutera de manière asynchrone via le système de queues.</p>
+                </div>
+            </div>
+            <div class="slide-footer">
+                <span class="author">M. JARRAY Mondher - ISIM Médenine</span>
+                <span class="page-number">12</span>
+            </div>
+        </div>
+
+        <!-- ==================== SLIDE 13 : Enregistrer Events ==================== -->
+        <div class="slide">
+            <div class="slide-header">
+                <div class="logo-container">
+                    <img src="../assets/isim-logo.jpeg" alt="ISIM Logo" class="logo">
+                    <div class="institution">
+                        <strong>ISIM</strong>
+                        Institut Supérieur d'Informatique de Médenine
+                    </div>
+                </div>
+                <div class="chapter-info">
+                    <div class="chapter-number">Ch. 09</div>
+                    Events
+                </div>
+            </div>
+            <div class="slide-title">
+                <h1>Enregistrer Events/Listeners</h1>
+                <p class="subtitle">Laravel 11 : Découverte automatique</p>
+            </div>
+            <div class="slide-content">
+                <div class="info-box note">
+                    <div class="info-box-title">Laravel 11</div>
+                    <p>Laravel 11 découvre automatiquement les listeners grâce au type-hint de la méthode <code class="code-inline">handle()</code>.</p>
+                </div>
+
+                <h4>Méthode manuelle (si nécessaire)</h4>
+                <div class="code-block" data-language="PHP">
+<code><span class="comment">// app/Providers/AppServiceProvider.php</span>
+<span class="keyword">use</span> App\Events\ProjectCreated;
+<span class="keyword">use</span> App\Listeners\SendProjectCreatedNotification;
+<span class="keyword">use</span> App\Listeners\LogProjectCreation;
+<span class="keyword">use</span> Illuminate\Support\Facades\Event;
+
+<span class="keyword">public function</span> <span class="function">boot</span>(): <span class="keyword">void</span>
+{
+    Event::<span class="function">listen</span>(
+        ProjectCreated::<span class="keyword">class</span>,
+        SendProjectCreatedNotification::<span class="keyword">class</span>
+    );
+
+    <span class="comment">// Plusieurs listeners pour un même event</span>
+    Event::<span class="function">listen</span>(
+        ProjectCreated::<span class="keyword">class</span>,
+        LogProjectCreation::<span class="keyword">class</span>
+    );
+
+    <span class="comment">// Avec une closure</span>
+    Event::<span class="function">listen</span>(ProjectCreated::<span class="keyword">class</span>, <span class="keyword">function</span> (<span class="variable">$event</span>) {
+        Log::<span class="function">info</span>(<span class="string">'Projet créé: '</span> . <span class="variable">$event</span>->project->name);
+    });
+}</code>
+                </div>
+            </div>
+            <div class="slide-footer">
+                <span class="author">M. JARRAY Mondher - ISIM Médenine</span>
+                <span class="page-number">13</span>
+            </div>
+        </div>
+
+        <!-- ==================== SLIDE 14 : Queues Introduction ==================== -->
+        <div class="slide">
+            <div class="slide-header">
+                <div class="logo-container">
+                    <img src="../assets/isim-logo.jpeg" alt="ISIM Logo" class="logo">
+                    <div class="institution">
+                        <strong>ISIM</strong>
+                        Institut Supérieur d'Informatique de Médenine
+                    </div>
+                </div>
+                <div class="chapter-info">
+                    <div class="chapter-number">Ch. 09</div>
+                    Queues
+                </div>
+            </div>
+            <div class="slide-title">
+                <h1>Les Queues (Files d'Attente)</h1>
+                <p class="subtitle">Tâches asynchrones</p>
+            </div>
+            <div class="slide-content">
+                <div class="two-columns">
+                    <div class="column">
+                        <div class="info-box note">
+                            <div class="info-box-title">Pourquoi les Queues ?</div>
+                            <p>Les queues permettent d'exécuter des tâches longues en arrière-plan sans bloquer l'utilisateur.</p>
+                        </div>
+                        <h4>Cas d'utilisation</h4>
+                        <ul>
+                            <li>Envoi d'emails</li>
+                            <li>Génération de PDF/rapports</li>
+                            <li>Traitement d'images</li>
+                            <li>Appels API externes</li>
+                            <li>Import/export de données</li>
+                        </ul>
+                    </div>
+                    <div class="column">
+                        <h4>Drivers disponibles</h4>
+                        <table>
+                            <tr>
+                                <th>Driver</th>
+                                <th>Usage</th>
+                            </tr>
+                            <tr>
+                                <td><code class="code-inline">sync</code></td>
+                                <td>Synchrone (dev)</td>
+                            </tr>
+                            <tr>
+                                <td><code class="code-inline">database</code></td>
+                                <td>Simple, persistant</td>
+                            </tr>
+                            <tr>
+                                <td><code class="code-inline">redis</code></td>
+                                <td>Rapide, recommandé</td>
+                            </tr>
+                            <tr>
+                                <td><code class="code-inline">sqs</code></td>
+                                <td>AWS SQS</td>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+            </div>
+            <div class="slide-footer">
+                <span class="author">M. JARRAY Mondher - ISIM Médenine</span>
+                <span class="page-number">14</span>
+            </div>
+        </div>
+
+        <!-- ==================== SLIDE 15 : Créer un Job ==================== -->
+        <div class="slide">
+            <div class="slide-header">
+                <div class="logo-container">
+                    <img src="../assets/isim-logo.jpeg" alt="ISIM Logo" class="logo">
+                    <div class="institution">
+                        <strong>ISIM</strong>
+                        Institut Supérieur d'Informatique de Médenine
+                    </div>
+                </div>
+                <div class="chapter-info">
+                    <div class="chapter-number">Ch. 09</div>
+                    Queues
+                </div>
+            </div>
+            <div class="slide-title">
+                <h1>Créer un Job</h1>
+                <p class="subtitle">Tâche exécutable en file d'attente</p>
+            </div>
+            <div class="slide-content">
+                <div class="command-line">php artisan make:job GenerateProjectReport</div>
+
+                <div class="code-block" data-language="PHP">
+<code><span class="comment">// app/Jobs/GenerateProjectReport.php</span>
+<span class="keyword">namespace</span> App\Jobs;
+
+<span class="keyword">use</span> App\Models\Project;
+<span class="keyword">use</span> Illuminate\Bus\Queueable;
+<span class="keyword">use</span> Illuminate\Contracts\Queue\ShouldQueue;
+<span class="keyword">use</span> Illuminate\Foundation\Bus\Dispatchable;
+<span class="keyword">use</span> Illuminate\Queue\InteractsWithQueue;
+<span class="keyword">use</span> Illuminate\Queue\SerializesModels;
+
+<span class="keyword">class</span> <span class="function">GenerateProjectReport</span> <span class="keyword">implements</span> ShouldQueue
+{
+    <span class="keyword">use</span> Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
+
+    <span class="keyword">public</span> <span class="variable">$tries</span> = <span class="number">3</span>;           <span class="comment">// Nombre de tentatives</span>
+    <span class="keyword">public</span> <span class="variable">$timeout</span> = <span class="number">120</span>;        <span class="comment">// Timeout en secondes</span>
+
+    <span class="keyword">public function</span> <span class="function">__construct</span>(
+        <span class="keyword">public</span> Project <span class="variable">$project</span>
+    ) {}
+
+    <span class="keyword">public function</span> <span class="function">handle</span>(): <span class="keyword">void</span>
+    {
+        <span class="comment">// Logique de génération du rapport</span>
+        <span class="variable">$report</span> = <span class="variable">$this</span>->project-><span class="function">generateReport</span>();
+        Storage::<span class="function">put</span>(<span class="string">"reports/{$this->project->id}.pdf"</span>, <span class="variable">$report</span>);
+    }
+}</code>
+                </div>
+            </div>
+            <div class="slide-footer">
+                <span class="author">M. JARRAY Mondher - ISIM Médenine</span>
+                <span class="page-number">15</span>
+            </div>
+        </div>
+
+        <!-- ==================== SLIDE 16 : Dispatcher un Job ==================== -->
+        <div class="slide">
+            <div class="slide-header">
+                <div class="logo-container">
+                    <img src="../assets/isim-logo.jpeg" alt="ISIM Logo" class="logo">
+                    <div class="institution">
+                        <strong>ISIM</strong>
+                        Institut Supérieur d'Informatique de Médenine
+                    </div>
+                </div>
+                <div class="chapter-info">
+                    <div class="chapter-number">Ch. 09</div>
+                    Queues
+                </div>
+            </div>
+            <div class="slide-title">
+                <h1>Dispatcher et Exécuter les Jobs</h1>
+                <p class="subtitle">Mise en file d'attente et traitement</p>
+            </div>
+            <div class="slide-content">
+                <h4>Dispatcher un job</h4>
+                <div class="code-block" data-language="PHP">
+<code><span class="keyword">use</span> App\Jobs\GenerateProjectReport;
+
+<span class="comment">// Dispatcher immédiatement dans la queue</span>
+GenerateProjectReport::<span class="function">dispatch</span>(<span class="variable">$project</span>);
+
+<span class="comment">// Avec délai</span>
+GenerateProjectReport::<span class="function">dispatch</span>(<span class="variable">$project</span>)
+    -><span class="function">delay</span>(<span class="function">now</span>()-><span class="function">addMinutes</span>(<span class="number">5</span>));
+
+<span class="comment">// Sur une queue spécifique</span>
+GenerateProjectReport::<span class="function">dispatch</span>(<span class="variable">$project</span>)
+    -><span class="function">onQueue</span>(<span class="string">'reports'</span>);
+
+<span class="comment">// Chaîner plusieurs jobs</span>
+Bus::<span class="function">chain</span>([
+    <span class="keyword">new</span> <span class="function">ProcessData</span>(<span class="variable">$data</span>),
+    <span class="keyword">new</span> <span class="function">GenerateReport</span>(<span class="variable">$data</span>),
+    <span class="keyword">new</span> <span class="function">SendNotification</span>(<span class="variable">$user</span>),
+])-><span class="function">dispatch</span>();</code>
+                </div>
+
+                <h4>Exécuter le worker</h4>
+                <div class="command-line">php artisan queue:work</div>
+                <div class="command-line">php artisan queue:work --queue=reports,default</div>
+
+                <div class="info-box warning">
+                    <div class="info-box-title">Production</div>
+                    <p>Utilisez Supervisor pour garder le worker actif en permanence.</p>
+                </div>
+            </div>
+            <div class="slide-footer">
+                <span class="author">M. JARRAY Mondher - ISIM Médenine</span>
+                <span class="page-number">16</span>
+            </div>
+        </div>
+
+        <!-- ==================== SLIDE 17 : Notifications ==================== -->
+        <div class="slide">
+            <div class="slide-header">
+                <div class="logo-container">
+                    <img src="../assets/isim-logo.jpeg" alt="ISIM Logo" class="logo">
+                    <div class="institution">
+                        <strong>ISIM</strong>
+                        Institut Supérieur d'Informatique de Médenine
+                    </div>
+                </div>
+                <div class="chapter-info">
+                    <div class="chapter-number">Ch. 09</div>
+                    Notifications
+                </div>
+            </div>
+            <div class="slide-title">
+                <h1>Notifications Multi-Canaux</h1>
+                <p class="subtitle">Email, SMS, Base de données, Slack...</p>
+            </div>
+            <div class="slide-content">
+                <div class="command-line">php artisan make:notification TaskAssigned</div>
+
+                <div class="code-block" data-language="PHP">
+<code><span class="comment">// app/Notifications/TaskAssigned.php</span>
+<span class="keyword">namespace</span> App\Notifications;
+
+<span class="keyword">use</span> Illuminate\Notifications\Notification;
+<span class="keyword">use</span> Illuminate\Notifications\Messages\MailMessage;
+
+<span class="keyword">class</span> <span class="function">TaskAssigned</span> <span class="keyword">extends</span> Notification
+{
+    <span class="keyword">public function</span> <span class="function">__construct</span>(
+        <span class="keyword">public</span> Task <span class="variable">$task</span>
+    ) {}
+
+    <span class="comment">// Canaux de notification</span>
+    <span class="keyword">public function</span> <span class="function">via</span>(<span class="variable">$notifiable</span>): <span class="keyword">array</span>
+    {
+        <span class="keyword">return</span> [<span class="string">'mail'</span>, <span class="string">'database'</span>];
+    }
+
+    <span class="comment">// Format email</span>
+    <span class="keyword">public function</span> <span class="function">toMail</span>(<span class="variable">$notifiable</span>): MailMessage
+    {
+        <span class="keyword">return</span> (<span class="keyword">new</span> <span class="function">MailMessage</span>)
+            -><span class="function">subject</span>(<span class="string">'Nouvelle tâche assignée'</span>)
+            -><span class="function">line</span>(<span class="string">"La tâche '{$this->task->title}' vous a été assignée."</span>)
+            -><span class="function">action</span>(<span class="string">'Voir la tâche'</span>, <span class="function">route</span>(<span class="string">'tasks.show'</span>, <span class="variable">$this</span>->task))
+            -><span class="function">line</span>(<span class="string">'Merci d\'utiliser TaskFlow!'</span>);
+    }
+}</code>
+                </div>
+            </div>
+            <div class="slide-footer">
+                <span class="author">M. JARRAY Mondher - ISIM Médenine</span>
+                <span class="page-number">17</span>
+            </div>
+        </div>
+
+        <!-- ==================== SLIDE 18 : Notification Database ==================== -->
+        <div class="slide">
+            <div class="slide-header">
+                <div class="logo-container">
+                    <img src="../assets/isim-logo.jpeg" alt="ISIM Logo" class="logo">
+                    <div class="institution">
+                        <strong>ISIM</strong>
+                        Institut Supérieur d'Informatique de Médenine
+                    </div>
+                </div>
+                <div class="chapter-info">
+                    <div class="chapter-number">Ch. 09</div>
+                    Notifications
+                </div>
+            </div>
+            <div class="slide-title">
+                <h1>Notifications en Base de Données</h1>
+                <p class="subtitle">Pour afficher dans l'application</p>
+            </div>
+            <div class="slide-content">
+                <h4>Créer la table de notifications</h4>
+                <div class="command-line">php artisan notifications:table && php artisan migrate</div>
+
+                <div class="code-block" data-language="PHP">
+<code><span class="comment">// Dans la notification</span>
+<span class="keyword">public function</span> <span class="function">toDatabase</span>(<span class="variable">$notifiable</span>): <span class="keyword">array</span>
+{
+    <span class="keyword">return</span> [
+        <span class="string">'task_id'</span> => <span class="variable">$this</span>->task->id,
+        <span class="string">'task_title'</span> => <span class="variable">$this</span>->task->title,
+        <span class="string">'message'</span> => <span class="string">"Nouvelle tâche assignée: {$this->task->title}"</span>,
+    ];
+}
+
+<span class="comment">// Envoyer la notification</span>
+<span class="variable">$user</span>-><span class="function">notify</span>(<span class="keyword">new</span> <span class="function">TaskAssigned</span>(<span class="variable">$task</span>));
+
+<span class="comment">// Lire les notifications</span>
+<span class="variable">$notifications</span> = <span class="variable">$user</span>->notifications;          <span class="comment">// Toutes</span>
+<span class="variable">$unread</span> = <span class="variable">$user</span>->unreadNotifications;            <span class="comment">// Non lues</span>
+
+<span class="comment">// Marquer comme lue</span>
+<span class="variable">$notification</span>-><span class="function">markAsRead</span>();
+<span class="variable">$user</span>-><span class="function">unreadNotifications</span>-><span class="function">markAsRead</span>();        <span class="comment">// Toutes</span></code>
+                </div>
+
+                <div class="info-box note">
+                    <div class="info-box-title">Dans Blade</div>
+                    <div class="code-block" data-language="Blade">
+<code><span class="keyword">@foreach</span>(<span class="function">auth</span>()-><span class="function">user</span>()->unreadNotifications <span class="keyword">as</span> <span class="variable">$notification</span>)
+    &lt;div class=<span class="string">"notification"</span>&gt;
+        {{ <span class="variable">$notification</span>->data[<span class="string">'message'</span>] }}
+    &lt;/div&gt;
+<span class="keyword">@endforeach</span></code>
+                    </div>
+                </div>
+            </div>
+            <div class="slide-footer">
+                <span class="author">M. JARRAY Mondher - ISIM Médenine</span>
+                <span class="page-number">18</span>
+            </div>
+        </div>
+
+        <!-- ==================== SLIDE 19 : TaskFlow Services ==================== -->
+        <div class="slide">
+            <div class="slide-header">
+                <div class="logo-container">
+                    <img src="../assets/isim-logo.jpeg" alt="ISIM Logo" class="logo">
+                    <div class="institution">
+                        <strong>ISIM</strong>
+                        Institut Supérieur d'Informatique de Médenine
+                    </div>
+                </div>
+                <div class="chapter-info">
+                    <div class="chapter-number">Ch. 09</div>
+                    TaskFlow
+                </div>
+            </div>
+            <div class="slide-title">
+                <h1>Application TaskFlow</h1>
+                <p class="subtitle">Architecture événementielle</p>
+            </div>
+            <div class="slide-content">
+                <div class="highlight-box">
+                    <h4>Events TaskFlow</h4>
+                    <ul>
+                        <li><strong>TaskAssigned</strong> → Notifier l'utilisateur assigné</li>
+                        <li><strong>TaskCompleted</strong> → Mettre à jour les statistiques du projet</li>
+                        <li><strong>ProjectCompleted</strong> → Générer un rapport et notifier l'équipe</li>
+                    </ul>
+                </div>
+
+                <div class="code-block" data-language="PHP">
+<code><span class="comment">// app/Services/TaskService.php</span>
+<span class="keyword">class</span> <span class="function">TaskService</span>
+{
+    <span class="keyword">public function</span> <span class="function">assign</span>(Task <span class="variable">$task</span>, User <span class="variable">$user</span>): <span class="keyword">void</span>
+    {
+        <span class="variable">$task</span>-><span class="function">update</span>([<span class="string">'assigned_to'</span> => <span class="variable">$user</span>->id]);
+        TaskAssigned::<span class="function">dispatch</span>(<span class="variable">$task</span>, <span class="variable">$user</span>);
+    }
+
+    <span class="keyword">public function</span> <span class="function">complete</span>(Task <span class="variable">$task</span>): <span class="keyword">void</span>
+    {
+        <span class="variable">$task</span>-><span class="function">update</span>([
+            <span class="string">'status'</span> => <span class="string">'completed'</span>,
+            <span class="string">'completed_at'</span> => <span class="function">now</span>(),
+        ]);
+        TaskCompleted::<span class="function">dispatch</span>(<span class="variable">$task</span>);
+
+        <span class="comment">// Vérifier si le projet est terminé</span>
+        <span class="keyword">if</span> (<span class="variable">$task</span>->project-><span class="function">isComplete</span>()) {
+            ProjectCompleted::<span class="function">dispatch</span>(<span class="variable">$task</span>->project);
+        }
+    }
+}</code>
+                </div>
+            </div>
+            <div class="slide-footer">
+                <span class="author">M. JARRAY Mondher - ISIM Médenine</span>
+                <span class="page-number">19</span>
+            </div>
+        </div>
+
+        <!-- ==================== SLIDE 20 : Résumé ==================== -->
+        <div class="slide">
+            <div class="slide-header">
+                <div class="logo-container">
+                    <img src="../assets/isim-logo.jpeg" alt="ISIM Logo" class="logo">
+                    <div class="institution">
+                        <strong>ISIM</strong>
+                        Institut Supérieur d'Informatique de Médenine
+                    </div>
+                </div>
+                <div class="chapter-info">
+                    <div class="chapter-number">Ch. 09</div>
+                    Résumé
+                </div>
+            </div>
+            <div class="slide-title">
+                <h1>Résumé du Chapitre</h1>
+            </div>
+            <div class="slide-content">
+                <div class="summary-grid">
+                    <div class="summary-item">
+                        <h5>Service Container</h5>
+                        <p>Gestion des dépendances et injection automatique</p>
+                    </div>
+                    <div class="summary-item">
+                        <h5>Service Providers</h5>
+                        <p>Configuration et bootstrapping de l'application</p>
+                    </div>
+                    <div class="summary-item">
+                        <h5>Events/Listeners</h5>
+                        <p>Architecture découplée et réactive</p>
+                    </div>
+                    <div class="summary-item">
+                        <h5>Queues & Jobs</h5>
+                        <p>Tâches asynchrones en arrière-plan</p>
+                    </div>
+                </div>
+
+                <div class="info-box success">
+                    <div class="info-box-title">Commandes essentielles</div>
+                    <ul>
+                        <li><code class="code-inline">php artisan make:provider</code> - Créer un Service Provider</li>
+                        <li><code class="code-inline">php artisan make:event</code> / <code class="code-inline">make:listener</code> - Events</li>
+                        <li><code class="code-inline">php artisan make:job</code> - Créer un Job</li>
+                        <li><code class="code-inline">php artisan make:notification</code> - Notification</li>
+                        <li><code class="code-inline">php artisan queue:work</code> - Exécuter le worker</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="slide-footer">
+                <span class="author">M. JARRAY Mondher - ISIM Médenine</span>
+                <span class="page-number">20</span>
+            </div>
+        </div>
+
+        <!-- ==================== SLIDE 21 : Questions ==================== -->
+        <div class="slide">
+            <div class="slide-header">
+                <div class="logo-container">
+                    <img src="../assets/isim-logo.jpeg" alt="ISIM Logo" class="logo">
+                    <div class="institution">
+                        <strong>ISIM</strong>
+                        Institut Supérieur d'Informatique de Médenine
+                    </div>
+                </div>
+                <div class="chapter-info">
+                    <div class="chapter-number">Ch. 09</div>
+                    Questions
+                </div>
+            </div>
+            <div class="slide-title">
+                <h1>Questions ?</h1>
+            </div>
+            <div class="slide-content" style="display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center;">
+                <div class="architecture-box" style="max-width: 600px;">
+                    <h4>Prochain Chapitre</h4>
+                    <p style="font-size: 1.2rem; margin-top: 20px;">
+                        <strong>Chapitre 10 : Déploiement et Bonnes Pratiques</strong>
+                    </p>
+                    <p style="margin-top: 15px;">
+                        Tests, Optimisation, Sécurité, Déploiement Cloud
+                    </p>
+                </div>
+                <div style="margin-top: 40px;">
+                    <p><strong>TP 9 :</strong> Implémenter les notifications et queues dans TaskFlow</p>
+                </div>
+            </div>
+            <div class="slide-footer">
+                <span class="author">M. JARRAY Mondher - ISIM Médenine</span>
+                <span class="page-number">21</span>
+            </div>
+        </div>
+
+    </div>
+</body>
+</html>

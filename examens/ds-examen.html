@@ -1,0 +1,410 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DS - BackFront Framework Symfony | ISIMED</title>
+    <link rel="stylesheet" href="../css/tp.css">
+    <style>
+        .question-box {
+            border: 2px solid var(--isim-blue-light);
+            border-radius: 8px;
+            margin-bottom: 20px;
+            overflow: hidden;
+        }
+        
+        .question-header {
+            background: var(--isim-blue-primary);
+            color: white;
+            padding: 10px 15px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .question-content {
+            padding: 15px;
+        }
+        
+        .answer-lines {
+            border-bottom: 1px solid #ddd;
+            min-height: 25px;
+            margin: 8px 0;
+        }
+        
+        .code-answer {
+            background: #f8f9fa;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            min-height: 120px;
+            padding: 10px;
+            font-family: 'Consolas', monospace;
+        }
+        
+        .points-badge {
+            background: white;
+            color: var(--isim-blue-primary);
+            padding: 3px 12px;
+            border-radius: 15px;
+            font-weight: bold;
+            font-size: 0.9rem;
+        }
+        
+        .consignes-box {
+            background: #fff3cd;
+            border: 2px solid #ffc107;
+            border-radius: 8px;
+            padding: 15px 20px;
+            margin-bottom: 25px;
+        }
+        
+        .consignes-box h3 {
+            color: #856404;
+            margin-bottom: 10px;
+        }
+        
+        .bareme-table {
+            width: 100%;
+            margin-top: 20px;
+        }
+        
+        .bareme-table td {
+            padding: 8px 15px;
+        }
+        
+        .bareme-table .total {
+            background: var(--isim-blue-dark);
+            color: white;
+            font-weight: bold;
+        }
+        
+        @media print {
+            .question-box {
+                page-break-inside: avoid;
+                break-inside: avoid;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="document">
+
+        <!-- ==================== EN-TÊTE DU DOCUMENT ==================== -->
+        <div class="doc-header">
+            <div class="header-top">
+                <div class="header-logo">
+                    <img src="../assets/isim-logo.jpeg" alt="ISIM Logo">
+                    <div class="institution-name">
+                        <strong>ISIM</strong> Institut Supérieur d'Informatique de Médenine
+                    </div>
+                </div>
+                <div class="header-info">
+                    Année Universitaire<br>
+                    <strong>2025-2026</strong>
+                </div>
+            </div>
+            <div class="header-title">
+                <h1>Devoir Surveillé - BackFront Framework Symfony</h1>
+                <h2>Laravel 11 - Session Principale</h2>
+            </div>
+        </div>
+
+        <!-- ==================== BARRE D'INFORMATIONS ==================== -->
+        <div class="info-bar">
+            <div class="info-item">
+                <span class="label">Classe :</span>
+                <span class="value">MP1ILC</span>
+            </div>
+            <div class="info-item">
+                <span class="label">Enseignant :</span>
+                <span class="value">M. JARRAY Mondher</span>
+            </div>
+            <div class="info-item">
+                <span class="label">Durée :</span>
+                <span class="value">1h</span>
+            </div>
+            <div class="info-item">
+                <span class="label">Documents :</span>
+                <span class="value">Non autorisés</span>
+            </div>
+        </div>
+
+        <!-- ==================== CONTENU PRINCIPAL ==================== -->
+        <div class="doc-content">
+
+
+
+            <!-- Consignes -->
+            <div class="consignes-box">
+                <h3>Consignes</h3>
+                <ul>
+                    <li>Lisez attentivement toutes les questions avant de commencer</li>
+                    <li>La clarté et la précision des réponses seront prises en compte</li>
+                    <li>Le barème est indicatif et peut être adapté</li>
+                </ul>
+            </div>
+
+            <!-- ==================== PARTIE 1 : QCM ==================== -->
+            <div class="section">
+                <h2 class="section-title">Partie 1 : Questions à Choix Multiples (6 points)</h2>
+                <p><em>Cochez la ou les bonne(s) réponse(s) pour chaque question.</em></p>
+
+                <div class="question-box">
+                    <div class="question-header">
+                        <span>Question 1</span>
+                        <span class="points-badge">1 pt</span>
+                    </div>
+                    <div class="question-content">
+                        <p><strong>Quelle commande permet de créer un nouveau projet Laravel 11 ?</strong></p>
+                        <div style="margin-left: 20px;">
+                            <p>☐ a) <code class="code-inline">composer create laravel/laravel mon-projet</code></p>
+                            <p>☐ b) <code class="code-inline">composer create-project laravel/laravel mon-projet</code></p>
+                            <p>☐ c) <code class="code-inline">laravel new mon-projet</code></p>
+                            <p>☐ d) <code class="code-inline">php artisan create:project mon-projet</code></p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="question-box">
+                    <div class="question-header">
+                        <span>Question 2</span>
+                        <span class="points-badge">1 pt</span>
+                    </div>
+                    <div class="question-content">
+                        <p><strong>Dans le pattern MVC de Laravel, quel composant est responsable de la logique métier ?</strong></p>
+                        <div style="margin-left: 20px;">
+                            <p>☐ a) La Vue (View)</p>
+                            <p>☐ b) Le Modèle (Model)</p>
+                            <p>☐ c) Le Contrôleur (Controller)</p>
+                            <p>☐ d) La Route (Route)</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="question-box">
+                    <div class="question-header">
+                        <span>Question 3</span>
+                        <span class="points-badge">1 pt</span>
+                    </div>
+                    <div class="question-content">
+                        <p><strong>Quelle directive Blade permet d'afficher une variable en échappant les caractères HTML ?</strong></p>
+                        <div style="margin-left: 20px;">
+                            <p>☐ a) <code class="code-inline">{!! $variable !!}</code></p>
+                            <p>☐ b) <code class="code-inline">{{ $variable }}</code></p>
+                            <p>☐ c) <code class="code-inline">@echo($variable)</code></p>
+                            <p>☐ d) <code class="code-inline">&lt;?= $variable ?&gt;</code></p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="question-box">
+                    <div class="question-header">
+                        <span>Question 4</span>
+                        <span class="points-badge">1 pt</span>
+                    </div>
+                    <div class="question-content">
+                        <p><strong>Quel fichier contient la configuration de la base de données dans Laravel ?</strong></p>
+                        <div style="margin-left: 20px;">
+                            <p>☐ a) <code class="code-inline">config/database.php</code></p>
+                            <p>☐ b) <code class="code-inline">.env</code></p>
+                            <p>☐ c) <code class="code-inline">database/config.php</code></p>
+                            <p>☐ d) Les réponses a) et b) sont correctes</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="question-box">
+                    <div class="question-header">
+                        <span>Question 5</span>
+                        <span class="points-badge">1 pt</span>
+                    </div>
+                    <div class="question-content">
+                        <p><strong>Quelle méthode Eloquent permet de récupérer tous les enregistrements d'une table ?</strong></p>
+                        <div style="margin-left: 20px;">
+                            <p>☐ a) <code class="code-inline">Model::getAll()</code></p>
+                            <p>☐ b) <code class="code-inline">Model::all()</code></p>
+                            <p>☐ c) <code class="code-inline">Model::findAll()</code></p>
+                            <p>☐ d) <code class="code-inline">Model::fetch()</code></p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="question-box">
+                    <div class="question-header">
+                        <span>Question 6</span>
+                        <span class="points-badge">1 pt</span>
+                    </div>
+                    <div class="question-content">
+                        <p><strong>Quelle commande exécute les migrations en attente ?</strong></p>
+                        <div style="margin-left: 20px;">
+                            <p>☐ a) <code class="code-inline">php artisan migrate:run</code></p>
+                            <p>☐ b) <code class="code-inline">php artisan db:migrate</code></p>
+                            <p>☐ c) <code class="code-inline">php artisan migrate</code></p>
+                            <p>☐ d) <code class="code-inline">php artisan migration:execute</code></p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+
+            <!-- ==================== PARTIE 2 : Questions de cours ==================== -->
+            <div class="section">
+                <h2 class="section-title">Partie 2 : Questions de Cours (6 points)</h2>
+
+                <div class="question-box">
+                    <div class="question-header">
+                        <span>Question 7</span>
+                        <span class="points-badge">2 pts</span>
+                    </div>
+                    <div class="question-content">
+                        <p><strong>Expliquez brièvement le rôle des migrations dans Laravel et donnez deux avantages de leur utilisation.</strong></p>
+
+                    </div>
+                </div>
+
+                <div class="question-box">
+                    <div class="question-header">
+                        <span>Question 8</span>
+                        <span class="points-badge">2 pts</span>
+                    </div>
+                    <div class="question-content">
+                        <p><strong>Quelle est la différence entre une <code class="code-inline">Migration</code> et une <code class="code-inline">Seeders</code> dans LARAVEL ? Donnez un exemple concret.</strong></p>
+
+                    </div>
+                </div>
+
+                <div class="question-box">
+                    <div class="question-header">
+                        <span>Question 9</span>
+                        <span class="points-badge">2 pts</span>
+                    </div>
+                    <div class="question-content">
+                        <p><strong>Décrivez le cycle de vie d'une requête HTTP dans une application Laravel (de la réception à la réponse).</strong></p>
+
+                    </div>
+                </div>
+            </div>
+
+            <div class="page-break"></div>
+
+            <!-- ==================== PARTIE 3 : Pratique ==================== -->
+            <div class="section">
+                <h2 class="section-title">Partie 3 : Exercices Pratiques (8 points)</h2>
+
+                <div class="question-box">
+                    <div class="question-header">
+                        <span>Exercice 1 : Routes</span>
+                        <span class="points-badge">2 pts</span>
+                    </div>
+                    <div class="question-content">
+                        <p><strong>Écrivez les routes nécessaires pour un CRUD complet de ressource "Task" avec les spécifications suivantes :</strong></p>
+                        <ul>
+                            <li>GET /tasks → Liste toutes les tâches</li>
+                            <li>GET /tasks/create → Formulaire de création</li>
+                            <li>POST /tasks → Enregistre une nouvelle tâche</li>
+                            <li>GET /tasks/{id} → Affiche une tâche</li>
+                            <li>GET /tasks/{id}/edit → Formulaire d'édition</li>
+                            <li>PUT /tasks/{id} → Met à jour une tâche</li>
+                            <li>DELETE /tasks/{id} → Supprime une tâche</li>
+                        </ul>
+                        <p><em>Utilisez la méthode la plus concise possible.</em></p>
+
+                    </div>
+                </div>
+
+                <div class="question-box">
+                    <div class="question-header">
+                        <span>Exercice 2 : Migration</span>
+                        <span class="points-badge">2 pts</span>
+                    </div>
+                    <div class="question-content">
+                        <p><strong>Écrivez la méthode <code class="code-inline">up()</code> d'une migration pour créer la table "tasks" avec les colonnes suivantes :</strong></p>
+                        <ul>
+                            <li>id (clé primaire auto-incrémentée)</li>
+                            <li>title (chaîne de 255 caractères, non null)</li>
+                            <li>description (texte, nullable)</li>
+                            <li>status (enum : 'pending', 'in_progress', 'completed', défaut 'pending')</li>
+                            <li>priority (entier, défaut 1)</li>
+                            <li>due_date (date, nullable)</li>
+                            <li>user_id (clé étrangère vers users)</li>
+                            <li>timestamps (created_at et updated_at)</li>
+                        </ul>
+
+                    </div>
+                </div>
+
+
+
+                <div class="question-box">
+                    <div class="question-header">
+                        <span>Exercice 3 : Contrôleur</span>
+                        <span class="points-badge">2 pts</span>
+                    </div>
+                    <div class="question-content">
+                        <p><strong>Complétez la méthode <code class="code-inline">store()</code> du contrôleur TaskController pour :</strong></p>
+                        <ul>
+                            <li>Valider les données (title requis min 3 caractères, description optionnelle, due_date doit être une date future)</li>
+                            <li>Créer la tâche en associant l'utilisateur connecté</li>
+                            <li>Rediriger vers la liste des tâches avec un message de succès</li>
+                        </ul>
+
+                    </div>
+                </div>
+                <div class="page-break"></div>
+                <div class="question-box">
+                    <div class="question-header">
+                        <span>Exercice 4 : Vue Blade</span>
+                        <span class="points-badge">2 pts</span>
+                    </div>
+                    <div class="question-content">
+                        <p><strong>Créez une vue Blade qui affiche la liste des tâches avec les éléments suivants :</strong></p>
+                        <ul>
+                            <li>Étend un layout "app"</li>
+                            <li>Affiche un titre "Mes Tâches"</li>
+                            <li>Boucle sur les tâches pour afficher le titre et le statut</li>
+                            <li>Affiche "Aucune tâche" si la liste est vide</li>
+                            <li>Inclut un lien pour créer une nouvelle tâche</li>
+                        </ul>
+
+                    </div>
+                </div>
+            </div>
+
+            <!-- ==================== BARÈME ==================== -->
+            <div class="evaluation-box">
+                <h3>Barème Récapitulatif</h3>
+                <table class="bareme-table">
+                    <tr>
+                        <td>Partie 1 : QCM (6 questions × 1 pt)</td>
+                        <td style="text-align: right; font-weight: bold;">6 points</td>
+                    </tr>
+                    <tr>
+                        <td>Partie 2 : Questions de cours (3 questions)</td>
+                        <td style="text-align: right; font-weight: bold;">6 points</td>
+                    </tr>
+                    <tr>
+                        <td>Partie 3 : Exercices pratiques (4 exercices)</td>
+                        <td style="text-align: right; font-weight: bold;">8 points</td>
+                    </tr>
+                    <tr class="total">
+                        <td>TOTAL</td>
+                        <td style="text-align: right;">20 points</td>
+                    </tr>
+                </table>
+            </div>
+
+        </div>
+
+        <!-- ==================== PIED DE PAGE ==================== -->
+        <div class="doc-footer">
+            <span>ISIM Médenine | BackFront Framework Symfony | 2025-2026</span>
+            <span>M. JARRAY Mondher</span>
+        </div>
+
+    </div>
+</body>
+
+</html>

@@ -1,0 +1,1207 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chapitre 3 - Vues et Blade | ISIMED</title>
+    <link rel="stylesheet" href="../css/slides.css">
+</head>
+<body>
+    <div class="presentation">
+
+        <!-- ==================== SLIDE 1 : TITRE ==================== -->
+        <div class="slide title-slide">
+            <div class="slide-header">
+                <div class="logo-container">
+                    <img src="../assets/isim-logo.jpeg" alt="ISIM Logo" class="logo">
+                    <div class="institution">
+                        <strong>ISIM</strong>
+                        Institut Supérieur d'Informatique<br>de Médenine
+                    </div>
+                </div>
+                <div class="chapter-info">
+                    Année Universitaire<br>
+                    <strong>2025-2026</strong>
+                </div>
+            </div>
+            <div class="slide-content">
+                <h1 class="main-title">Développement Web Avancé</h1>
+                <h2 class="course-title">Framework Laravel 11</h2>
+                <div class="chapter-title">Chapitre 3 : Vues et Blade</div>
+                <div class="info-grid">
+                    <div class="info-item">
+                        <label>Enseignant</label>
+                        <span>M. JARRAY Mondher</span>
+                    </div>
+                    <div class="info-item">
+                        <label>Classe</label>
+                        <span>MP1ILC</span>
+                    </div>
+                    <div class="info-item">
+                        <label>Semestre</label>
+                        <span>S1</span>
+                    </div>
+                    <div class="info-item">
+                        <label>Durée</label>
+                        <span>1h30</span>
+                    </div>
+                </div>
+            </div>
+            <div class="slide-footer">
+                <span class="author">M. JARRAY Mondher | ISIM Médenine</span>
+                <span class="page-number">1</span>
+            </div>
+        </div>
+
+        <!-- ==================== SLIDE 2 : OBJECTIFS ==================== -->
+        <div class="slide">
+            <div class="slide-header">
+                <div class="logo-container">
+                    <img src="../assets/isim-logo.jpeg" alt="ISIM Logo" class="logo">
+                    <div class="institution">
+                        <strong>ISIM</strong>
+                        Développement Web Avancé
+                    </div>
+                </div>
+                <div class="chapter-info">
+                    Chapitre 3<br>
+                    <span class="chapter-number">Blade</span>
+                </div>
+            </div>
+            <div class="slide-title">
+                <h1>Objectifs du Chapitre</h1>
+            </div>
+            <div class="slide-content">
+                <ul class="objectives-list">
+                    <li>Comprendre le rôle des vues dans l'architecture MVC</li>
+                    <li>Maîtriser la syntaxe du moteur de templates Blade</li>
+                    <li>Créer des layouts et des composants réutilisables</li>
+                    <li>Passer des données du contrôleur à la vue</li>
+                    <li>Utiliser les directives de contrôle (if, foreach, etc.)</li>
+                    <li>Organiser les vues pour le projet TaskFlow</li>
+                </ul>
+            </div>
+            <div class="slide-footer">
+                <span class="author">M. JARRAY Mondher | ISIM Médenine</span>
+                <span class="page-number">2</span>
+            </div>
+        </div>
+
+        <!-- ==================== SLIDE 3 : PLAN ==================== -->
+        <div class="slide">
+            <div class="slide-header">
+                <div class="logo-container">
+                    <img src="../assets/isim-logo.jpeg" alt="ISIM Logo" class="logo">
+                    <div class="institution">
+                        <strong>ISIM</strong>
+                        Développement Web Avancé
+                    </div>
+                </div>
+                <div class="chapter-info">
+                    Chapitre 3<br>
+                    <span class="chapter-number">Blade</span>
+                </div>
+            </div>
+            <div class="slide-title">
+                <h1>Plan du Chapitre</h1>
+            </div>
+            <div class="slide-content">
+                <ol>
+                    <li><strong>Introduction aux Vues</strong>
+                        <ul>
+                            <li>Rôle des vues</li>
+                            <li>Créer et afficher une vue</li>
+                        </ul>
+                    </li>
+                    <li><strong>Le Moteur Blade</strong>
+                        <ul>
+                            <li>Affichage de données</li>
+                            <li>Directives de contrôle</li>
+                        </ul>
+                    </li>
+                    <li><strong>Layouts et Héritage</strong>
+                        <ul>
+                            <li>Créer un layout principal</li>
+                            <li>Sections et yield</li>
+                        </ul>
+                    </li>
+                    <li><strong>Composants Blade</strong></li>
+                    <li><strong>Inclusion de Sous-vues</strong></li>
+                </ol>
+            </div>
+            <div class="slide-footer">
+                <span class="author">M. JARRAY Mondher | ISIM Médenine</span>
+                <span class="page-number">3</span>
+            </div>
+        </div>
+
+        <!-- ==================== SLIDE 4 : INTRODUCTION AUX VUES ==================== -->
+        <div class="slide">
+            <div class="slide-header">
+                <div class="logo-container">
+                    <img src="../assets/isim-logo.jpeg" alt="ISIM Logo" class="logo">
+                    <div class="institution">
+                        <strong>ISIM</strong>
+                        Développement Web Avancé
+                    </div>
+                </div>
+                <div class="chapter-info">
+                    Chapitre 3<br>
+                    <span class="chapter-number">Blade</span>
+                </div>
+            </div>
+            <div class="slide-title">
+                <h1>1. Introduction aux Vues</h1>
+                <p class="subtitle">La couche présentation de l'application</p>
+            </div>
+            <div class="slide-content">
+                <div class="info-box note">
+                    <div class="info-box-title">Définition</div>
+                    Une <strong>vue</strong> est un fichier qui contient le code HTML de votre application. Elle est responsable de l'affichage des données à l'utilisateur.
+                </div>
+
+                <h3>Emplacement des vues</h3>
+                <div class="file-tree"><pre>
+<span class="folder">resources/</span>
+    <span class="folder">views/</span>
+        <span class="file">welcome.blade.php</span>       <span class="comment"># Page d'accueil par défaut</span>
+        <span class="folder">layouts/</span>
+            <span class="file">app.blade.php</span>       <span class="comment"># Layout principal</span>
+        <span class="folder">projets/</span>
+            <span class="file">index.blade.php</span>     <span class="comment"># Liste des projets</span>
+            <span class="file">show.blade.php</span>      <span class="comment"># Détail d'un projet</span>
+            <span class="file">create.blade.php</span>    <span class="comment"># Formulaire création</span>
+        <span class="folder">components/</span>
+            <span class="file">alert.blade.php</span>     <span class="comment"># Composant réutilisable</span>
+</pre></div>
+
+                <div class="info-box tip">
+                    <div class="info-box-title">Convention de nommage</div>
+                    <ul>
+                        <li>Extension : <code class="code-inline">.blade.php</code></li>
+                        <li>Nom en minuscules avec tirets : <code class="code-inline">mon-fichier.blade.php</code></li>
+                        <li>Organiser par dossier selon le modèle : <code class="code-inline">projets/</code>, <code class="code-inline">taches/</code></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="slide-footer">
+                <span class="author">M. JARRAY Mondher | ISIM Médenine</span>
+                <span class="page-number">4</span>
+            </div>
+        </div>
+
+        <!-- ==================== SLIDE 5 : CRÉER ET AFFICHER UNE VUE ==================== -->
+        <div class="slide">
+            <div class="slide-header">
+                <div class="logo-container">
+                    <img src="../assets/isim-logo.jpeg" alt="ISIM Logo" class="logo">
+                    <div class="institution">
+                        <strong>ISIM</strong>
+                        Développement Web Avancé
+                    </div>
+                </div>
+                <div class="chapter-info">
+                    Chapitre 3<br>
+                    <span class="chapter-number">Blade</span>
+                </div>
+            </div>
+            <div class="slide-title">
+                <h1>Créer et Afficher une Vue</h1>
+                <p class="subtitle">Du contrôleur à l'affichage</p>
+            </div>
+            <div class="slide-content">
+                <h3>Étape 1 : Créer le fichier de vue</h3>
+                <p>Créez <code class="code-inline">resources/views/projets/index.blade.php</code></p>
+                <div class="code-block" data-language="HTML">
+<code><span class="keyword">&lt;!DOCTYPE html&gt;</span>
+<span class="keyword">&lt;html&gt;</span>
+<span class="keyword">&lt;head&gt;</span>
+    <span class="keyword">&lt;title&gt;</span>Liste des Projets<span class="keyword">&lt;/title&gt;</span>
+<span class="keyword">&lt;/head&gt;</span>
+<span class="keyword">&lt;body&gt;</span>
+    <span class="keyword">&lt;h1&gt;</span>Mes Projets<span class="keyword">&lt;/h1&gt;</span>
+    <span class="keyword">&lt;p&gt;</span>Bienvenue sur TaskFlow !<span class="keyword">&lt;/p&gt;</span>
+<span class="keyword">&lt;/body&gt;</span>
+<span class="keyword">&lt;/html&gt;</span></code>
+                </div>
+
+                <h3>Étape 2 : Retourner la vue depuis le contrôleur</h3>
+                <div class="code-block" data-language="PHP">
+<code><span class="comment">// Dans ProjetController.php</span>
+<span class="keyword">public function</span> <span class="function">index</span>()
+{
+    <span class="comment">// 'projets.index' = resources/views/projets/index.blade.php</span>
+    <span class="keyword">return</span> <span class="function">view</span>(<span class="string">'projets.index'</span>);
+}</code>
+                </div>
+
+                <div class="info-box note">
+                    <div class="info-box-title">Notation pointée</div>
+                    Le point <code class="code-inline">.</code> représente un séparateur de dossier :
+                    <ul>
+                        <li><code class="code-inline">view('projets.index')</code> → <code class="code-inline">views/projets/index.blade.php</code></li>
+                        <li><code class="code-inline">view('admin.users.edit')</code> → <code class="code-inline">views/admin/users/edit.blade.php</code></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="slide-footer">
+                <span class="author">M. JARRAY Mondher | ISIM Médenine</span>
+                <span class="page-number">5</span>
+            </div>
+        </div>
+
+        <!-- ==================== SLIDE 6 : PASSER DES DONNÉES ==================== -->
+        <div class="slide">
+            <div class="slide-header">
+                <div class="logo-container">
+                    <img src="../assets/isim-logo.jpeg" alt="ISIM Logo" class="logo">
+                    <div class="institution">
+                        <strong>ISIM</strong>
+                        Développement Web Avancé
+                    </div>
+                </div>
+                <div class="chapter-info">
+                    Chapitre 3<br>
+                    <span class="chapter-number">Blade</span>
+                </div>
+            </div>
+            <div class="slide-title">
+                <h1>Passer des Données à la Vue</h1>
+                <p class="subtitle">Du contrôleur vers l'affichage</p>
+            </div>
+            <div class="slide-content">
+                <h3>Méthode 1 : Tableau associatif</h3>
+                <div class="code-block" data-language="PHP">
+<code><span class="keyword">public function</span> <span class="function">index</span>()
+{
+    <span class="variable">$projets</span> = [<span class="string">'Projet A'</span>, <span class="string">'Projet B'</span>, <span class="string">'Projet C'</span>];
+    <span class="variable">$titre</span> = <span class="string">'Liste des projets'</span>;
+
+    <span class="keyword">return</span> <span class="function">view</span>(<span class="string">'projets.index'</span>, [
+        <span class="string">'projets'</span> => <span class="variable">$projets</span>,
+        <span class="string">'titre'</span> => <span class="variable">$titre</span>
+    ]);
+}</code>
+                </div>
+
+                <h3>Méthode 2 : Fonction compact()</h3>
+                <div class="code-block" data-language="PHP">
+<code><span class="keyword">public function</span> <span class="function">index</span>()
+{
+    <span class="variable">$projets</span> = [<span class="string">'Projet A'</span>, <span class="string">'Projet B'</span>];
+    <span class="variable">$titre</span> = <span class="string">'Liste des projets'</span>;
+
+    <span class="comment">// compact() crée un tableau à partir des noms de variables</span>
+    <span class="keyword">return</span> <span class="function">view</span>(<span class="string">'projets.index'</span>, <span class="function">compact</span>(<span class="string">'projets'</span>, <span class="string">'titre'</span>));
+}</code>
+                </div>
+
+                <h3>Méthode 3 : Chaînage with()</h3>
+                <div class="code-block" data-language="PHP">
+<code><span class="keyword">return</span> <span class="function">view</span>(<span class="string">'projets.index'</span>)
+    -><span class="function">with</span>(<span class="string">'projets'</span>, <span class="variable">$projets</span>)
+    -><span class="function">with</span>(<span class="string">'titre'</span>, <span class="variable">$titre</span>);</code>
+                </div>
+            </div>
+            <div class="slide-footer">
+                <span class="author">M. JARRAY Mondher | ISIM Médenine</span>
+                <span class="page-number">6</span>
+            </div>
+        </div>
+
+        <!-- ==================== SLIDE 7 : SYNTAXE BLADE - AFFICHAGE ==================== -->
+        <div class="slide">
+            <div class="slide-header">
+                <div class="logo-container">
+                    <img src="../assets/isim-logo.jpeg" alt="ISIM Logo" class="logo">
+                    <div class="institution">
+                        <strong>ISIM</strong>
+                        Développement Web Avancé
+                    </div>
+                </div>
+                <div class="chapter-info">
+                    Chapitre 3<br>
+                    <span class="chapter-number">Blade</span>
+                </div>
+            </div>
+            <div class="slide-title">
+                <h1>2. Le Moteur Blade</h1>
+                <p class="subtitle">Afficher des données</p>
+            </div>
+            <div class="slide-content">
+                <div class="info-box note">
+                    <div class="info-box-title">Qu'est-ce que Blade ?</div>
+                    <strong>Blade</strong> est le moteur de templates de Laravel. Il permet d'écrire du PHP de manière plus simple et sécurisée dans les vues.
+                </div>
+
+                <h3>Afficher une variable</h3>
+                <div class="two-columns">
+                    <div class="column">
+                        <h4>Syntaxe Blade</h4>
+                        <div class="code-block" data-language="Blade">
+<code><span class="comment">{{-- Échappé (sécurisé) --}}</span>
+<span class="keyword">&lt;h1&gt;</span>{{ <span class="variable">$titre</span> }}<span class="keyword">&lt;/h1&gt;</span>
+<span class="keyword">&lt;p&gt;</span>{{ <span class="variable">$description</span> }}<span class="keyword">&lt;/p&gt;</span>
+
+<span class="comment">{{-- Non échappé (HTML brut) --}}</span>
+{!! <span class="variable">$contenuHtml</span> !!}</code>
+                        </div>
+                    </div>
+                    <div class="column">
+                        <h4>Équivalent PHP</h4>
+                        <div class="code-block" data-language="PHP">
+<code><span class="comment">// Échappé</span>
+<span class="keyword">&lt;h1&gt;&lt;?=</span> <span class="function">htmlspecialchars</span>(<span class="variable">$titre</span>) <span class="keyword">?&gt;&lt;/h1&gt;</span>
+
+<span class="comment">// Non échappé</span>
+<span class="keyword">&lt;?=</span> <span class="variable">$contenuHtml</span> <span class="keyword">?&gt;</span></code>
+                        </div>
+                    </div>
+                </div>
+
+                <h3>Valeur par défaut</h3>
+                <div class="code-block" data-language="Blade">
+<code><span class="comment">{{-- Si $nom n'existe pas, affiche 'Invité' --}}</span>
+<span class="keyword">&lt;p&gt;</span>Bonjour, {{ <span class="variable">$nom</span> ?? <span class="string">'Invité'</span> }}<span class="keyword">&lt;/p&gt;</span></code>
+                </div>
+
+                <div class="info-box danger">
+                    <div class="info-box-title">Sécurité</div>
+                    Utilisez toujours <code class="code-inline">{{ }}</code> (double accolades) pour éviter les attaques XSS. N'utilisez <code class="code-inline">{!! !!}</code> que si vous êtes sûr que le contenu est sûr.
+                </div>
+            </div>
+            <div class="slide-footer">
+                <span class="author">M. JARRAY Mondher | ISIM Médenine</span>
+                <span class="page-number">7</span>
+            </div>
+        </div>
+
+        <!-- ==================== SLIDE 8 : DIRECTIVES CONDITIONNELLES ==================== -->
+        <div class="slide">
+            <div class="slide-header">
+                <div class="logo-container">
+                    <img src="../assets/isim-logo.jpeg" alt="ISIM Logo" class="logo">
+                    <div class="institution">
+                        <strong>ISIM</strong>
+                        Développement Web Avancé
+                    </div>
+                </div>
+                <div class="chapter-info">
+                    Chapitre 3<br>
+                    <span class="chapter-number">Blade</span>
+                </div>
+            </div>
+            <div class="slide-title">
+                <h1>Directives Conditionnelles</h1>
+                <p class="subtitle">@if, @else, @elseif</p>
+            </div>
+            <div class="slide-content">
+                <h3>Structure if / else</h3>
+                <div class="code-block" data-language="Blade">
+<code><span class="keyword">@if</span>(<span class="variable">$projets</span>-><span class="function">count</span>() > <span class="number">0</span>)
+    <span class="keyword">&lt;p&gt;</span>Vous avez {{ <span class="variable">$projets</span>-><span class="function">count</span>() }} projet(s)<span class="keyword">&lt;/p&gt;</span>
+<span class="keyword">@else</span>
+    <span class="keyword">&lt;p&gt;</span>Aucun projet trouvé<span class="keyword">&lt;/p&gt;</span>
+<span class="keyword">@endif</span></code>
+                </div>
+
+                <h3>Structure complète</h3>
+                <div class="code-block" data-language="Blade">
+<code><span class="keyword">@if</span>(<span class="variable">$statut</span> === <span class="string">'termine'</span>)
+    <span class="keyword">&lt;span class="badge-success"&gt;</span>Terminé<span class="keyword">&lt;/span&gt;</span>
+<span class="keyword">@elseif</span>(<span class="variable">$statut</span> === <span class="string">'en_cours'</span>)
+    <span class="keyword">&lt;span class="badge-warning"&gt;</span>En cours<span class="keyword">&lt;/span&gt;</span>
+<span class="keyword">@else</span>
+    <span class="keyword">&lt;span class="badge-secondary"&gt;</span>En attente<span class="keyword">&lt;/span&gt;</span>
+<span class="keyword">@endif</span></code>
+                </div>
+
+                <h3>Directives utiles</h3>
+                <div class="code-block" data-language="Blade">
+<code><span class="keyword">@isset</span>(<span class="variable">$projet</span>)
+    <span class="comment">{{-- S'affiche si $projet existe et n'est pas null --}}</span>
+<span class="keyword">@endisset</span>
+
+<span class="keyword">@empty</span>(<span class="variable">$projets</span>)
+    <span class="keyword">&lt;p&gt;</span>La liste est vide<span class="keyword">&lt;/p&gt;</span>
+<span class="keyword">@endempty</span>
+
+<span class="keyword">@auth</span>
+    <span class="comment">{{-- S'affiche si l'utilisateur est connecté --}}</span>
+<span class="keyword">@endauth</span>
+
+<span class="keyword">@guest</span>
+    <span class="comment">{{-- S'affiche si l'utilisateur n'est PAS connecté --}}</span>
+<span class="keyword">@endguest</span></code>
+                </div>
+            </div>
+            <div class="slide-footer">
+                <span class="author">M. JARRAY Mondher | ISIM Médenine</span>
+                <span class="page-number">8</span>
+            </div>
+        </div>
+
+        <!-- ==================== SLIDE 9 : BOUCLES ==================== -->
+        <div class="slide">
+            <div class="slide-header">
+                <div class="logo-container">
+                    <img src="../assets/isim-logo.jpeg" alt="ISIM Logo" class="logo">
+                    <div class="institution">
+                        <strong>ISIM</strong>
+                        Développement Web Avancé
+                    </div>
+                </div>
+                <div class="chapter-info">
+                    Chapitre 3<br>
+                    <span class="chapter-number">Blade</span>
+                </div>
+            </div>
+            <div class="slide-title">
+                <h1>Directives de Boucle</h1>
+                <p class="subtitle">@foreach, @for, @while</p>
+            </div>
+            <div class="slide-content">
+                <h3>@foreach - La plus utilisée</h3>
+                <div class="code-block" data-language="Blade">
+<code><span class="keyword">&lt;ul&gt;</span>
+<span class="keyword">@foreach</span>(<span class="variable">$projets</span> <span class="keyword">as</span> <span class="variable">$projet</span>)
+    <span class="keyword">&lt;li&gt;</span>{{ <span class="variable">$projet</span>-><span class="variable">nom</span> }}<span class="keyword">&lt;/li&gt;</span>
+<span class="keyword">@endforeach</span>
+<span class="keyword">&lt;/ul&gt;</span></code>
+                </div>
+
+                <h3>@forelse - Avec gestion du cas vide</h3>
+                <div class="code-block" data-language="Blade">
+<code><span class="keyword">@forelse</span>(<span class="variable">$projets</span> <span class="keyword">as</span> <span class="variable">$projet</span>)
+    <span class="keyword">&lt;div class="card"&gt;</span>
+        <span class="keyword">&lt;h3&gt;</span>{{ <span class="variable">$projet</span>-><span class="variable">nom</span> }}<span class="keyword">&lt;/h3&gt;</span>
+        <span class="keyword">&lt;p&gt;</span>{{ <span class="variable">$projet</span>-><span class="variable">description</span> }}<span class="keyword">&lt;/p&gt;</span>
+    <span class="keyword">&lt;/div&gt;</span>
+<span class="keyword">@empty</span>
+    <span class="keyword">&lt;p&gt;</span>Aucun projet à afficher<span class="keyword">&lt;/p&gt;</span>
+<span class="keyword">@endforelse</span></code>
+                </div>
+
+                <h3>Variable $loop</h3>
+                <p>Dans une boucle, vous avez accès à la variable <code class="code-inline">$loop</code> :</p>
+                <div class="code-block" data-language="Blade">
+<code><span class="keyword">@foreach</span>(<span class="variable">$projets</span> <span class="keyword">as</span> <span class="variable">$projet</span>)
+    <span class="keyword">&lt;p&gt;</span>
+        {{ <span class="variable">$loop</span>-><span class="variable">iteration</span> }}. {{ <span class="variable">$projet</span>-><span class="variable">nom</span> }}
+        <span class="keyword">@if</span>(<span class="variable">$loop</span>-><span class="variable">first</span>) <span class="keyword">&lt;span&gt;</span>(Premier)<span class="keyword">&lt;/span&gt;</span> <span class="keyword">@endif</span>
+        <span class="keyword">@if</span>(<span class="variable">$loop</span>-><span class="variable">last</span>) <span class="keyword">&lt;span&gt;</span>(Dernier)<span class="keyword">&lt;/span&gt;</span> <span class="keyword">@endif</span>
+    <span class="keyword">&lt;/p&gt;</span>
+<span class="keyword">@endforeach</span></code>
+                </div>
+            </div>
+            <div class="slide-footer">
+                <span class="author">M. JARRAY Mondher | ISIM Médenine</span>
+                <span class="page-number">9</span>
+            </div>
+        </div>
+
+        <!-- ==================== SLIDE 10 : VARIABLE $LOOP ==================== -->
+        <div class="slide">
+            <div class="slide-header">
+                <div class="logo-container">
+                    <img src="../assets/isim-logo.jpeg" alt="ISIM Logo" class="logo">
+                    <div class="institution">
+                        <strong>ISIM</strong>
+                        Développement Web Avancé
+                    </div>
+                </div>
+                <div class="chapter-info">
+                    Chapitre 3<br>
+                    <span class="chapter-number">Blade</span>
+                </div>
+            </div>
+            <div class="slide-title">
+                <h1>Propriétés de $loop</h1>
+                <p class="subtitle">Informations sur l'itération en cours</p>
+            </div>
+            <div class="slide-content">
+                <div class="table-container">
+                    <table>
+                        <tr>
+                            <th>Propriété</th>
+                            <th>Description</th>
+                            <th>Exemple</th>
+                        </tr>
+                        <tr>
+                            <td><code class="code-inline">$loop->index</code></td>
+                            <td>Index actuel (commence à 0)</td>
+                            <td>0, 1, 2...</td>
+                        </tr>
+                        <tr>
+                            <td><code class="code-inline">$loop->iteration</code></td>
+                            <td>Numéro d'itération (commence à 1)</td>
+                            <td>1, 2, 3...</td>
+                        </tr>
+                        <tr>
+                            <td><code class="code-inline">$loop->remaining</code></td>
+                            <td>Itérations restantes</td>
+                            <td>4, 3, 2, 1, 0</td>
+                        </tr>
+                        <tr>
+                            <td><code class="code-inline">$loop->count</code></td>
+                            <td>Nombre total d'éléments</td>
+                            <td>5</td>
+                        </tr>
+                        <tr>
+                            <td><code class="code-inline">$loop->first</code></td>
+                            <td>Est-ce le premier élément ?</td>
+                            <td>true/false</td>
+                        </tr>
+                        <tr>
+                            <td><code class="code-inline">$loop->last</code></td>
+                            <td>Est-ce le dernier élément ?</td>
+                            <td>true/false</td>
+                        </tr>
+                        <tr>
+                            <td><code class="code-inline">$loop->even</code></td>
+                            <td>Itération paire ?</td>
+                            <td>true/false</td>
+                        </tr>
+                        <tr>
+                            <td><code class="code-inline">$loop->odd</code></td>
+                            <td>Itération impaire ?</td>
+                            <td>true/false</td>
+                        </tr>
+                        <tr>
+                            <td><code class="code-inline">$loop->parent</code></td>
+                            <td>Accès à la boucle parente</td>
+                            <td>Boucles imbriquées</td>
+                        </tr>
+                    </table>
+                </div>
+
+                <h3>Exemple : Alterner les couleurs</h3>
+                <div class="code-block" data-language="Blade">
+<code><span class="keyword">@foreach</span>(<span class="variable">$projets</span> <span class="keyword">as</span> <span class="variable">$projet</span>)
+    <span class="keyword">&lt;tr class="</span>{{ <span class="variable">$loop</span>-><span class="variable">even</span> ? <span class="string">'bg-gray'</span> : <span class="string">'bg-white'</span> }}<span class="keyword">"&gt;</span>
+        <span class="keyword">&lt;td&gt;</span>{{ <span class="variable">$projet</span>-><span class="variable">nom</span> }}<span class="keyword">&lt;/td&gt;</span>
+    <span class="keyword">&lt;/tr&gt;</span>
+<span class="keyword">@endforeach</span></code>
+                </div>
+            </div>
+            <div class="slide-footer">
+                <span class="author">M. JARRAY Mondher | ISIM Médenine</span>
+                <span class="page-number">10</span>
+            </div>
+        </div>
+
+        <!-- ==================== SLIDE 11 : LAYOUTS - INTRODUCTION ==================== -->
+        <div class="slide">
+            <div class="slide-header">
+                <div class="logo-container">
+                    <img src="../assets/isim-logo.jpeg" alt="ISIM Logo" class="logo">
+                    <div class="institution">
+                        <strong>ISIM</strong>
+                        Développement Web Avancé
+                    </div>
+                </div>
+                <div class="chapter-info">
+                    Chapitre 3<br>
+                    <span class="chapter-number">Blade</span>
+                </div>
+            </div>
+            <div class="slide-title">
+                <h1>3. Layouts et Héritage</h1>
+                <p class="subtitle">Éviter la répétition de code</p>
+            </div>
+            <div class="slide-content">
+                <h3>Le problème</h3>
+                <p>Sans layout, vous devez répéter le HTML de base dans chaque page :</p>
+
+                <div class="two-columns">
+                    <div class="column">
+                        <h4>page1.blade.php</h4>
+                        <div class="code-block" data-language="HTML" style="font-size: 0.8rem;">
+<code>&lt;!DOCTYPE html&gt;
+&lt;html&gt;
+&lt;head&gt;
+  &lt;title&gt;Page 1&lt;/title&gt;
+  &lt;link href="style.css"...&gt;
+&lt;/head&gt;
+&lt;body&gt;
+  &lt;nav&gt;...&lt;/nav&gt;
+  <span class="string">&lt;!-- Contenu page 1 --&gt;</span>
+  &lt;footer&gt;...&lt;/footer&gt;
+&lt;/body&gt;
+&lt;/html&gt;</code>
+                        </div>
+                    </div>
+                    <div class="column">
+                        <h4>page2.blade.php</h4>
+                        <div class="code-block" data-language="HTML" style="font-size: 0.8rem;">
+<code>&lt;!DOCTYPE html&gt;
+&lt;html&gt;
+&lt;head&gt;
+  &lt;title&gt;Page 2&lt;/title&gt;
+  &lt;link href="style.css"...&gt;
+&lt;/head&gt;
+&lt;body&gt;
+  &lt;nav&gt;...&lt;/nav&gt;
+  <span class="string">&lt;!-- Contenu page 2 --&gt;</span>
+  &lt;footer&gt;...&lt;/footer&gt;
+&lt;/body&gt;
+&lt;/html&gt;</code>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="info-box warning">
+                    <div class="info-box-title">Problème</div>
+                    <ul>
+                        <li>Duplication de code HTML (head, nav, footer...)</li>
+                        <li>Difficile à maintenir</li>
+                        <li>Si on change le menu, il faut modifier TOUTES les pages</li>
+                    </ul>
+                </div>
+
+                <div class="info-box success">
+                    <div class="info-box-title">Solution : Les Layouts</div>
+                    Créer un fichier "template" avec la structure commune, et y injecter le contenu spécifique.
+                </div>
+            </div>
+            <div class="slide-footer">
+                <span class="author">M. JARRAY Mondher | ISIM Médenine</span>
+                <span class="page-number">11</span>
+            </div>
+        </div>
+
+        <!-- ==================== SLIDE 12 : CRÉER UN LAYOUT ==================== -->
+        <div class="slide">
+            <div class="slide-header">
+                <div class="logo-container">
+                    <img src="../assets/isim-logo.jpeg" alt="ISIM Logo" class="logo">
+                    <div class="institution">
+                        <strong>ISIM</strong>
+                        Développement Web Avancé
+                    </div>
+                </div>
+                <div class="chapter-info">
+                    Chapitre 3<br>
+                    <span class="chapter-number">Blade</span>
+                </div>
+            </div>
+            <div class="slide-title">
+                <h1>Créer un Layout Principal</h1>
+                <p class="subtitle">resources/views/layouts/app.blade.php</p>
+            </div>
+            <div class="slide-content">
+                <div class="code-block" data-language="Blade">
+<code><span class="keyword">&lt;!DOCTYPE html&gt;</span>
+<span class="keyword">&lt;html lang="fr"&gt;</span>
+<span class="keyword">&lt;head&gt;</span>
+    <span class="keyword">&lt;meta charset="UTF-8"&gt;</span>
+    <span class="keyword">&lt;meta name="viewport" content="width=device-width, initial-scale=1.0"&gt;</span>
+    <span class="keyword">&lt;title&gt;</span><span class="variable">@yield</span>(<span class="string">'title'</span>, <span class="string">'TaskFlow'</span>)<span class="keyword">&lt;/title&gt;</span>
+    <span class="keyword">&lt;link href="/css/app.css" rel="stylesheet"&gt;</span>
+<span class="keyword">&lt;/head&gt;</span>
+<span class="keyword">&lt;body&gt;</span>
+    <span class="comment">&lt;!-- Navigation --&gt;</span>
+    <span class="keyword">&lt;nav class="navbar"&gt;</span>
+        <span class="keyword">&lt;a href="/"&gt;</span>TaskFlow<span class="keyword">&lt;/a&gt;</span>
+        <span class="keyword">&lt;a href="/projets"&gt;</span>Projets<span class="keyword">&lt;/a&gt;</span>
+        <span class="keyword">&lt;a href="/taches"&gt;</span>Tâches<span class="keyword">&lt;/a&gt;</span>
+    <span class="keyword">&lt;/nav&gt;</span>
+
+    <span class="comment">&lt;!-- Contenu principal (injecté ici) --&gt;</span>
+    <span class="keyword">&lt;main class="container"&gt;</span>
+        <span class="variable">@yield</span>(<span class="string">'content'</span>)
+    <span class="keyword">&lt;/main&gt;</span>
+
+    <span class="comment">&lt;!-- Pied de page --&gt;</span>
+    <span class="keyword">&lt;footer&gt;</span>
+        &copy; {{ <span class="function">date</span>(<span class="string">'Y'</span>) }} TaskFlow - ISIM Médenine
+    <span class="keyword">&lt;/footer&gt;</span>
+
+    <span class="variable">@yield</span>(<span class="string">'scripts'</span>)
+<span class="keyword">&lt;/body&gt;</span>
+<span class="keyword">&lt;/html&gt;</span></code>
+                </div>
+            </div>
+            <div class="slide-footer">
+                <span class="author">M. JARRAY Mondher | ISIM Médenine</span>
+                <span class="page-number">12</span>
+            </div>
+        </div>
+
+        <!-- ==================== SLIDE 13 : UTILISER LE LAYOUT ==================== -->
+        <div class="slide">
+            <div class="slide-header">
+                <div class="logo-container">
+                    <img src="../assets/isim-logo.jpeg" alt="ISIM Logo" class="logo">
+                    <div class="institution">
+                        <strong>ISIM</strong>
+                        Développement Web Avancé
+                    </div>
+                </div>
+                <div class="chapter-info">
+                    Chapitre 3<br>
+                    <span class="chapter-number">Blade</span>
+                </div>
+            </div>
+            <div class="slide-title">
+                <h1>Utiliser le Layout</h1>
+                <p class="subtitle">@extends et @section</p>
+            </div>
+            <div class="slide-content">
+                <h3>Page qui hérite du layout</h3>
+                <p>Fichier : <code class="code-inline">resources/views/projets/index.blade.php</code></p>
+                <div class="code-block" data-language="Blade">
+<code><span class="comment">{{-- Hériter du layout --}}</span>
+<span class="variable">@extends</span>(<span class="string">'layouts.app'</span>)
+
+<span class="comment">{{-- Définir le titre --}}</span>
+<span class="variable">@section</span>(<span class="string">'title'</span>, <span class="string">'Liste des Projets'</span>)
+
+<span class="comment">{{-- Définir le contenu principal --}}</span>
+<span class="variable">@section</span>(<span class="string">'content'</span>)
+    <span class="keyword">&lt;h1&gt;</span>Mes Projets<span class="keyword">&lt;/h1&gt;</span>
+
+    <span class="variable">@forelse</span>(<span class="variable">$projets</span> <span class="keyword">as</span> <span class="variable">$projet</span>)
+        <span class="keyword">&lt;div class="card"&gt;</span>
+            <span class="keyword">&lt;h2&gt;</span>{{ <span class="variable">$projet</span>-><span class="variable">nom</span> }}<span class="keyword">&lt;/h2&gt;</span>
+            <span class="keyword">&lt;p&gt;</span>{{ <span class="variable">$projet</span>-><span class="variable">description</span> }}<span class="keyword">&lt;/p&gt;</span>
+            <span class="keyword">&lt;a href="/projets/</span>{{ <span class="variable">$projet</span>-><span class="variable">id</span> }}<span class="keyword">"&gt;</span>Voir détails<span class="keyword">&lt;/a&gt;</span>
+        <span class="keyword">&lt;/div&gt;</span>
+    <span class="variable">@empty</span>
+        <span class="keyword">&lt;p&gt;</span>Aucun projet trouvé.<span class="keyword">&lt;/p&gt;</span>
+    <span class="variable">@endforelse</span>
+<span class="variable">@endsection</span></code>
+                </div>
+
+                <div class="info-box note">
+                    <div class="info-box-title">Comment ça marche</div>
+                    <ul>
+                        <li><code class="code-inline">@extends</code> : Indique quel layout utiliser</li>
+                        <li><code class="code-inline">@section</code> : Définit le contenu à injecter dans un <code class="code-inline">@yield</code></li>
+                        <li><code class="code-inline">@endsection</code> : Ferme la section</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="slide-footer">
+                <span class="author">M. JARRAY Mondher | ISIM Médenine</span>
+                <span class="page-number">13</span>
+            </div>
+        </div>
+
+        <!-- ==================== SLIDE 14 : COMPOSANTS BLADE ==================== -->
+        <div class="slide">
+            <div class="slide-header">
+                <div class="logo-container">
+                    <img src="../assets/isim-logo.jpeg" alt="ISIM Logo" class="logo">
+                    <div class="institution">
+                        <strong>ISIM</strong>
+                        Développement Web Avancé
+                    </div>
+                </div>
+                <div class="chapter-info">
+                    Chapitre 3<br>
+                    <span class="chapter-number">Blade</span>
+                </div>
+            </div>
+            <div class="slide-title">
+                <h1>4. Composants Blade</h1>
+                <p class="subtitle">Éléments réutilisables</p>
+            </div>
+            <div class="slide-content">
+                <p>Les composants permettent de créer des éléments d'interface réutilisables.</p>
+
+                <h3>Créer un composant Alert</h3>
+                <div class="command-line">php artisan make:component Alert</div>
+
+                <p>Fichier créé : <code class="code-inline">resources/views/components/alert.blade.php</code></p>
+                <div class="code-block" data-language="Blade">
+<code><span class="comment">{{-- Composant Alert --}}</span>
+<span class="keyword">&lt;div class="alert alert-</span>{{ <span class="variable">$type</span> ?? <span class="string">'info'</span> }}<span class="keyword">"&gt;</span>
+    <span class="keyword">@if</span>(<span class="function">isset</span>(<span class="variable">$title</span>))
+        <span class="keyword">&lt;strong&gt;</span>{{ <span class="variable">$title</span> }}<span class="keyword">&lt;/strong&gt;</span>
+    <span class="keyword">@endif</span>
+    {{ <span class="variable">$slot</span> }}
+<span class="keyword">&lt;/div&gt;</span></code>
+                </div>
+
+                <h3>Utiliser le composant</h3>
+                <div class="code-block" data-language="Blade">
+<code><span class="comment">{{-- Utilisation simple --}}</span>
+<span class="keyword">&lt;x-alert type="success"&gt;</span>
+    Projet créé avec succès !
+<span class="keyword">&lt;/x-alert&gt;</span>
+
+<span class="comment">{{-- Avec titre --}}</span>
+<span class="keyword">&lt;x-alert type="danger" title="Erreur"&gt;</span>
+    Une erreur est survenue.
+<span class="keyword">&lt;/x-alert&gt;</span></code>
+                </div>
+
+                <div class="info-box tip">
+                    <div class="info-box-title">Astuce</div>
+                    <code class="code-inline">$slot</code> contient le contenu entre les balises du composant.
+                </div>
+            </div>
+            <div class="slide-footer">
+                <span class="author">M. JARRAY Mondher | ISIM Médenine</span>
+                <span class="page-number">14</span>
+            </div>
+        </div>
+
+        <!-- ==================== SLIDE 15 : COMPOSANT CARD ==================== -->
+        <div class="slide">
+            <div class="slide-header">
+                <div class="logo-container">
+                    <img src="../assets/isim-logo.jpeg" alt="ISIM Logo" class="logo">
+                    <div class="institution">
+                        <strong>ISIM</strong>
+                        Développement Web Avancé
+                    </div>
+                </div>
+                <div class="chapter-info">
+                    Chapitre 3<br>
+                    <span class="chapter-number">Blade</span>
+                </div>
+            </div>
+            <div class="slide-title">
+                <h1>Exemple : Composant Card</h1>
+                <p class="subtitle">Pour afficher les projets TaskFlow</p>
+            </div>
+            <div class="slide-content">
+                <h3>Créer le composant</h3>
+                <p>Fichier : <code class="code-inline">resources/views/components/projet-card.blade.php</code></p>
+                <div class="code-block" data-language="Blade">
+<code><span class="keyword">@props</span>([<span class="string">'projet'</span>])
+
+<span class="keyword">&lt;div class="card"&gt;</span>
+    <span class="keyword">&lt;div class="card-header"&gt;</span>
+        <span class="keyword">&lt;h3&gt;</span>{{ <span class="variable">$projet</span>-><span class="variable">nom</span> }}<span class="keyword">&lt;/h3&gt;</span>
+        <span class="keyword">&lt;span class="badge badge-</span>{{ <span class="variable">$projet</span>-><span class="variable">statut</span> }}<span class="keyword">"&gt;</span>
+            {{ <span class="variable">$projet</span>-><span class="variable">statut</span> }}
+        <span class="keyword">&lt;/span&gt;</span>
+    <span class="keyword">&lt;/div&gt;</span>
+    <span class="keyword">&lt;div class="card-body"&gt;</span>
+        <span class="keyword">&lt;p&gt;</span>{{ <span class="variable">$projet</span>-><span class="variable">description</span> }}<span class="keyword">&lt;/p&gt;</span>
+        <span class="keyword">&lt;small&gt;</span>{{ <span class="variable">$projet</span>-><span class="variable">taches_count</span> }} tâche(s)<span class="keyword">&lt;/small&gt;</span>
+    <span class="keyword">&lt;/div&gt;</span>
+    <span class="keyword">&lt;div class="card-footer"&gt;</span>
+        <span class="keyword">&lt;a href="</span>{{ <span class="function">route</span>(<span class="string">'projets.show'</span>, <span class="variable">$projet</span>) }}<span class="keyword">"&gt;</span>Voir<span class="keyword">&lt;/a&gt;</span>
+    <span class="keyword">&lt;/div&gt;</span>
+<span class="keyword">&lt;/div&gt;</span></code>
+                </div>
+
+                <h3>Utilisation dans une liste</h3>
+                <div class="code-block" data-language="Blade">
+<code><span class="keyword">&lt;div class="projets-grid"&gt;</span>
+    <span class="variable">@foreach</span>(<span class="variable">$projets</span> <span class="keyword">as</span> <span class="variable">$projet</span>)
+        <span class="keyword">&lt;x-projet-card :projet="$projet" /&gt;</span>
+    <span class="variable">@endforeach</span>
+<span class="keyword">&lt;/div&gt;</span></code>
+                </div>
+
+                <div class="info-box note">
+                    <div class="info-box-title">@props</div>
+                    <code class="code-inline">@props</code> définit les attributs que le composant accepte.
+                </div>
+            </div>
+            <div class="slide-footer">
+                <span class="author">M. JARRAY Mondher | ISIM Médenine</span>
+                <span class="page-number">15</span>
+            </div>
+        </div>
+
+        <!-- ==================== SLIDE 16 : INCLUDE ==================== -->
+        <div class="slide">
+            <div class="slide-header">
+                <div class="logo-container">
+                    <img src="../assets/isim-logo.jpeg" alt="ISIM Logo" class="logo">
+                    <div class="institution">
+                        <strong>ISIM</strong>
+                        Développement Web Avancé
+                    </div>
+                </div>
+                <div class="chapter-info">
+                    Chapitre 3<br>
+                    <span class="chapter-number">Blade</span>
+                </div>
+            </div>
+            <div class="slide-title">
+                <h1>5. Inclusion de Sous-vues</h1>
+                <p class="subtitle">@include et @each</p>
+            </div>
+            <div class="slide-content">
+                <h3>@include - Inclure une vue partielle</h3>
+                <div class="code-block" data-language="Blade">
+<code><span class="comment">{{-- Inclure le header --}}</span>
+<span class="variable">@include</span>(<span class="string">'partials.header'</span>)
+
+<span class="comment">{{-- Inclure avec des données --}}</span>
+<span class="variable">@include</span>(<span class="string">'partials.sidebar'</span>, [<span class="string">'menu'</span> => <span class="variable">$menuItems</span>])
+
+<span class="comment">{{-- Inclure si existe --}}</span>
+<span class="variable">@includeIf</span>(<span class="string">'partials.optional'</span>)
+
+<span class="comment">{{-- Inclure si condition vraie --}}</span>
+<span class="variable">@includeWhen</span>(<span class="variable">$user</span>-><span class="variable">isAdmin</span>, <span class="string">'partials.admin-menu'</span>)</code>
+                </div>
+
+                <h3>@each - Inclure pour chaque élément</h3>
+                <div class="code-block" data-language="Blade">
+<code><span class="comment">{{-- Pour chaque projet, inclure la vue partials.projet-item --}}</span>
+<span class="variable">@each</span>(<span class="string">'partials.projet-item'</span>, <span class="variable">$projets</span>, <span class="string">'projet'</span>)
+
+<span class="comment">{{-- Avec vue pour le cas vide --}}</span>
+<span class="variable">@each</span>(<span class="string">'partials.projet-item'</span>, <span class="variable">$projets</span>, <span class="string">'projet'</span>, <span class="string">'partials.no-projets'</span>)</code>
+                </div>
+
+                <h3>Fichier partiel exemple</h3>
+                <p><code class="code-inline">resources/views/partials/projet-item.blade.php</code></p>
+                <div class="code-block" data-language="Blade">
+<code><span class="keyword">&lt;li&gt;</span>
+    <span class="keyword">&lt;strong&gt;</span>{{ <span class="variable">$projet</span>-><span class="variable">nom</span> }}<span class="keyword">&lt;/strong&gt;</span>
+    - {{ <span class="variable">$projet</span>-><span class="variable">statut</span> }}
+<span class="keyword">&lt;/li&gt;</span></code>
+                </div>
+            </div>
+            <div class="slide-footer">
+                <span class="author">M. JARRAY Mondher | ISIM Médenine</span>
+                <span class="page-number">16</span>
+            </div>
+        </div>
+
+        <!-- ==================== SLIDE 17 : LIENS ET ASSETS ==================== -->
+        <div class="slide">
+            <div class="slide-header">
+                <div class="logo-container">
+                    <img src="../assets/isim-logo.jpeg" alt="ISIM Logo" class="logo">
+                    <div class="institution">
+                        <strong>ISIM</strong>
+                        Développement Web Avancé
+                    </div>
+                </div>
+                <div class="chapter-info">
+                    Chapitre 3<br>
+                    <span class="chapter-number">Blade</span>
+                </div>
+            </div>
+            <div class="slide-title">
+                <h1>Liens et Assets</h1>
+                <p class="subtitle">URLs, routes, images, CSS</p>
+            </div>
+            <div class="slide-content">
+                <h3>Générer des URLs</h3>
+                <div class="code-block" data-language="Blade">
+<code><span class="comment">{{-- URL de base --}}</span>
+<span class="keyword">&lt;a href="</span>{{ <span class="function">url</span>(<span class="string">'/projets'</span>) }}<span class="keyword">"&gt;</span>Projets<span class="keyword">&lt;/a&gt;</span>
+
+<span class="comment">{{-- Route nommée --}}</span>
+<span class="keyword">&lt;a href="</span>{{ <span class="function">route</span>(<span class="string">'projets.index'</span>) }}<span class="keyword">"&gt;</span>Liste<span class="keyword">&lt;/a&gt;</span>
+
+<span class="comment">{{-- Route avec paramètre --}}</span>
+<span class="keyword">&lt;a href="</span>{{ <span class="function">route</span>(<span class="string">'projets.show'</span>, <span class="variable">$projet</span>-><span class="variable">id</span>) }}<span class="keyword">"&gt;</span>Voir<span class="keyword">&lt;/a&gt;</span>
+
+<span class="comment">{{-- Route avec modèle (Route Model Binding) --}}</span>
+<span class="keyword">&lt;a href="</span>{{ <span class="function">route</span>(<span class="string">'projets.show'</span>, <span class="variable">$projet</span>) }}<span class="keyword">"&gt;</span>Voir<span class="keyword">&lt;/a&gt;</span></code>
+                </div>
+
+                <h3>Assets (CSS, JS, Images)</h3>
+                <div class="code-block" data-language="Blade">
+<code><span class="comment">{{-- Fichiers dans public/ --}}</span>
+<span class="keyword">&lt;link href="</span>{{ <span class="function">asset</span>(<span class="string">'css/app.css'</span>) }}<span class="keyword">" rel="stylesheet"&gt;</span>
+<span class="keyword">&lt;script src="</span>{{ <span class="function">asset</span>(<span class="string">'js/app.js'</span>) }}<span class="keyword">"&gt;&lt;/script&gt;</span>
+<span class="keyword">&lt;img src="</span>{{ <span class="function">asset</span>(<span class="string">'images/logo.png'</span>) }}<span class="keyword">" alt="Logo"&gt;</span>
+
+<span class="comment">{{-- Avec Vite (Laravel 11) --}}</span>
+<span class="variable">@vite</span>([<span class="string">'resources/css/app.css'</span>, <span class="string">'resources/js/app.js'</span>])</code>
+                </div>
+
+                <div class="info-box tip">
+                    <div class="info-box-title">Conseil</div>
+                    Utilisez toujours <code class="code-inline">route()</code> au lieu d'écrire les URLs manuellement. Si vous changez l'URL de la route, les liens se mettent à jour automatiquement.
+                </div>
+            </div>
+            <div class="slide-footer">
+                <span class="author">M. JARRAY Mondher | ISIM Médenine</span>
+                <span class="page-number">17</span>
+            </div>
+        </div>
+
+        <!-- ==================== SLIDE 18 : CSRF ET FORMULAIRES ==================== -->
+        <div class="slide">
+            <div class="slide-header">
+                <div class="logo-container">
+                    <img src="../assets/isim-logo.jpeg" alt="ISIM Logo" class="logo">
+                    <div class="institution">
+                        <strong>ISIM</strong>
+                        Développement Web Avancé
+                    </div>
+                </div>
+                <div class="chapter-info">
+                    Chapitre 3<br>
+                    <span class="chapter-number">Blade</span>
+                </div>
+            </div>
+            <div class="slide-title">
+                <h1>Formulaires et CSRF</h1>
+                <p class="subtitle">Protection contre les attaques</p>
+            </div>
+            <div class="slide-content">
+                <div class="info-box danger">
+                    <div class="info-box-title">CSRF - Cross-Site Request Forgery</div>
+                    Laravel protège automatiquement vos formulaires contre les attaques CSRF. Vous devez ajouter <code class="code-inline">@csrf</code> dans chaque formulaire.
+                </div>
+
+                <h3>Formulaire simple</h3>
+                <div class="code-block" data-language="Blade">
+<code><span class="keyword">&lt;form action="</span>{{ <span class="function">route</span>(<span class="string">'projets.store'</span>) }}<span class="keyword">" method="POST"&gt;</span>
+    <span class="variable">@csrf</span>
+
+    <span class="keyword">&lt;label&gt;</span>Nom du projet<span class="keyword">&lt;/label&gt;</span>
+    <span class="keyword">&lt;input type="text" name="nom" required&gt;</span>
+
+    <span class="keyword">&lt;label&gt;</span>Description<span class="keyword">&lt;/label&gt;</span>
+    <span class="keyword">&lt;textarea name="description"&gt;&lt;/textarea&gt;</span>
+
+    <span class="keyword">&lt;button type="submit"&gt;</span>Créer<span class="keyword">&lt;/button&gt;</span>
+<span class="keyword">&lt;/form&gt;</span></code>
+                </div>
+
+                <h3>Méthode PUT/DELETE (spoofing)</h3>
+                <div class="code-block" data-language="Blade">
+<code><span class="comment">{{-- HTML ne supporte que GET et POST --}}</span>
+<span class="comment">{{-- @method simule PUT, PATCH, DELETE --}}</span>
+
+<span class="keyword">&lt;form action="</span>{{ <span class="function">route</span>(<span class="string">'projets.update'</span>, <span class="variable">$projet</span>) }}<span class="keyword">" method="POST"&gt;</span>
+    <span class="variable">@csrf</span>
+    <span class="variable">@method</span>(<span class="string">'PUT'</span>)
+    <span class="comment">{{-- Champs du formulaire --}}</span>
+<span class="keyword">&lt;/form&gt;</span>
+
+<span class="keyword">&lt;form action="</span>{{ <span class="function">route</span>(<span class="string">'projets.destroy'</span>, <span class="variable">$projet</span>) }}<span class="keyword">" method="POST"&gt;</span>
+    <span class="variable">@csrf</span>
+    <span class="variable">@method</span>(<span class="string">'DELETE'</span>)
+    <span class="keyword">&lt;button&gt;</span>Supprimer<span class="keyword">&lt;/button&gt;</span>
+<span class="keyword">&lt;/form&gt;</span></code>
+                </div>
+            </div>
+            <div class="slide-footer">
+                <span class="author">M. JARRAY Mondher | ISIM Médenine</span>
+                <span class="page-number">18</span>
+            </div>
+        </div>
+
+        <!-- ==================== SLIDE 19 : RÉSUMÉ ==================== -->
+        <div class="slide">
+            <div class="slide-header">
+                <div class="logo-container">
+                    <img src="../assets/isim-logo.jpeg" alt="ISIM Logo" class="logo">
+                    <div class="institution">
+                        <strong>ISIM</strong>
+                        Développement Web Avancé
+                    </div>
+                </div>
+                <div class="chapter-info">
+                    Chapitre 3<br>
+                    <span class="chapter-number">Blade</span>
+                </div>
+            </div>
+            <div class="slide-title">
+                <h1>Résumé du Chapitre</h1>
+            </div>
+            <div class="slide-content">
+                <div class="summary-grid">
+                    <div class="summary-item">
+                        <h5>{{ $var }}</h5>
+                        <p>Afficher une variable (échappé)</p>
+                    </div>
+                    <div class="summary-item">
+                        <h5>@if / @foreach</h5>
+                        <p>Structures de contrôle</p>
+                    </div>
+                    <div class="summary-item">
+                        <h5>@extends / @yield</h5>
+                        <p>Héritage de layouts</p>
+                    </div>
+                    <div class="summary-item">
+                        <h5>&lt;x-composant /&gt;</h5>
+                        <p>Composants réutilisables</p>
+                    </div>
+                </div>
+
+                <h3>Directives essentielles</h3>
+                <div class="table-container">
+                    <table>
+                        <tr>
+                            <th>Directive</th>
+                            <th>Usage</th>
+                        </tr>
+                        <tr>
+                            <td><code class="code-inline">@extends('layout')</code></td>
+                            <td>Hériter d'un layout</td>
+                        </tr>
+                        <tr>
+                            <td><code class="code-inline">@section('nom') ... @endsection</code></td>
+                            <td>Définir une section</td>
+                        </tr>
+                        <tr>
+                            <td><code class="code-inline">@yield('nom')</code></td>
+                            <td>Afficher une section</td>
+                        </tr>
+                        <tr>
+                            <td><code class="code-inline">@include('vue')</code></td>
+                            <td>Inclure une sous-vue</td>
+                        </tr>
+                        <tr>
+                            <td><code class="code-inline">@csrf</code></td>
+                            <td>Token de protection CSRF</td>
+                        </tr>
+                    </table>
+                </div>
+
+                <div class="info-box note">
+                    <div class="info-box-title">Prochain chapitre</div>
+                    <strong>Chapitre 4 :</strong> Bases de données et Migrations
+                </div>
+            </div>
+            <div class="slide-footer">
+                <span class="author">M. JARRAY Mondher | ISIM Médenine</span>
+                <span class="page-number">19</span>
+            </div>
+        </div>
+
+        <!-- ==================== SLIDE 20 : QUESTIONS ==================== -->
+        <div class="slide">
+            <div class="slide-header">
+                <div class="logo-container">
+                    <img src="../assets/isim-logo.jpeg" alt="ISIM Logo" class="logo">
+                    <div class="institution">
+                        <strong>ISIM</strong>
+                        Développement Web Avancé
+                    </div>
+                </div>
+                <div class="chapter-info">
+                    Chapitre 3<br>
+                    <span class="chapter-number">Blade</span>
+                </div>
+            </div>
+            <div class="slide-title">
+                <h1>Questions ?</h1>
+            </div>
+            <div class="slide-content" style="display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center;">
+                <div style="font-size: 4rem; margin-bottom: 30px;">🤔</div>
+                <h3>Avez-vous des questions sur Blade ?</h3>
+
+                <div style="margin-top: 40px; padding: 30px; background: var(--isim-blue-bg); border-radius: 10px;">
+                    <h4 style="color: var(--isim-blue-dark);">Prochaine séance : TP 3</h4>
+                    <p>Création des interfaces de TaskFlow avec Blade</p>
+                </div>
+            </div>
+            <div class="slide-footer">
+                <span class="author">M. JARRAY Mondher | ISIM Médenine</span>
+                <span class="page-number">20</span>
+            </div>
+        </div>
+
+    </div>
+</body>
+</html>

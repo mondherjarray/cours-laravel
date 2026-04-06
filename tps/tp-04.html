@@ -1,0 +1,475 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TP 4 - Modélisation Base de Données | ISIMED</title>
+    <link rel="stylesheet" href="../css/tp.css">
+</head>
+<body>
+    <div class="document">
+
+        <!-- ==================== EN-TÊTE ==================== -->
+        <div class="doc-header">
+            <div class="header-top">
+                <div class="header-logo">
+                    <img src="../assets/isim-logo.jpeg" alt="ISIM Logo">
+                    <div class="institution-name">
+                        <strong>ISIM</strong>
+                        Institut Supérieur d'Informatique de Médenine
+                    </div>
+                </div>
+                <div class="header-info">
+                    Année Universitaire<br>
+                    <strong>2025-2026</strong>
+                </div>
+            </div>
+            <div class="header-title">
+                <h1>Travaux Pratiques - Développement Web Avancé</h1>
+                <h2>TP N°4 : Modélisation Base de Données TaskFlow</h2>
+            </div>
+        </div>
+
+        <!-- ==================== BARRE D'INFORMATIONS ==================== -->
+        <div class="info-bar">
+            <div class="info-item">
+                <span class="label">Classe :</span>
+                <span class="value">MP1ILC</span>
+            </div>
+            <div class="info-item">
+                <span class="label">Enseignant :</span>
+                <span class="value">M. JARRAY Mondher</span>
+            </div>
+            <div class="info-item">
+                <span class="label">Durée :</span>
+                <span class="value">1h30</span>
+            </div>
+            <div class="info-item">
+                <span class="label">Projet :</span>
+                <span class="value">TaskFlow</span>
+            </div>
+        </div>
+
+        <!-- ==================== CONTENU ==================== -->
+        <div class="doc-content">
+
+            <!-- OBJECTIFS -->
+            <div class="objectives-box">
+                <h3>Objectifs du TP</h3>
+                <ul>
+                    <li>Configurer la connexion à la base de données</li>
+                    <li>Créer les migrations pour les tables de TaskFlow</li>
+                    <li>Définir les relations entre les tables</li>
+                    <li>Créer des seeders pour les données de test</li>
+                    <li>Créer des factories pour générer des données</li>
+                </ul>
+            </div>
+
+            <!-- PRÉREQUIS -->
+            <div class="prerequisites-box">
+                <h3>Prérequis</h3>
+                <ul>
+                    <li>TP 1-3 terminés (projet TaskFlow avec routes et vues)</li>
+                    <li>MySQL/MariaDB installé (Laragon, XAMPP, ou WAMP)</li>
+                    <li>Comprendre les concepts de migrations (Chapitre 4)</li>
+                </ul>
+            </div>
+
+            <!-- ==================== PARTIE 1 ==================== -->
+            <div class="section">
+                <h2 class="section-title">Partie 1 : Configuration de la Base de Données (15 min)</h2>
+
+                <!-- Exercice 1.1 -->
+                <div class="exercise">
+                    <div class="exercise-header">
+                        <h4>Exercice 1.1 : Créer la base de données</h4>
+                        <span class="exercise-points">2 pts</span>
+                    </div>
+                    <div class="exercise-content">
+                        <p><strong>Option A : Via phpMyAdmin</strong></p>
+                        <ol>
+                            <li>Ouvrez phpMyAdmin (<code class="code-inline">http://localhost/phpmyadmin</code>)</li>
+                            <li>Cliquez sur "Nouvelle base de données"</li>
+                            <li>Nom : <code class="code-inline">taskflow</code></li>
+                            <li>Interclassement : <code class="code-inline">utf8mb4_unicode_ci</code></li>
+                        </ol>
+
+                        <p><strong>Option B : Via le terminal MySQL</strong></p>
+                        <div class="code-block" data-language="SQL">
+<code>CREATE DATABASE taskflow CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;</code>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Exercice 1.2 -->
+                <div class="exercise">
+                    <div class="exercise-header">
+                        <h4>Exercice 1.2 : Configurer le fichier .env</h4>
+                        <span class="exercise-points">2 pts</span>
+                    </div>
+                    <div class="exercise-content">
+                        <p>Ouvrez le fichier <code class="code-inline">.env</code> et modifiez les lignes suivantes :</p>
+
+                        <div class="code-block" data-language="ENV">
+<code>DB_CONNECTION=mysql
+DB_HOST=127.0.0.1
+DB_PORT=3306
+DB_DATABASE=taskflow
+DB_USERNAME=root
+DB_PASSWORD=</code>
+                        </div>
+
+                        <div class="info-box warning">
+                            <div class="info-box-title">Note</div>
+                            <p>Si vous utilisez WAMP, le mot de passe par défaut est vide. Si vous utilisez MAMP, le mot de passe est souvent <code class="code-inline">root</code>.</p>
+                        </div>
+
+                        <p><strong>Testez la connexion :</strong></p>
+                        <div class="command-line">php artisan migrate:status</div>
+
+                        <p>Si la connexion fonctionne, vous verrez un tableau vide (pas d'erreur).</p>
+                    </div>
+                </div>
+            </div>
+
+            <hr class="page-break">
+
+            <!-- ==================== PARTIE 2 ==================== -->
+            <div class="section">
+                <h2 class="section-title">Partie 2 : Création des Migrations (35 min)</h2>
+
+                <!-- Exercice 2.1 -->
+                <div class="exercise">
+                    <div class="exercise-header">
+                        <h4>Exercice 2.1 : Migration de la table Projets</h4>
+                        <span class="exercise-points">5 pts</span>
+                    </div>
+                    <div class="exercise-content">
+                        <p><strong>Créez la migration :</strong></p>
+                        <div class="command-line">php artisan make:migration create_projets_table</div>
+
+                        <p><strong>Complétez le fichier créé :</strong></p>
+                        <div class="code-block" data-language="PHP">
+<code>public function up(): void
+{
+    Schema::create('projets', function (Blueprint $table) {
+        $table->id();
+        $table->string('nom');
+        $table->text('description')->nullable();
+        $table->enum('statut', ['en_attente', 'en_cours', 'termine'])
+              ->default('en_attente');
+        $table->date('date_debut')->nullable();
+        $table->date('date_fin')->nullable();
+        $table->foreignId('user_id')
+              ->constrained()
+              ->onDelete('cascade');
+        $table->timestamps();
+    });
+}
+
+public function down(): void
+{
+    Schema::dropIfExists('projets');
+}</code>
+                        </div>
+
+                        <p><strong>Questions :</strong></p>
+                        <p>1. Pourquoi utilise-t-on <code class="code-inline">->nullable()</code> pour la description ?</p>
+                        <div class="answer-zone"></div>
+
+                        <p>2. Que fait <code class="code-inline">->onDelete('cascade')</code> ?</p>
+                        <div class="answer-zone"></div>
+                    </div>
+                </div>
+
+                <!-- Exercice 2.2 -->
+                <div class="exercise">
+                    <div class="exercise-header">
+                        <h4>Exercice 2.2 : Migration de la table Tâches</h4>
+                        <span class="exercise-points">5 pts</span>
+                    </div>
+                    <div class="exercise-content">
+                        <p><strong>Créez la migration :</strong></p>
+                        <div class="command-line">php artisan make:migration create_taches_table</div>
+
+                        <p><strong>Complétez la migration avec les colonnes suivantes :</strong></p>
+                        <ul class="task-list">
+                            <li data-task="a"><code class="code-inline">id</code> : clé primaire</li>
+                            <li data-task="b"><code class="code-inline">titre</code> : string, obligatoire</li>
+                            <li data-task="c"><code class="code-inline">description</code> : text, nullable</li>
+                            <li data-task="d"><code class="code-inline">statut</code> : enum (todo, in_progress, done), défaut 'todo'</li>
+                            <li data-task="e"><code class="code-inline">priorite</code> : enum (basse, moyenne, haute), défaut 'moyenne'</li>
+                            <li data-task="f"><code class="code-inline">date_echeance</code> : date, nullable</li>
+                            <li data-task="g"><code class="code-inline">projet_id</code> : clé étrangère vers projets (cascade)</li>
+                            <li data-task="h"><code class="code-inline">user_id</code> : clé étrangère vers users (nullable, set null)</li>
+                            <li data-task="i"><code class="code-inline">timestamps</code> : created_at et updated_at</li>
+                        </ul>
+
+                        <div class="answer-zone code">
+                            <strong>Écrivez votre code de migration ici :</strong>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Exercice 2.3 -->
+                <div class="exercise">
+                    <div class="exercise-header">
+                        <h4>Exercice 2.3 : Exécuter les migrations</h4>
+                        <span class="exercise-points">3 pts</span>
+                    </div>
+                    <div class="exercise-content">
+                        <p><strong>Exécutez toutes les migrations :</strong></p>
+                        <div class="command-line">php artisan migrate</div>
+
+                        <p><strong>Vérifiez le résultat :</strong></p>
+                        <div class="command-line">php artisan migrate:status</div>
+
+                        <div class="screenshot-placeholder">
+                            <p><strong>Capture d'écran :</strong> Résultat de migrate:status montrant les tables créées</p>
+                        </div>
+
+                        <p><strong>Vérifiez dans phpMyAdmin</strong> que les tables suivantes existent :</p>
+                        <ul>
+                            <li>users</li>
+                            <li>projets</li>
+                            <li>taches</li>
+                            <li>migrations (table système)</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <hr class="page-break">
+
+            <!-- ==================== PARTIE 3 ==================== -->
+            <div class="section">
+                <h2 class="section-title">Partie 3 : Seeders et Factories (25 min)</h2>
+
+                <!-- Exercice 3.1 -->
+                <div class="exercise">
+                    <div class="exercise-header">
+                        <h4>Exercice 3.1 : Créer un UserSeeder</h4>
+                        <span class="exercise-points">3 pts</span>
+                    </div>
+                    <div class="exercise-content">
+                        <div class="command-line">php artisan make:seeder UserSeeder</div>
+
+                        <p><strong>Complétez database/seeders/UserSeeder.php :</strong></p>
+                        <div class="code-block" data-language="PHP">
+<code>use App\Models\User;
+use Illuminate\Support\Facades\Hash;
+
+public function run(): void
+{
+    // Créer un utilisateur admin
+    User::create([
+        'name' => 'Admin TaskFlow',
+        'email' => 'admin@taskflow.com',
+        'password' => Hash::make('password123'),
+    ]);
+
+    // Créer quelques utilisateurs de test
+    User::create([
+        'name' => 'Ahmed Ben Ali',
+        'email' => 'ahmed@example.com',
+        'password' => Hash::make('password123'),
+    ]);
+
+    User::create([
+        'name' => 'Fatma Trabelsi',
+        'email' => 'fatma@example.com',
+        'password' => Hash::make('password123'),
+    ]);
+}</code>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Exercice 3.2 -->
+                <div class="exercise">
+                    <div class="exercise-header">
+                        <h4>Exercice 3.2 : Créer un ProjetSeeder</h4>
+                        <span class="exercise-points">4 pts</span>
+                    </div>
+                    <div class="exercise-content">
+                        <div class="command-line">php artisan make:seeder ProjetSeeder</div>
+
+                        <p><strong>Créez au moins 5 projets de test :</strong></p>
+                        <div class="code-block" data-language="PHP">
+<code>use App\Models\Projet;
+
+public function run(): void
+{
+    Projet::create([
+        'nom' => 'Site E-commerce ISIM',
+        'description' => 'Développement d\'une boutique en ligne pour les produits ISIM',
+        'statut' => 'en_cours',
+        'date_debut' => '2025-01-15',
+        'user_id' => 1,
+    ]);
+
+    // Ajoutez 4 autres projets...
+}</code>
+                        </div>
+
+                        <div class="answer-zone code">
+                            <strong>Complétez avec 4 autres projets :</strong>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Exercice 3.3 -->
+                <div class="exercise">
+                    <div class="exercise-header">
+                        <h4>Exercice 3.3 : Créer des Factories</h4>
+                        <span class="exercise-points">5 pts</span>
+                    </div>
+                    <div class="exercise-content">
+                        <p><strong>Créez la factory pour les projets :</strong></p>
+                        <div class="command-line">php artisan make:factory ProjetFactory --model=Projet</div>
+
+                        <div class="code-block" data-language="PHP">
+<code>// database/factories/ProjetFactory.php
+public function definition(): array
+{
+    return [
+        'nom' => fake()->sentence(3),
+        'description' => fake()->paragraph(),
+        'statut' => fake()->randomElement(['en_attente', 'en_cours', 'termine']),
+        'date_debut' => fake()->dateTimeBetween('-2 months', 'now'),
+        'date_fin' => fake()->optional()->dateTimeBetween('now', '+3 months'),
+        'user_id' => \App\Models\User::factory(),
+    ];
+}</code>
+                        </div>
+
+                        <p><strong>Créez la factory pour les tâches :</strong></p>
+                        <div class="command-line">php artisan make:factory TacheFactory --model=Tache</div>
+
+                        <div class="answer-zone code">
+                            <strong>Écrivez le code de TacheFactory :</strong>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Exercice 3.4 -->
+                <div class="exercise">
+                    <div class="exercise-header">
+                        <h4>Exercice 3.4 : DatabaseSeeder principal</h4>
+                        <span class="exercise-points">3 pts</span>
+                    </div>
+                    <div class="exercise-content">
+                        <p><strong>Modifiez database/seeders/DatabaseSeeder.php :</strong></p>
+                        <div class="code-block" data-language="PHP">
+<code>public function run(): void
+{
+    // 1. Créer les utilisateurs
+    $this->call(UserSeeder::class);
+
+    // 2. Créer les projets manuels
+    $this->call(ProjetSeeder::class);
+
+    // 3. Créer des projets avec factory (10 projets aléatoires)
+    \App\Models\Projet::factory(10)->create([
+        'user_id' => 1, // Attribuer à l'admin
+    ]);
+
+    // 4. Créer des tâches pour chaque projet
+    \App\Models\Projet::all()->each(function ($projet) {
+        \App\Models\Tache::factory(rand(3, 8))->create([
+            'projet_id' => $projet->id,
+        ]);
+    });
+}</code>
+                        </div>
+
+                        <p><strong>Exécutez le tout :</strong></p>
+                        <div class="command-line">php artisan migrate:fresh --seed</div>
+
+                        <div class="screenshot-placeholder">
+                            <p><strong>Capture d'écran :</strong> phpMyAdmin montrant les données insérées</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ==================== BARÈME ==================== -->
+            <div class="evaluation-box">
+                <h3>Barème d'évaluation</h3>
+                <div class="evaluation-grid">
+                    <div class="evaluation-item">
+                        <span class="criteria">Création BDD (1.1)</span>
+                        <span class="points">2 pts</span>
+                    </div>
+                    <div class="evaluation-item">
+                        <span class="criteria">Configuration .env (1.2)</span>
+                        <span class="points">2 pts</span>
+                    </div>
+                    <div class="evaluation-item">
+                        <span class="criteria">Migration projets (2.1)</span>
+                        <span class="points">5 pts</span>
+                    </div>
+                    <div class="evaluation-item">
+                        <span class="criteria">Migration tâches (2.2)</span>
+                        <span class="points">5 pts</span>
+                    </div>
+                    <div class="evaluation-item">
+                        <span class="criteria">Exécution migrations (2.3)</span>
+                        <span class="points">3 pts</span>
+                    </div>
+                    <div class="evaluation-item">
+                        <span class="criteria">UserSeeder (3.1)</span>
+                        <span class="points">3 pts</span>
+                    </div>
+                    <div class="evaluation-item">
+                        <span class="criteria">ProjetSeeder (3.2)</span>
+                        <span class="points">4 pts</span>
+                    </div>
+                    <div class="evaluation-item">
+                        <span class="criteria">Factories (3.3)</span>
+                        <span class="points">5 pts</span>
+                    </div>
+                    <div class="evaluation-item">
+                        <span class="criteria">DatabaseSeeder (3.4)</span>
+                        <span class="points">3 pts</span>
+                    </div>
+                </div>
+                <div class="evaluation-total">
+                    <span>Total</span>
+                    <span class="points">32 pts</span>
+                </div>
+            </div>
+
+            <!-- ==================== BONUS ==================== -->
+            <div class="bonus-box">
+                <h3>Exercice Bonus (+4 pts)</h3>
+                <ol>
+                    <li>Créez une migration pour ajouter une colonne <code class="code-inline">couleur</code> à la table projets</li>
+                    <li>Créez une table <code class="code-inline">commentaires</code> liée aux tâches</li>
+                    <li>Ajoutez une factory pour les commentaires</li>
+                </ol>
+            </div>
+
+            <!-- ==================== LIVRABLES ==================== -->
+            <div class="deliverables-box">
+                <h3>Livrables à rendre</h3>
+                <ul class="deliverables-list">
+                    <li>Fichiers de migrations (create_projets_table, create_taches_table)</li>
+                    <li>Fichiers seeders (UserSeeder, ProjetSeeder, DatabaseSeeder)</li>
+                    <li>Fichiers factories (ProjetFactory, TacheFactory)</li>
+                    <li>Captures d'écran de phpMyAdmin</li>
+                    <li>Réponses aux questions</li>
+                </ul>
+            </div>
+
+        </div>
+
+        <!-- ==================== FOOTER ==================== -->
+        <div class="doc-footer">
+            <span>ISIM Médenine | Développement Web Avancé | 2025-2026</span>
+            <span>M. JARRAY Mondher</span>
+        </div>
+
+    </div>
+</body>
+</html>
