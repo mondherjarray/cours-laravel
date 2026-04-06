@@ -1,0 +1,727 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TP 5 - Eloquent ORM | Laravel 11</title>
+    <link rel="stylesheet" href="../css/tp.css">
+</head>
+
+<body>
+    <div class="document">
+
+        <!-- Header -->
+        <div class="doc-header">
+            <div class="header-top">
+                <div class="header-logo">
+                    <img src="../assets/isim-logo.jpeg" alt="ISIM Logo">
+                    <div class="institution-name">
+                        <strong>ISIMED</strong> Institut Supérieur d'Informatique de Médenine
+                    </div>
+                </div>
+                <div class="header-info">
+                    <div>Année universitaire : 2025-2026</div>
+                    <div>Classe : MP1ILC</div>
+                </div>
+            </div>
+            <div class="header-title">
+                <h1>Travaux Pratiques N°5</h1>
+                <h2>Eloquent ORM - Modèles et Relations</h2>
+            </div>
+        </div>
+
+        <!-- Info Bar -->
+        <div class="info-bar">
+            <div class="info-item">
+                <span class="label">Module :</span>
+                <span class="value">Développement Web Avancé</span>
+            </div>
+            <div class="info-item">
+                <span class="label">Durée :</span>
+                <span class="value">1h30</span>
+            </div>
+            <div class="info-item">
+                <span class="label">Enseignant :</span>
+                <span class="value">M. JARRAY Mondher</span>
+            </div>
+        </div>
+
+        <!-- Content -->
+        <div class="doc-content">
+
+            <!-- Objectifs -->
+            <div class="objectives-box">
+                <h3>Objectifs du TP</h3>
+                <ul>
+                    <li>Créer et configurer des modèles Eloquent pour TaskFlow</li>
+                    <li>Définir les relations entre modèles (hasMany, belongsTo, belongsToMany)</li>
+                    <li>Effectuer des opérations CRUD avec Eloquent</li>
+                    <li>Utiliser Tinker pour tester les requêtes</li>
+                    <li>Implémenter les Scopes</li>
+                </ul>
+            </div>
+
+            <!-- Prérequis -->
+            <div class="prerequisites-box">
+                <h3>Prérequis</h3>
+                <ul>
+                    <li>Avoir terminé le TP 4 (migrations créées)</li>
+                    <li>Base de données configurée et migrée</li>
+                    <li>Comprendre les concepts du chapitre 5</li>
+                </ul>
+            </div>
+
+            <!-- Exercice 1 -->
+            <div class="exercise">
+                <div class="exercise-header">
+                    <h4>Exercice 1 : Création des Modèles</h4>
+                </div>
+                <div class="exercise-content">
+                    <p>Créez les modèles Eloquent pour l'application TaskFlow.</p>
+
+                    <h5 class="subsection-title">1.1 Génération des modèles</h5>
+                    <p>Utilisez Artisan pour créer les modèles avec leurs factories et seeders :</p>
+
+                    <div class="command-line">php artisan make:model Project -fs</div>
+                    <div class="command-line">php artisan make:model Task -fs</div>
+                    <div class="command-line">php artisan make:model Category -fs</div>
+                    <div class="command-line">php artisan make:model Comment -fs</div>
+                    <div class="command-line">php artisan make:model Tag -fs</div>
+
+                    <div class="info-box note">
+                        <div class="info-box-title">Note</div>
+                        <p>L'option <code class="code-inline">-fs</code> crée le modèle avec sa Factory et son Seeder. Le modèle User existe déjà par défaut dans Laravel.</p>
+                    </div>
+
+                    <h5 class="subsection-title">1.2 Configuration du modèle Project</h5>
+                    <p>Ouvrez <code class="code-inline">app/Models/Project.php</code> et configurez-le :</p>
+
+                    <div class="code-block" data-language="php">
+                        <code>&lt;?php
+
+namespace App\Models;
+
+use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
+
+class Project extends Model
+{
+    use HasFactory, SoftDeletes;
+
+    protected $fillable = [
+        'name',
+        'description',
+        'status',
+        'priority',
+        'start_date',
+        'due_date',
+        'owner_id',
+    ];
+
+    protected $casts = [
+        'start_date' => 'date',
+        'due_date' => 'date',
+        'priority' => 'integer',
+    ];
+
+    // Les relations seront ajoutées dans l'exercice 2
+}</code>
+                    </div>
+
+                    <h5 class="subsection-title">1.3 Configuration du modèle Task</h5>
+                    <p>Configurez le modèle <code class="code-inline">app/Models/Task.php</code> :</p>
+
+                    <div class="code-block" data-language="php">
+                        <code>&lt;?php
+
+namespace App\Models;
+
+use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
+
+class Task extends Model
+{
+    use HasFactory, SoftDeletes;
+
+    protected $fillable = [
+        'title',
+        'description',
+        'status',
+        'priority',
+        'due_date',
+        'estimated_hours',
+        'project_id',
+        'assigned_to',
+        'category_id',
+    ];
+
+    protected $casts = [
+        'due_date' => 'date',
+        'priority' => 'integer',
+        'estimated_hours' => 'decimal:2',
+    ];
+}</code>
+                    </div>
+
+                    <ul class="task-list">
+                        <li data-task="1">Créer les 5 modèles avec Artisan</li>
+                        <li data-task="2">Configurer Project avec $fillable et $casts</li>
+                        <li data-task="3">Configurer Task avec $fillable et $casts</li>
+                        <li data-task="4">Configurer les modèles Category, Comment et Tag de la même manière</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="page-break"></div>
+
+            <!-- Exercice 2 -->
+            <div class="exercise">
+                <div class="exercise-header">
+                    <h4>Exercice 2 : Définition des Relations</h4>
+                </div>
+                <div class="exercise-content">
+                    <p>Définissez les relations entre les modèles selon le schéma de la base de données.</p>
+
+                    <h5 class="subsection-title">2.1 Relations du modèle User</h5>
+                    <p>Modifiez <code class="code-inline">app/Models/User.php</code> pour ajouter les relations :</p>
+
+                    <div class="code-block" data-language="php">
+                        <code>// Dans la classe User, ajoutez :
+
+/**
+ * Projets dont l'utilisateur est propriétaire
+ */
+public function ownedProjects()
+{
+    return $this->hasMany(Project::class, 'owner_id');
+}
+
+/**
+ * Projets auxquels l'utilisateur participe
+ */
+public function projects()
+{
+    return $this->belongsToMany(Project::class, 'project_user')
+        ->withPivot('role')
+        ->withTimestamps();
+}
+
+/**
+ * Tâches assignées à l'utilisateur
+ */
+public function assignedTasks()
+{
+    return $this->hasMany(Task::class, 'assigned_to');
+}
+
+/**
+ * Commentaires de l'utilisateur
+ */
+public function comments()
+{
+    return $this->hasMany(Comment::class);
+}</code>
+                    </div>
+
+                    <h5 class="subsection-title">2.2 Relations du modèle Project</h5>
+                    <p>Ajoutez les relations dans <code class="code-inline">app/Models/Project.php</code> :</p>
+
+                    <div class="code-block" data-language="php">
+                        <code>/**
+ * Propriétaire du projet
+ */
+public function owner()
+{
+    return $this->belongsTo(User::class, 'owner_id');
+}
+
+/**
+ * Membres du projet
+ */
+public function members()
+{
+    return $this->belongsToMany(User::class, 'project_user')
+        ->withPivot('role')
+        ->withTimestamps();
+}
+
+/**
+ * Tâches du projet
+ */
+public function tasks()
+{
+    return $this->hasMany(Task::class);
+}</code>
+                    </div>
+
+                    <h5 class="subsection-title">2.3 Relations du modèle Task</h5>
+                    <p>Complétez <code class="code-inline">app/Models/Task.php</code> :</p>
+
+                    <div class="code-block" data-language="php">
+                        <code>/**
+ * Projet parent
+ */
+public function project()
+{
+    return $this->belongsTo(Project::class);
+}
+
+/**
+ * Utilisateur assigné
+ */
+public function assignee()
+{
+    return $this->belongsTo(User::class, 'assigned_to');
+}
+
+/**
+ * Catégorie de la tâche
+ */
+public function category()
+{
+    return $this->belongsTo(Category::class);
+}
+
+/**
+ * Commentaires de la tâche
+ */
+public function comments()
+{
+    return $this->hasMany(Comment::class);
+}
+
+/**
+ * Tags de la tâche
+ */
+public function tags()
+{
+    return $this->belongsToMany(Tag::class, 'task_tag');
+}</code>
+                    </div>
+
+                    <ul class="task-list">
+                        <li data-task="1">Ajouter les relations au modèle User</li>
+                        <li data-task="2">Ajouter les relations au modèle Project</li>
+                        <li data-task="3">Ajouter les relations au modèle Task</li>
+                        <li data-task="4">Configurer Comment (belongsTo User, Task)</li>
+                        <li data-task="5">Configurer Tag (belongsToMany Task)</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="page-break"></div>
+
+            <!-- Exercice 3 -->
+            <div class="exercise">
+                <div class="exercise-header">
+                    <h4>Exercice 3 : Factories et Seeders</h4>
+                </div>
+                <div class="exercise-content">
+                    <p>Créez des factories pour générer des données de test.</p>
+
+                    <h5 class="subsection-title">3.1 Factory pour Project</h5>
+                    <p>Modifiez <code class="code-inline">database/factories/ProjectFactory.php</code> :</p>
+
+                    <div class="code-block" data-language="php">
+                        <code>&lt;?php
+
+namespace Database\Factories;
+
+use App\Models\User;
+use Illuminate\Database\Eloquent\Factories\Factory;
+
+class ProjectFactory extends Factory
+{
+    public function definition(): array
+    {
+        $startDate = fake()->dateTimeBetween('-1 month', 'now');
+
+        return [
+            'name' => fake()->sentence(3),
+            'description' => fake()->paragraph(),
+            'status' => fake()->randomElement(['planning', 'active', 'on_hold', 'completed']),
+            'priority' => fake()->numberBetween(1, 5),
+            'start_date' => $startDate,
+            'due_date' => fake()->dateTimeBetween($startDate, '+3 months'),
+            'owner_id' => User::factory(),
+        ];
+    }
+
+    // États personnalisés
+    public function active(): static
+    {
+        return $this->state(fn (array $attributes) => [
+            'status' => 'active',
+        ]);
+    }
+
+    public function completed(): static
+    {
+        return $this->state(fn (array $attributes) => [
+            'status' => 'completed',
+        ]);
+    }
+}</code>
+                    </div>
+
+                    <h5 class="subsection-title">3.2 Factory pour Task</h5>
+                    <p>Modifiez <code class="code-inline">database/factories/TaskFactory.php</code> :</p>
+
+                    <div class="code-block" data-language="php">
+                        <code>&lt;?php
+
+namespace Database\Factories;
+
+use App\Models\Project;
+use App\Models\User;
+use App\Models\Category;
+use Illuminate\Database\Eloquent\Factories\Factory;
+
+class TaskFactory extends Factory
+{
+    public function definition(): array
+    {
+        return [
+            'title' => fake()->sentence(4),
+            'description' => fake()->paragraph(),
+            'status' => fake()->randomElement(['todo', 'in_progress', 'review', 'done']),
+            'priority' => fake()->numberBetween(1, 5),
+            'due_date' => fake()->dateTimeBetween('now', '+2 months'),
+            'estimated_hours' => fake()->randomFloat(1, 1, 40),
+            'project_id' => Project::factory(),
+            'assigned_to' => User::factory(),
+            'category_id' => Category::factory(),
+        ];
+    }
+}</code>
+                    </div>
+
+                    <h5 class="subsection-title">3.3 Seeder principal</h5>
+                    <p>Modifiez <code class="code-inline">database/seeders/DatabaseSeeder.php</code> :</p>
+
+                    <div class="code-block" data-language="php">
+                        <code>&lt;?php
+
+namespace Database\Seeders;
+
+use App\Models\User;
+use App\Models\Project;
+use App\Models\Task;
+use App\Models\Category;
+use App\Models\Tag;
+use Illuminate\Database\Seeder;
+
+class DatabaseSeeder extends Seeder
+{
+    public function run(): void
+    {
+        // Créer des catégories
+        $categories = Category::factory()->count(5)->create();
+
+        // Créer des tags
+        $tags = Tag::factory()->count(10)->create();
+
+        // Créer des utilisateurs
+        $users = User::factory()->count(10)->create();
+
+        // Créer un utilisateur de test
+        $testUser = User::factory()->create([
+            'name' => 'Test User',
+            'email' => 'test@taskflow.com',
+        ]);
+
+        // Créer des projets avec des tâches
+        $projects = Project::factory()
+            ->count(5)
+            ->create(['owner_id' => $testUser->id]);
+
+        foreach ($projects as $project) {
+            // Ajouter des membres au projet
+            $project->members()->attach(
+                $users->random(3)->pluck('id'),
+                ['role' => 'developer']
+            );
+
+            // Créer des tâches pour le projet
+            $tasks = Task::factory()
+                ->count(rand(5, 10))
+                ->create([
+                    'project_id' => $project->id,
+                    'assigned_to' => $users->random()->id,
+                    'category_id' => $categories->random()->id,
+                ]);
+
+            // Associer des tags aux tâches
+            foreach ($tasks as $task) {
+                $task->tags()->attach($tags->random(rand(1, 3)));
+            }
+        }
+    }
+}</code>
+                    </div>
+
+                    <div class="command-line">php artisan db:seed</div>
+
+                    <ul class="task-list">
+                        <li data-task="1">Créer la factory ProjectFactory</li>
+                        <li data-task="2">Créer la factory TaskFactory</li>
+                        <li data-task="3">Créer les factories Category et Tag</li>
+                        <li data-task="4">Configurer le DatabaseSeeder</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="page-break"></div>
+
+            <!-- Exercice 4 -->
+            <div class="exercise">
+                <div class="exercise-header">
+                    <h4>Exercice 4 : Manipulation avec Tinker</h4>
+                </div>
+                <div class="exercise-content">
+                    <p>Utilisez Tinker pour tester les opérations CRUD et les relations.</p>
+
+                    <div class="command-line">php artisan tinker</div>
+
+                    <h5 class="subsection-title">4.1 Opérations CRUD</h5>
+                    <p>Exécutez les commandes suivantes dans Tinker et notez les résultats :</p>
+
+                    <div class="code-block" data-language="php">
+                        <code>// CREATE - Créer un nouveau projet
+$project = App\Models\Project::create([
+    'name' => 'Mon Premier Projet',
+    'description' => 'Description du projet',
+    'status' => 'active',
+    'priority' => 3,
+    'owner_id' => 1
+]);
+
+// READ - Récupérer des projets
+$allProjects = App\Models\Project::all();
+$activeProjects = App\Models\Project::where('status', 'active')->get();
+$project = App\Models\Project::find(1);
+$project = App\Models\Project::findOrFail(999); // Teste l'erreur 404
+
+// UPDATE - Modifier un projet
+$project = App\Models\Project::find(1);
+$project->update(['name' => 'Projet Modifié', 'priority' => 5]);
+
+// DELETE - Supprimer (soft delete)
+$project->delete();
+
+// Vérifier le soft delete
+App\Models\Project::withTrashed()->find(1);
+
+// Restaurer
+$project->restore();</code>
+                    </div>
+
+                    <h5 class="subsection-title">4.2 Test des relations</h5>
+
+                    <div class="code-block" data-language="php">
+                        <code>// Récupérer un projet avec ses tâches
+$project = App\Models\Project::with('tasks')->first();
+$project->tasks;
+
+// Créer une tâche liée au projet
+$project->tasks()->create([
+    'title' => 'Nouvelle tâche',
+    'status' => 'todo',
+    'priority' => 2,
+    'category_id' => 1
+]);
+
+// Accéder aux membres du projet
+$project->members;
+
+// Ajouter un membre au projet
+$project->members()->attach(2, ['role' => 'manager']);
+
+// Accéder au propriétaire
+$project->owner->name;
+
+// Depuis une tâche, accéder au projet
+$task = App\Models\Task::first();
+$task->project->name;
+
+// Tags d'une tâche
+$task->tags;</code>
+                    </div>
+
+                    <div class="answer-zone code">
+                        <p><strong>Notez vos observations :</strong></p>
+                    </div>
+
+                    <ul class="task-list">
+                        <li data-task="1">Tester les opérations CRUD dans Tinker</li>
+                        <li data-task="2">Vérifier les relations hasMany/belongsTo</li>
+                        <li data-task="3">Tester les relations belongsToMany</li>
+                        <li data-task="4">Tester le soft delete et la restauration</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="page-break"></div>
+
+            <!-- Exercice 5 -->
+            <div class="exercise">
+                <div class="exercise-header">
+                    <h4>Exercice 5 : Scopes</h4>
+                </div>
+                <div class="exercise-content">
+                    <p>Ajoutez des Query Scopes aux modèles.</p>
+
+                    <h5 class="subsection-title">5.1 Scopes pour Project</h5>
+                    <p>Ajoutez dans <code class="code-inline">app/Models/Project.php</code> :</p>
+
+                    <div class="code-block" data-language="php">
+                        <code>use Illuminate\Database\Eloquent\Casts\Attribute;
+
+// Query Scopes
+public function scopeActive($query)
+{
+    return $query->where('status', 'active');
+}
+
+public function scopeHighPriority($query)
+{
+    return $query->where('priority', '>=', 4);
+}
+
+public function scopeOverdue($query)
+{
+    return $query->where('due_date', '<', now())
+                 ->where('status', '!=', 'completed');
+}
+
+public function scopeOwnedBy($query, $userId)
+{
+    return $query->where('owner_id', $userId);
+}
+</code>
+                    </div>
+
+                    <h5 class="subsection-title">5.2 Scopes pour Task</h5>
+                    <p>Ajoutez dans <code class="code-inline">app/Models/Task.php</code> :</p>
+
+                    <div class="code-block" data-language="php">
+                        <code>// Scopes
+public function scopeTodo($query)
+{
+    return $query->where('status', 'todo');
+}
+
+public function scopeInProgress($query)
+{
+    return $query->where('status', 'in_progress');
+}
+
+public function scopeCompleted($query)
+{
+    return $query->where('status', 'done');
+}
+
+public function scopeAssignedTo($query, $userId)
+{
+    return $query->where('assigned_to', $userId);
+}
+
+public function scopeDueSoon($query, $days = 7)
+{
+    return $query->whereBetween('due_date', [now(), now()->addDays($days)]);
+}</code>
+                    </div>
+
+                    <h5 class="subsection-title">5.3 Test dans Tinker</h5>
+
+                    <div class="code-block" data-language="php">
+                        <code>// Utiliser les scopes
+App\Models\Project::active()->get();
+App\Models\Project::active()->highPriority()->get();
+App\Models\Project::overdue()->count();
+
+App\Models\Task::todo()->assignedTo(1)->get();
+App\Models\Task::dueSoon(3)->get();
+</code>
+                    </div>
+
+                    <ul class="task-list">
+                        <li data-task="1">Ajouter les scopes au modèle Project</li>
+                        <li data-task="2">Ajouter les scopes au modèle Task</li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Évaluation -->
+            <div class="evaluation-box">
+                <h3>Grille d'évaluation</h3>
+                <div class="evaluation-grid">
+                    <div class="evaluation-item">
+                        <span class="criteria">Création et configuration des modèles</span>
+                    </div>
+                    <div class="evaluation-item">
+                        <span class="criteria">Définition correcte des relations</span>
+                    </div>
+                    <div class="evaluation-item">
+                        <span class="criteria">Factories et seeders fonctionnels</span>
+                    </div>
+                    <div class="evaluation-item">
+                        <span class="criteria">Tests CRUD avec Tinker</span>
+                    </div>
+                    <div class="evaluation-item">
+                        <span class="criteria">Scopes/span>
+                    </div>
+                </div>
+                <div class="evaluation-total">
+                    <span>Total</span>
+                    </div>
+                </div>
+
+                <!-- Bonus -->
+                <div class="bonus-box">
+                    <h3>Exercice Bonus </h3>
+                    <p>Implémentez les fonctionnalités avancées suivantes :</p>
+                    <ol>
+                        <li><strong>Global Scope</strong> : Créez un scope global sur Task pour filtrer par défaut les tâches non supprimées de l'utilisateur connecté</li>
+                        <li><strong>Événement de modèle</strong> : Utilisez les événements Eloquent pour envoyer une notification quand une tâche est marquée comme "done"</li>
+                        <li><strong>Custom Cast</strong> : Créez un cast personnalisé pour le champ status qui retourne un objet avec des méthodes comme <code class="code-inline">isActive()</code>, <code class="code-inline">label()</code>, etc.</li>
+                    </ol>
+                </div>
+
+                <!-- Livrables -->
+                <div class="deliverables-box">
+                    <h3>Livrables</h3>
+                    <ul class="deliverables-list">
+                        <li>Tous les modèles configurés dans <code class="code-inline">app/Models/</code></li>
+                        <li>Factories dans <code class="code-inline">database/factories/</code></li>
+                        <li>DatabaseSeeder fonctionnel</li>
+                        <li>Capture d'écran des tests Tinker</li>
+                    </ul>
+                </div>
+
+                <!-- Conseils -->
+                <div class="info-box tip">
+                    <div class="info-box-title">Conseils</div>
+                    <ul>
+                        <li>Utilisez <code class="code-inline">php artisan migrate:fresh --seed</code> pour réinitialiser la base avec les données de test</li>
+                        <li>Dans Tinker, utilisez <code class="code-inline">\App\Models\Project::class</code> pour voir le chemin complet</li>
+                        <li>Testez toujours les relations dans les deux sens (hasMany et belongsTo)</li>
+                        <li>Utilisez Eager Loading (<code class="code-inline">with()</code>) pour éviter le problème N+1</li>
+                    </ul>
+                </div>
+
+            </div>
+
+            <!-- Footer -->
+            <div class="doc-footer">
+                <span>ISIMED - Développement Web Avancé - Laravel 11</span>
+                <span>TP 5 - Page 1</span>
+            </div>
+
+        </div>
+</body>
+
+</html>

@@ -1,0 +1,1098 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chapitre 5 - Eloquent ORM | Laravel 11</title>
+    <link rel="stylesheet" href="../css/slides.css">
+</head>
+
+<body>
+    <div class="presentation">
+
+        <!-- Slide 1: Page de titre -->
+        <div class="slide title-slide">
+            <div class="slide-header">
+                <div class="logo-container">
+                    <img src="../assets/isim-logo.jpeg" alt="ISIM Logo" class="logo">
+                    <div class="institution">
+                        <strong>ISIMED</strong> Institut Supérieur d'Informatique<br>de Médenine
+                    </div>
+                </div>
+                <div class="chapter-info">
+                    <div class="chapter-number">Chapitre 05</div>
+                    <div>Développement Web Avancé</div>
+                </div>
+            </div>
+            <div class="slide-content">
+                <h1 class="main-title">Laravel 11</h1>
+                <h2 class="course-title">Développement Web Avancé</h2>
+                <div class="chapter-title">Chapitre 5 : Eloquent ORM</div>
+                <div class="info-grid">
+                    <div class="info-item">
+                        <label>Enseignant</label>
+                        <span>M. JARRAY Mondher</span>
+                    </div>
+                    <div class="info-item">
+                        <label>Classe</label>
+                        <span>MP1ILC</span>
+                    </div>
+                    <div class="info-item">
+                        <label>Année</label>
+                        <span>2025-2026</span>
+                    </div>
+                    <div class="info-item">
+                        <label>Durée</label>
+                        <span>1h30</span>
+                    </div>
+                </div>
+            </div>
+            <div class="slide-footer">
+                <span class="author">M. JARRAY Mondher - ISIMED</span>
+                <span class="page-number">1</span>
+            </div>
+        </div>
+
+        <!-- Slide 2: Objectifs -->
+        <div class="slide">
+            <div class="slide-header">
+                <div class="logo-container">
+                    <img src="../assets/isim-logo.jpeg" alt="ISIM Logo" class="logo">
+                    <div class="institution">
+                        <strong>ISIMED</strong> Développement Web Avancé
+                    </div>
+                </div>
+                <div class="chapter-info">
+                    <div class="chapter-number">05</div>
+                    <div>Eloquent ORM</div>
+                </div>
+            </div>
+            <div class="slide-title">
+                <h1>Objectifs du Chapitre</h1>
+            </div>
+            <div class="slide-content">
+                <ul class="objectives-list">
+                    <li>Comprendre le concept d'ORM et ses avantages</li>
+                    <li>Créer et configurer des modèles Eloquent</li>
+                    <li>Maîtriser les opérations CRUD avec Eloquent</li>
+                    <li>Définir les relations entre modèles</li>
+                    <li>Utiliser les Query Scopes </li>
+                </ul>
+            </div>
+            <div class="slide-footer">
+                <span class="author">M. JARRAY Mondher - ISIMED</span>
+                <span class="page-number">2</span>
+            </div>
+        </div>
+
+        <!-- Slide 3: Introduction à l'ORM -->
+        <div class="slide">
+            <div class="slide-header">
+                <div class="logo-container">
+                    <img src="../assets/isim-logo.jpeg" alt="ISIM Logo" class="logo">
+                    <div class="institution">
+                        <strong>ISIMED</strong> Développement Web Avancé
+                    </div>
+                </div>
+                <div class="chapter-info">
+                    <div class="chapter-number">05</div>
+                    <div>Eloquent ORM</div>
+                </div>
+            </div>
+            <div class="slide-title">
+                <h1>Qu'est-ce qu'un ORM ?</h1>
+                <p class="subtitle">Object-Relational Mapping</p>
+            </div>
+            <div class="slide-content">
+                <h3>Définition</h3>
+                <p>Un <strong>ORM</strong> (Object-Relational Mapping) est une technique qui permet de travailler avec une base de données en utilisant des objets PHP au lieu d'écrire du SQL directement.</p>
+
+                <div class="two-columns">
+                    <div class="column">
+                        <h4>Sans ORM (SQL brut)</h4>
+                        <div class="code-block" data-language="php">
+                            <code>$pdo->query("SELECT * FROM users
+    WHERE status = 'active'");</code>
+                        </div>
+                    </div>
+                    <div class="column">
+                        <h4>Avec Eloquent ORM</h4>
+                        <div class="code-block" data-language="php">
+                            <code>User::where('status', 'active')
+    ->get();</code>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="info-box note">
+                    <div class="info-box-title">Avantages de l'ORM</div>
+                    <ul>
+                        <li>Code plus lisible et maintenable</li>
+                        <li>Protection contre les injections SQL</li>
+                        <li>Indépendance vis-à-vis du SGBD</li>
+                        <li>Relations entre tables simplifiées</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="slide-footer">
+                <span class="author">M. JARRAY Mondher - ISIMED</span>
+                <span class="page-number">3</span>
+            </div>
+        </div>
+
+        <!-- Slide 4: Eloquent - L'ORM de Laravel -->
+        <div class="slide">
+            <div class="slide-header">
+                <div class="logo-container">
+                    <img src="../assets/isim-logo.jpeg" alt="ISIM Logo" class="logo">
+                    <div class="institution">
+                        <strong>ISIMED</strong> Développement Web Avancé
+                    </div>
+                </div>
+                <div class="chapter-info">
+                    <div class="chapter-number">05</div>
+                    <div>Eloquent ORM</div>
+                </div>
+            </div>
+            <div class="slide-title">
+                <h1>Eloquent - L'ORM de Laravel</h1>
+                <p class="subtitle">Un ORM élégant et puissant</p>
+            </div>
+            <div class="slide-content">
+                <h3>Principes de base</h3>
+                <p>Eloquent suit le pattern <strong>Active Record</strong> : chaque modèle correspond à une table et chaque instance à une ligne de cette table.</p>
+
+                <div class="architecture-box">
+                    <h4>Mapping Eloquent</h4>
+                    <table>
+                        <tr>
+                            <th>Concept PHP</th>
+                            <th>Concept Base de données</th>
+                        </tr>
+                        <tr>
+                            <td>Classe Model (User)</td>
+                            <td>Table (users)</td>
+                        </tr>
+                        <tr>
+                            <td>Instance de Model ($user)</td>
+                            <td>Ligne dans la table</td>
+                        </tr>
+                        <tr>
+                            <td>Propriété ($user->name)</td>
+                            <td>Colonne de la table</td>
+                        </tr>
+                        <tr>
+                            <td>Méthode ($user->save())</td>
+                            <td>Requête SQL (INSERT/UPDATE)</td>
+                        </tr>
+                    </table>
+                </div>
+
+                <div class="info-box success">
+                    <div class="info-box-title">Convention de nommage</div>
+                    <p>Par défaut, le modèle <code class="code-inline">User</code> correspond à la table <code class="code-inline">users</code> (nom en minuscules au pluriel).</p>
+                </div>
+            </div>
+            <div class="slide-footer">
+                <span class="author">M. JARRAY Mondher - ISIMED</span>
+                <span class="page-number">4</span>
+            </div>
+        </div>
+
+        <!-- Slide 5: Création d'un modèle -->
+        <div class="slide">
+            <div class="slide-header">
+                <div class="logo-container">
+                    <img src="../assets/isim-logo.jpeg" alt="ISIM Logo" class="logo">
+                    <div class="institution">
+                        <strong>ISIMED</strong> Développement Web Avancé
+                    </div>
+                </div>
+                <div class="chapter-info">
+                    <div class="chapter-number">05</div>
+                    <div>Eloquent ORM</div>
+                </div>
+            </div>
+            <div class="slide-title">
+                <h1>Création d'un Modèle</h1>
+                <p class="subtitle">La commande Artisan make:model</p>
+            </div>
+            <div class="slide-content">
+                <h3>Générer un modèle</h3>
+                <div class="command-line">php artisan make:model Project</div>
+
+                <h4>Options utiles</h4>
+                <div class="code-block" data-language="bash">
+                    <code><span class="comment"># Modèle + Migration</span>
+php artisan make:model Project -m
+
+<span class="comment"># Modèle + Migration + Controller + Factory + Seeder</span>
+php artisan make:model Project -mfsc
+
+<span class="comment"># Tout en un (avec Resource Controller)</span>
+php artisan make:model Project --all</code>
+                </div>
+
+                <h4>Structure d'un modèle</h4>
+                <div class="code-block" data-language="php">
+                    <code><span class="keyword">&lt;?php</span>
+
+<span class="keyword">namespace</span> App\Models;
+
+<span class="keyword">use</span> Illuminate\Database\Eloquent\Model;
+
+<span class="keyword">class</span> <span class="function">Project</span> <span class="keyword">extends</span> Model
+{
+    <span class="comment">// Le modèle utilisera la table 'projects'</span>
+}</code>
+                </div>
+            </div>
+            <div class="slide-footer">
+                <span class="author">M. JARRAY Mondher - ISIMED</span>
+                <span class="page-number">5</span>
+            </div>
+        </div>
+
+        <!-- Slide 6: Configuration du modèle -->
+        <div class="slide">
+            <div class="slide-header">
+                <div class="logo-container">
+                    <img src="../assets/isim-logo.jpeg" alt="ISIM Logo" class="logo">
+                    <div class="institution">
+                        <strong>ISIMED</strong> Développement Web Avancé
+                    </div>
+                </div>
+                <div class="chapter-info">
+                    <div class="chapter-number">05</div>
+                    <div>Eloquent ORM</div>
+                </div>
+            </div>
+            <div class="slide-title">
+                <h1>Configuration du Modèle</h1>
+                <p class="subtitle">Propriétés importantes</p>
+            </div>
+            <div class="slide-content">
+                <div class="code-block" data-language="php">
+                    <code><span class="keyword">class</span> <span class="function">Project</span> <span class="keyword">extends</span> Model
+{
+    <span class="comment">// Nom de la table (si différent de la convention)</span>
+    <span class="keyword">protected</span> <span class="variable">$table</span> = <span class="string">'mes_projets'</span>;
+
+    <span class="comment">// Clé primaire (si différente de 'id')</span>
+    <span class="keyword">protected</span> <span class="variable">$primaryKey</span> = <span class="string">'project_id'</span>;
+
+    <span class="comment">// Désactiver les timestamps (created_at, updated_at)</span>
+    <span class="keyword">public</span> <span class="variable">$timestamps</span> = <span class="keyword">false</span>;
+
+    <span class="comment">// Champs autorisés pour l'assignation de masse</span>
+    <span class="keyword">protected</span> <span class="variable">$fillable</span> = [
+        <span class="string">'name'</span>,
+        <span class="string">'description'</span>,
+        <span class="string">'status'</span>
+    ];
+
+    <span class="comment">// Champs protégés contre l'assignation de masse</span>
+    <span class="keyword">protected</span> <span class="variable">$guarded</span> = [<span class="string">'id'</span>];
+
+    <span class="comment">// Attributs cachés dans les tableaux/JSON</span>
+    <span class="keyword">protected</span> <span class="variable">$hidden</span> = [<span class="string">'password'</span>];
+}</code>
+                </div>
+
+                <div class="info-box warning">
+                    <div class="info-box-title">Sécurité - Mass Assignment</div>
+                    <p>Toujours définir <code class="code-inline">$fillable</code> ou <code class="code-inline">$guarded</code> pour protéger contre les attaques d'assignation de masse.</p>
+                </div>
+            </div>
+            <div class="slide-footer">
+                <span class="author">M. JARRAY Mondher - ISIMED</span>
+                <span class="page-number">6</span>
+            </div>
+        </div>
+
+        <!-- Slide 7: CRUD - Create -->
+        <div class="slide">
+            <div class="slide-header">
+                <div class="logo-container">
+                    <img src="../assets/isim-logo.jpeg" alt="ISIM Logo" class="logo">
+                    <div class="institution">
+                        <strong>ISIMED</strong> Développement Web Avancé
+                    </div>
+                </div>
+                <div class="chapter-info">
+                    <div class="chapter-number">05</div>
+                    <div>Eloquent ORM</div>
+                </div>
+            </div>
+            <div class="slide-title">
+                <h1>Opérations CRUD - Create</h1>
+                <p class="subtitle">Créer des enregistrements</p>
+            </div>
+            <div class="slide-content">
+                <h3>Méthode 1 : Créer et sauvegarder</h3>
+                <div class="code-block" data-language="php">
+                    <code><span class="variable">$project</span> = <span class="keyword">new</span> Project();
+<span class="variable">$project</span>->name = <span class="string">'Mon Projet'</span>;
+<span class="variable">$project</span>->description = <span class="string">'Description du projet'</span>;
+<span class="variable">$project</span>->save();</code>
+                </div>
+
+                <h3>Méthode 2 : create() - Assignation de masse</h3>
+                <div class="code-block" data-language="php">
+                    <code><span class="variable">$project</span> = Project::create([
+    <span class="string">'name'</span> => <span class="string">'Mon Projet'</span>,
+    <span class="string">'description'</span> => <span class="string">'Description du projet'</span>,
+    <span class="string">'status'</span> => <span class="string">'active'</span>
+]);</code>
+                </div>
+
+                <h3>Méthode 3 : firstOrCreate / updateOrCreate</h3>
+                <div class="code-block" data-language="php">
+                    <code><span class="comment">// Trouve ou crée si n'existe pas</span>
+<span class="variable">$project</span> = Project::firstOrCreate(
+    [<span class="string">'name'</span> => <span class="string">'Mon Projet'</span>],  <span class="comment">// Critères de recherche</span>
+    [<span class="string">'status'</span> => <span class="string">'active'</span>]       <span class="comment">// Valeurs par défaut</span>
+);</code>
+                </div>
+            </div>
+            <div class="slide-footer">
+                <span class="author">M. JARRAY Mondher - ISIMED</span>
+                <span class="page-number">7</span>
+            </div>
+        </div>
+
+        <!-- Slide 8: CRUD - Read -->
+        <div class="slide">
+            <div class="slide-header">
+                <div class="logo-container">
+                    <img src="../assets/isim-logo.jpeg" alt="ISIM Logo" class="logo">
+                    <div class="institution">
+                        <strong>ISIMED</strong> Développement Web Avancé
+                    </div>
+                </div>
+                <div class="chapter-info">
+                    <div class="chapter-number">05</div>
+                    <div>Eloquent ORM</div>
+                </div>
+            </div>
+            <div class="slide-title">
+                <h1>Opérations CRUD - Read</h1>
+                <p class="subtitle">Lire des enregistrements</p>
+            </div>
+            <div class="slide-content">
+                <h3>Récupération de données</h3>
+                <div class="code-block" data-language="php">
+                    <code><span class="comment">// Tous les enregistrements</span>
+<span class="variable">$projects</span> = Project::all();
+
+<span class="comment">// Par ID</span>
+<span class="variable">$project</span> = Project::find(<span class="number">1</span>);
+
+<span class="comment">// Par ID ou erreur 404</span>
+<span class="variable">$project</span> = Project::findOrFail(<span class="number">1</span>);
+
+<span class="comment">// Premier résultat</span>
+<span class="variable">$project</span> = Project::where(<span class="string">'status'</span>, <span class="string">'active'</span>)->first();
+
+<span class="comment">// Premier résultat ou erreur 404</span>
+<span class="variable">$project</span> = Project::where(<span class="string">'status'</span>, <span class="string">'active'</span>)->firstOrFail();
+
+<span class="comment">// Collection filtrée</span>
+<span class="variable">$projects</span> = Project::where(<span class="string">'status'</span>, <span class="string">'active'</span>)
+    ->orderBy(<span class="string">'created_at'</span>, <span class="string">'desc'</span>)
+    ->get();
+
+<span class="comment">// Pagination</span>
+<span class="variable">$projects</span> = Project::paginate(<span class="number">10</span>);</code>
+                </div>
+            </div>
+            <div class="slide-footer">
+                <span class="author">M. JARRAY Mondher - ISIMED</span>
+                <span class="page-number">8</span>
+            </div>
+        </div>
+
+        <!-- Slide 9: CRUD - Update & Delete -->
+        <div class="slide">
+            <div class="slide-header">
+                <div class="logo-container">
+                    <img src="../assets/isim-logo.jpeg" alt="ISIM Logo" class="logo">
+                    <div class="institution">
+                        <strong>ISIMED</strong> Développement Web Avancé
+                    </div>
+                </div>
+                <div class="chapter-info">
+                    <div class="chapter-number">05</div>
+                    <div>Eloquent ORM</div>
+                </div>
+            </div>
+            <div class="slide-title">
+                <h1>CRUD - Update & Delete</h1>
+                <p class="subtitle">Modifier et supprimer</p>
+            </div>
+            <div class="slide-content">
+                <div class="two-columns">
+                    <div class="column">
+                        <h3>Update</h3>
+                        <div class="code-block" data-language="php">
+                            <code><span class="comment">// Méthode 1</span>
+<span class="variable">$project</span> = Project::find(<span class="number">1</span>);
+<span class="variable">$project</span>->name = <span class="string">'Nouveau nom'</span>;
+<span class="variable">$project</span>->save();
+
+<span class="comment">// Méthode 2 - update()</span>
+<span class="variable">$project</span>->update([
+    <span class="string">'name'</span> => <span class="string">'Nouveau nom'</span>,
+    <span class="string">'status'</span> => <span class="string">'completed'</span>
+]);
+
+<span class="comment">// Mise à jour en masse</span>
+Project::where(<span class="string">'status'</span>, <span class="string">'pending'</span>)
+    ->update([<span class="string">'status'</span> => <span class="string">'active'</span>]);</code>
+                        </div>
+                    </div>
+                    <div class="column">
+                        <h3>Delete</h3>
+                        <div class="code-block" data-language="php">
+                            <code><span class="comment">// Supprimer un modèle</span>
+<span class="variable">$project</span> = Project::find(<span class="number">1</span>);
+<span class="variable">$project</span>->delete();
+
+<span class="comment">// Supprimer par ID</span>
+Project::destroy(<span class="number">1</span>);
+Project::destroy([<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>]);
+
+<span class="comment">// Suppression conditionnelle</span>
+Project::where(<span class="string">'status'</span>, <span class="string">'archived'</span>)
+    ->delete();</code>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="info-box note">
+                    <div class="info-box-title">Soft Deletes</div>
+                    <p>Laravel permet de faire des suppressions "douces" (soft delete) qui ne suppriment pas réellement les données mais ajoutent une date de suppression.</p>
+                </div>
+            </div>
+            <div class="slide-footer">
+                <span class="author">M. JARRAY Mondher - ISIMED</span>
+                <span class="page-number">9</span>
+            </div>
+        </div>
+
+        <!-- Slide 10: Query Builder -->
+        <div class="slide">
+            <div class="slide-header">
+                <div class="logo-container">
+                    <img src="../assets/isim-logo.jpeg" alt="ISIM Logo" class="logo">
+                    <div class="institution">
+                        <strong>ISIMED</strong> Développement Web Avancé
+                    </div>
+                </div>
+                <div class="chapter-info">
+                    <div class="chapter-number">05</div>
+                    <div>Eloquent ORM</div>
+                </div>
+            </div>
+            <div class="slide-title">
+                <h1>Query Builder Eloquent</h1>
+                <p class="subtitle">Construire des requêtes avancées</p>
+            </div>
+            <div class="slide-content">
+                <div class="code-block" data-language="php">
+                    <code><span class="comment">// Conditions multiples</span>
+<span class="variable">$projects</span> = Project::where(<span class="string">'status'</span>, <span class="string">'active'</span>)
+    ->where(<span class="string">'priority'</span>, <span class="string">'>'</span>, <span class="number">5</span>)
+    ->orWhere(<span class="string">'featured'</span>, <span class="keyword">true</span>)
+    ->get();
+
+<span class="comment">// whereIn, whereBetween, whereNull</span>
+<span class="variable">$projects</span> = Project::whereIn(<span class="string">'status'</span>, [<span class="string">'active'</span>, <span class="string">'pending'</span>])
+    ->whereBetween(<span class="string">'created_at'</span>, [<span class="variable">$start</span>, <span class="variable">$end</span>])
+    ->whereNotNull(<span class="string">'completed_at'</span>)
+    ->get();
+
+<span class="comment">// Tri et limite</span>
+<span class="variable">$projects</span> = Project::orderBy(<span class="string">'name'</span>, <span class="string">'asc'</span>)
+    ->latest()  <span class="comment">// orderBy('created_at', 'desc')</span>
+    ->take(<span class="number">5</span>)
+    ->get();
+
+<span class="comment">// Sélection de colonnes</span>
+<span class="variable">$projects</span> = Project::select(<span class="string">'id'</span>, <span class="string">'name'</span>, <span class="string">'status'</span>)->get();
+
+<span class="comment">// Comptage et agrégation</span>
+<span class="variable">$count</span> = Project::where(<span class="string">'status'</span>, <span class="string">'active'</span>)->count();
+<span class="variable">$avg</span> = Task::where(<span class="string">'project_id'</span>, <span class="number">1</span>)->avg(<span class="string">'hours'</span>);</code>
+                </div>
+            </div>
+            <div class="slide-footer">
+                <span class="author">M. JARRAY Mondher - ISIMED</span>
+                <span class="page-number">10</span>
+            </div>
+        </div>
+
+        <!-- Slide 11: Relations - Introduction -->
+        <div class="slide">
+            <div class="slide-header">
+                <div class="logo-container">
+                    <img src="../assets/isim-logo.jpeg" alt="ISIM Logo" class="logo">
+                    <div class="institution">
+                        <strong>ISIMED</strong> Développement Web Avancé
+                    </div>
+                </div>
+                <div class="chapter-info">
+                    <div class="chapter-number">05</div>
+                    <div>Eloquent ORM</div>
+                </div>
+            </div>
+            <div class="slide-title">
+                <h1>Les Relations Eloquent</h1>
+                <p class="subtitle">Lier les modèles entre eux</p>
+            </div>
+            <div class="slide-content">
+                <h3>Types de relations</h3>
+                <table>
+                    <tr>
+                        <th>Relation</th>
+                        <th>Description</th>
+                        <th>Exemple</th>
+                    </tr>
+                    <tr>
+                        <td><code class="code-inline">hasOne</code></td>
+                        <td>Un à un</td>
+                        <td>User hasOne Profile</td>
+                    </tr>
+                    <tr>
+                        <td><code class="code-inline">hasMany</code></td>
+                        <td>Un à plusieurs</td>
+                        <td>Project hasMany Tasks</td>
+                    </tr>
+                    <tr>
+                        <td><code class="code-inline">belongsTo</code></td>
+                        <td>Inverse de hasOne/hasMany</td>
+                        <td>Task belongsTo Project</td>
+                    </tr>
+                    <tr>
+                        <td><code class="code-inline">belongsToMany</code></td>
+                        <td>Plusieurs à plusieurs</td>
+                        <td>User belongsToMany Roles</td>
+                    </tr>
+                    <tr>
+                        <td><code class="code-inline">hasOneThrough</code></td>
+                        <td>Un à un via intermédiaire</td>
+                        <td>Country hasOneThrough User</td>
+                    </tr>
+                    <tr>
+                        <td><code class="code-inline">hasManyThrough</code></td>
+                        <td>Un à plusieurs via intermédiaire</td>
+                        <td>Country hasManyThrough Posts</td>
+                    </tr>
+                </table>
+            </div>
+            <div class="slide-footer">
+                <span class="author">M. JARRAY Mondher - ISIMED</span>
+                <span class="page-number">11</span>
+            </div>
+        </div>
+
+        <!-- Slide 12: Relation hasMany / belongsTo -->
+        <div class="slide">
+            <div class="slide-header">
+                <div class="logo-container">
+                    <img src="../assets/isim-logo.jpeg" alt="ISIM Logo" class="logo">
+                    <div class="institution">
+                        <strong>ISIMED</strong> Développement Web Avancé
+                    </div>
+                </div>
+                <div class="chapter-info">
+                    <div class="chapter-number">05</div>
+                    <div>Eloquent ORM</div>
+                </div>
+            </div>
+            <div class="slide-title">
+                <h1>Relations hasMany / belongsTo</h1>
+                <p class="subtitle">Un projet a plusieurs tâches</p>
+            </div>
+            <div class="slide-content">
+                <div class="two-columns">
+                    <div class="column">
+                        <h4>Modèle Project</h4>
+                        <div class="code-block" data-language="php">
+                            <code><span class="keyword">class</span> Project <span class="keyword">extends</span> Model
+{
+    <span class="keyword">public function</span> <span class="function">tasks</span>()
+    {
+        <span class="keyword">return</span> <span class="variable">$this</span>->hasMany(
+            Task::class
+        );
+    }
+}</code>
+                        </div>
+                    </div>
+                    <div class="column">
+                        <h4>Modèle Task</h4>
+                        <div class="code-block" data-language="php">
+                            <code><span class="keyword">class</span> Task <span class="keyword">extends</span> Model
+{
+    <span class="keyword">public function</span> <span class="function">project</span>()
+    {
+        <span class="keyword">return</span> <span class="variable">$this</span>->belongsTo(
+            Project::class
+        );
+    }
+}</code>
+                        </div>
+                    </div>
+                </div>
+
+                <h3>Utilisation</h3>
+                <div class="code-block" data-language="php">
+                    <code><span class="comment">// Accéder aux tâches d'un projet</span>
+<span class="variable">$project</span> = Project::find(<span class="number">1</span>);
+<span class="variable">$tasks</span> = <span class="variable">$project</span>->tasks;  <span class="comment">// Collection de Task</span>
+
+<span class="comment">// Accéder au projet d'une tâche</span>
+<span class="variable">$task</span> = Task::find(<span class="number">1</span>);
+<span class="variable">$projectName</span> = <span class="variable">$task</span>->project->name;
+
+<span class="comment">// Créer une tâche liée au projet</span>
+<span class="variable">$project</span>->tasks()->create([<span class="string">'title'</span> => <span class="string">'Nouvelle tâche'</span>]);</code>
+                </div>
+            </div>
+            <div class="slide-footer">
+                <span class="author">M. JARRAY Mondher - ISIMED</span>
+                <span class="page-number">12</span>
+            </div>
+        </div>
+
+        <!-- Slide 13: Relation belongsToMany -->
+        <div class="slide">
+            <div class="slide-header">
+                <div class="logo-container">
+                    <img src="../assets/isim-logo.jpeg" alt="ISIM Logo" class="logo">
+                    <div class="institution">
+                        <strong>ISIMED</strong> Développement Web Avancé
+                    </div>
+                </div>
+                <div class="chapter-info">
+                    <div class="chapter-number">05</div>
+                    <div>Eloquent ORM</div>
+                </div>
+            </div>
+            <div class="slide-title">
+                <h1>Relation belongsToMany</h1>
+                <p class="subtitle">Plusieurs à plusieurs avec table pivot</p>
+            </div>
+            <div class="slide-content">
+                <h3>Exemple : Users et Projects</h3>
+                <div class="code-block" data-language="php">
+                    <code><span class="comment">// Modèle User</span>
+<span class="keyword">public function</span> <span class="function">projects</span>()
+{
+    <span class="keyword">return</span> <span class="variable">$this</span>->belongsToMany(Project::class)
+        ->withPivot(<span class="string">'role'</span>)           <span class="comment">// Colonnes pivot</span>
+        ->withTimestamps();           <span class="comment">// created_at, updated_at</span>
+}
+
+<span class="comment">// Modèle Project</span>
+<span class="keyword">public function</span> <span class="function">members</span>()
+{
+    <span class="keyword">return</span> <span class="variable">$this</span>->belongsToMany(User::class, <span class="string">'project_user'</span>);
+}</code>
+                </div>
+
+                <h4>Manipulation de la relation</h4>
+                <div class="code-block" data-language="php">
+                    <code><span class="comment">// Attacher un utilisateur à un projet</span>
+<span class="variable">$project</span>->members()->attach(<span class="variable">$userId</span>, [<span class="string">'role'</span> => <span class="string">'developer'</span>]);
+
+<span class="comment">// Détacher</span>
+<span class="variable">$project</span>->members()->detach(<span class="variable">$userId</span>);
+
+<span class="comment">// Synchroniser (remplace tous les existants)</span>
+<span class="variable">$project</span>->members()->sync([<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>]);
+
+<span class="comment">// Accéder aux données pivot</span>
+<span class="keyword">foreach</span> (<span class="variable">$project</span>->members <span class="keyword">as</span> <span class="variable">$member</span>) {
+    <span class="keyword">echo</span> <span class="variable">$member</span>->pivot->role;
+}</code>
+                </div>
+            </div>
+            <div class="slide-footer">
+                <span class="author">M. JARRAY Mondher - ISIMED</span>
+                <span class="page-number">13</span>
+            </div>
+        </div>
+
+        <!-- Slide 14: Eager Loading -->
+        <div class="slide">
+            <div class="slide-header">
+                <div class="logo-container">
+                    <img src="../assets/isim-logo.jpeg" alt="ISIM Logo" class="logo">
+                    <div class="institution">
+                        <strong>ISIMED</strong> Développement Web Avancé
+                    </div>
+                </div>
+                <div class="chapter-info">
+                    <div class="chapter-number">05</div>
+                    <div>Eloquent ORM</div>
+                </div>
+            </div>
+            <div class="slide-title">
+                <h1>Eager Loading</h1>
+                <p class="subtitle">Optimiser les requêtes avec with()</p>
+            </div>
+            <div class="slide-content">
+                <h3>Le problème N+1</h3>
+                <div class="two-columns">
+                    <div class="column">
+                        <h4>Sans Eager Loading (N+1)</h4>
+                        <div class="code-block" data-language="php">
+                            <code><span class="comment">// 1 requête pour les projets</span>
+<span class="comment">// + N requêtes pour les tâches</span>
+<span class="variable">$projects</span> = Project::all();
+<span class="keyword">foreach</span> (<span class="variable">$projects</span> <span class="keyword">as</span> <span class="variable">$p</span>) {
+    <span class="keyword">echo</span> <span class="variable">$p</span>->tasks->count();
+}</code>
+                        </div>
+                        <p class="badge danger">100 projets = 101 requêtes</p>
+                    </div>
+                    <div class="column">
+                        <h4>Avec Eager Loading</h4>
+                        <div class="code-block" data-language="php">
+                            <code><span class="comment">// 2 requêtes seulement</span>
+<span class="variable">$projects</span> = Project::with(<span class="string">'tasks'</span>)
+    ->get();
+<span class="keyword">foreach</span> (<span class="variable">$projects</span> <span class="keyword">as</span> <span class="variable">$p</span>) {
+    <span class="keyword">echo</span> <span class="variable">$p</span>->tasks->count();
+}</code>
+                        </div>
+                        <p class="badge success">100 projets = 2 requêtes</p>
+                    </div>
+                </div>
+
+                <h4>Options avancées</h4>
+                <div class="code-block" data-language="php">
+                    <code><span class="comment">// Multiple relations</span>
+<span class="variable">$projects</span> = Project::with([<span class="string">'tasks'</span>, <span class="string">'members'</span>])->get();
+
+<span class="comment">// Relations imbriquées</span>
+<span class="variable">$projects</span> = Project::with(<span class="string">'tasks.comments'</span>)->get();
+
+<span class="comment">// Eager loading conditionnel</span>
+<span class="variable">$projects</span> = Project::with([<span class="string">'tasks'</span> => <span class="keyword">function</span>(<span class="variable">$query</span>) {
+    <span class="variable">$query</span>->where(<span class="string">'status'</span>, <span class="string">'pending'</span>);
+}])->get();</code>
+                </div>
+            </div>
+            <div class="slide-footer">
+                <span class="author">M. JARRAY Mondher - ISIMED</span>
+                <span class="page-number">14</span>
+            </div>
+        </div>
+
+        <!-- Slide 15: Query Scopes -->
+        <div class="slide">
+            <div class="slide-header">
+                <div class="logo-container">
+                    <img src="../assets/isim-logo.jpeg" alt="ISIM Logo" class="logo">
+                    <div class="institution">
+                        <strong>ISIMED</strong> Développement Web Avancé
+                    </div>
+                </div>
+                <div class="chapter-info">
+                    <div class="chapter-number">05</div>
+                    <div>Eloquent ORM</div>
+                </div>
+            </div>
+            <div class="slide-title">
+                <h1>Query Scopes</h1>
+                <p class="subtitle">Réutiliser des conditions de requête</p>
+            </div>
+            <div class="slide-content">
+                <h3>Local Scopes</h3>
+                <div class="code-block" data-language="php">
+                    <code><span class="keyword">class</span> Project <span class="keyword">extends</span> Model
+{
+    <span class="comment">// Scope local (préfixe "scope")</span>
+    <span class="keyword">public function</span> <span class="function">scopeActive</span>(<span class="variable">$query</span>)
+    {
+        <span class="keyword">return</span> <span class="variable">$query</span>->where(<span class="string">'status'</span>, <span class="string">'active'</span>);
+    }
+
+    <span class="keyword">public function</span> <span class="function">scopeOfPriority</span>(<span class="variable">$query</span>, <span class="variable">$priority</span>)
+    {
+        <span class="keyword">return</span> <span class="variable">$query</span>->where(<span class="string">'priority'</span>, <span class="string">'>='</span>, <span class="variable">$priority</span>);
+    }
+}
+
+<span class="comment">// Utilisation</span>
+<span class="variable">$projects</span> = Project::active()->get();
+<span class="variable">$projects</span> = Project::active()->ofPriority(<span class="number">5</span>)->get();</code>
+                </div>
+
+                <h3>Global Scopes</h3>
+                <div class="code-block" data-language="php">
+                    <code><span class="comment">// Appliqué automatiquement à toutes les requêtes</span>
+<span class="keyword">protected static function</span> <span class="function">booted</span>()
+{
+    <span class="keyword">static</span>::addGlobalScope(<span class="string">'active'</span>, <span class="keyword">function</span> (<span class="variable">$query</span>) {
+        <span class="variable">$query</span>->where(<span class="string">'status'</span>, <span class="string">'active'</span>);
+    });
+}
+
+<span class="comment">// Ignorer le scope global</span>
+Project::withoutGlobalScope(<span class="string">'active'</span>)->get();</code>
+                </div>
+            </div>
+            <div class="slide-footer">
+                <span class="author">M. JARRAY Mondher - ISIMED</span>
+                <span class="page-number">15</span>
+            </div>
+        </div>
+
+
+
+        <!-- Slide 17: Attribute Casting -->
+        <div class="slide">
+            <div class="slide-header">
+                <div class="logo-container">
+                    <img src="../assets/isim-logo.jpeg" alt="ISIM Logo" class="logo">
+                    <div class="institution">
+                        <strong>ISIMED</strong> Développement Web Avancé
+                    </div>
+                </div>
+                <div class="chapter-info">
+                    <div class="chapter-number">05</div>
+                    <div>Eloquent ORM</div>
+                </div>
+            </div>
+            <div class="slide-title">
+                <h1>Attribute Casting</h1>
+                <p class="subtitle">Conversion automatique des types</p>
+            </div>
+            <div class="slide-content">
+                <div class="code-block" data-language="php">
+                    <code><span class="keyword">class</span> Project <span class="keyword">extends</span> Model
+{
+    <span class="keyword">protected</span> <span class="variable">$casts</span> = [
+        <span class="string">'is_active'</span> => <span class="string">'boolean'</span>,
+        <span class="string">'settings'</span> => <span class="string">'array'</span>,           <span class="comment">// JSON ↔ Array</span>
+        <span class="string">'metadata'</span> => <span class="string">'object'</span>,          <span class="comment">// JSON ↔ stdClass</span>
+        <span class="string">'options'</span> => <span class="string">'collection'</span>,      <span class="comment">// JSON ↔ Collection</span>
+        <span class="string">'started_at'</span> => <span class="string">'datetime'</span>,
+        <span class="string">'due_date'</span> => <span class="string">'date'</span>,
+        <span class="string">'budget'</span> => <span class="string">'decimal:2'</span>,
+        <span class="string">'password'</span> => <span class="string">'hashed'</span>,         <span class="comment">// Hash automatique</span>
+    ];
+}</code>
+                </div>
+
+                <h4>Utilisation</h4>
+                <div class="code-block" data-language="php">
+                    <code><span class="variable">$project</span> = Project::find(<span class="number">1</span>);
+
+<span class="comment">// Boolean</span>
+<span class="keyword">if</span> (<span class="variable">$project</span>->is_active) { ... }
+
+<span class="comment">// Array (stocké en JSON)</span>
+<span class="variable">$project</span>->settings = [<span class="string">'theme'</span> => <span class="string">'dark'</span>];
+<span class="variable">$project</span>->save();
+
+<span class="comment">// DateTime avec Carbon</span>
+<span class="keyword">echo</span> <span class="variable">$project</span>->started_at->format(<span class="string">'d/m/Y'</span>);
+<span class="keyword">echo</span> <span class="variable">$project</span>->started_at->diffForHumans();  <span class="comment">// "il y a 2 jours"</span></code>
+                </div>
+            </div>
+            <div class="slide-footer">
+                <span class="author">M. JARRAY Mondher - ISIMED</span>
+                <span class="page-number">16</span>
+            </div>
+        </div>
+
+        <!-- Slide 18: Soft Deletes -->
+        <div class="slide">
+            <div class="slide-header">
+                <div class="logo-container">
+                    <img src="../assets/isim-logo.jpeg" alt="ISIM Logo" class="logo">
+                    <div class="institution">
+                        <strong>ISIMED</strong> Développement Web Avancé
+                    </div>
+                </div>
+                <div class="chapter-info">
+                    <div class="chapter-number">05</div>
+                    <div>Eloquent ORM</div>
+                </div>
+            </div>
+            <div class="slide-title">
+                <h1>Soft Deletes</h1>
+                <p class="subtitle">Suppression douce (corbeille)</p>
+            </div>
+            <div class="slide-content">
+                <h3>Configuration</h3>
+                <div class="code-block" data-language="php">
+                    <code><span class="keyword">use</span> Illuminate\Database\Eloquent\SoftDeletes;
+
+<span class="keyword">class</span> Project <span class="keyword">extends</span> Model
+{
+    <span class="keyword">use</span> SoftDeletes;  <span class="comment">// Active le soft delete</span>
+}
+
+<span class="comment">// Dans la migration</span>
+<span class="variable">$table</span>->softDeletes();  <span class="comment">// Ajoute la colonne deleted_at</span></code>
+                </div>
+
+                <h3>Utilisation</h3>
+                <div class="code-block" data-language="php">
+                    <code><span class="comment">// Suppression douce</span>
+<span class="variable">$project</span>->delete();  <span class="comment">// Marque deleted_at, ne supprime pas</span>
+
+<span class="comment">// Les requêtes normales excluent les supprimés</span>
+Project::all();  <span class="comment">// N'inclut pas les supprimés</span>
+
+<span class="comment">// Inclure les supprimés</span>
+Project::withTrashed()->get();
+
+<span class="comment">// Seulement les supprimés</span>
+Project::onlyTrashed()->get();
+
+<span class="comment">// Restaurer</span>
+<span class="variable">$project</span>->restore();
+
+<span class="comment">// Suppression définitive</span>
+<span class="variable">$project</span>->forceDelete();</code>
+                </div>
+            </div>
+            <div class="slide-footer">
+                <span class="author">M. JARRAY Mondher - ISIMED</span>
+                <span class="page-number">17</span>
+            </div>
+        </div>
+
+        <!-- Slide 19: Exemple TaskFlow -->
+        <div class="slide">
+            <div class="slide-header">
+                <div class="logo-container">
+                    <img src="../assets/isim-logo.jpeg" alt="ISIM Logo" class="logo">
+                    <div class="institution">
+                        <strong>ISIMED</strong> Développement Web Avancé
+                    </div>
+                </div>
+                <div class="chapter-info">
+                    <div class="chapter-number">05</div>
+                    <div>Eloquent ORM</div>
+                </div>
+            </div>
+            <div class="slide-title">
+                <h1>Application : TaskFlow</h1>
+                <p class="subtitle">Modèles et relations du projet</p>
+            </div>
+            <div class="slide-content">
+                <div class="code-block" data-language="php">
+                    <code><span class="keyword">class</span> Project <span class="keyword">extends</span> Model
+{
+    <span class="keyword">use</span> SoftDeletes;
+
+    <span class="keyword">protected</span> <span class="variable">$fillable</span> = [<span class="string">'name'</span>, <span class="string">'description'</span>, <span class="string">'status'</span>];
+    <span class="keyword">protected</span> <span class="variable">$casts</span> = [<span class="string">'due_date'</span> => <span class="string">'date'</span>];
+
+    <span class="keyword">public function</span> <span class="function">tasks</span>()
+    {
+        <span class="keyword">return</span> <span class="variable">$this</span>->hasMany(Task::class);
+    }
+
+    <span class="keyword">public function</span> <span class="function">members</span>()
+    {
+        <span class="keyword">return</span> <span class="variable">$this</span>->belongsToMany(User::class)->withPivot(<span class="string">'role'</span>);
+    }
+
+    <span class="keyword">public function</span> <span class="function">owner</span>()
+    {
+        <span class="keyword">return</span> <span class="variable">$this</span>->belongsTo(User::class, <span class="string">'owner_id'</span>);
+    }
+
+    <span class="comment">// Scopes</span>
+    <span class="keyword">public function</span> <span class="function">scopeActive</span>(<span class="variable">$query</span>)
+    {
+        <span class="keyword">return</span> <span class="variable">$query</span>->where(<span class="string">'status'</span>, <span class="string">'active'</span>);
+    }
+
+    <span class="comment">// Accessor</span>
+    <span class="keyword">protected function</span> <span class="function">progress</span>(): Attribute
+    {
+        <span class="keyword">return</span> Attribute::get(<span class="keyword">fn</span>() =>
+            <span class="variable">$this</span>->tasks()->where(<span class="string">'completed'</span>, <span class="keyword">true</span>)->count()
+            / max(<span class="variable">$this</span>->tasks()->count(), <span class="number">1</span>) * <span class="number">100</span>
+        );
+    }
+}</code>
+                </div>
+            </div>
+            <div class="slide-footer">
+                <span class="author">M. JARRAY Mondher - ISIMED</span>
+                <span class="page-number">18</span>
+            </div>
+        </div>
+
+        <!-- Slide 20: Résumé -->
+        <div class="slide">
+            <div class="slide-header">
+                <div class="logo-container">
+                    <img src="../assets/isim-logo.jpeg" alt="ISIM Logo" class="logo">
+                    <div class="institution">
+                        <strong>ISIMED</strong> Développement Web Avancé
+                    </div>
+                </div>
+                <div class="chapter-info">
+                    <div class="chapter-number">05</div>
+                    <div>Eloquent ORM</div>
+                </div>
+            </div>
+            <div class="slide-title">
+                <h1>Résumé du Chapitre</h1>
+            </div>
+            <div class="slide-content">
+                <div class="summary-grid">
+                    <div class="summary-item">
+                        <h5>Modèles</h5>
+                        <p>Représentation objet des tables avec conventions de nommage</p>
+                    </div>
+                    <div class="summary-item">
+                        <h5>CRUD</h5>
+                        <p>create(), find(), update(), delete() pour manipuler les données</p>
+                    </div>
+                    <div class="summary-item">
+                        <h5>Relations</h5>
+                        <p>hasMany, belongsTo, belongsToMany pour lier les modèles</p>
+                    </div>
+                    <div class="summary-item">
+                        <h5>Optimisation</h5>
+                        <p>Eager Loading avec with() pour éviter le problème N+1</p>
+                    </div>
+                </div>
+
+                <div class="highlight-box">
+                    <h4>Commandes essentielles</h4>
+                    <ul>
+                        <li><code class="code-inline">php artisan make:model NomModele -mfsc</code> - Créer un modèle complet</li>
+                        <li><code class="code-inline">php artisan tinker</code> - Tester Eloquent en ligne de commande</li>
+                    </ul>
+                </div>
+
+                <div class="info-box success">
+                    <div class="info-box-title">Prochain chapitre</div>
+                    <p>Chapitre 6 : Formulaires et Validation - Créer des formulaires et valider les données utilisateur</p>
+                </div>
+            </div>
+            <div class="slide-footer">
+                <span class="author">M. JARRAY Mondher - ISIMED</span>
+                <span class="page-number">19</span>
+            </div>
+        </div>
+
+    </div>
+</body>
+
+</html>
